@@ -6,6 +6,10 @@ import com.tower.smartline.common.app.Activity;
 
 import butterknife.BindView;
 
+/**
+ * @author zpsong-tower <pingzisong2012@gmail.com>
+ * @since 2020/10/27 4:00
+ */
 public class MainActivity extends Activity {
     @BindView(R.id.text_test)
     TextView mTestText;

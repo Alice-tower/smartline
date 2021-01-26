@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -30,21 +31,20 @@ public abstract class Fragment extends androidx.fragment.app.Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         if (mRoot == null) {
             int layId = getContentLayoutId();
 
             // 初始化当前的根布局，但不在创建时就添加到ViewGroup中
-            View root = inflater.inflate(layId, container, false);
-            initWidget(root);
-            mRoot = root;
+            mRoot = inflater.inflate(layId, container, false);
+            initWidget(mRoot);
         } else {
             if (mRoot.getParent() != null) {
                 // 把当前Root从其父控件中移除
                 ((ViewGroup) mRoot.getParent()).removeView(mRoot);
             }
         }
-
         return mRoot;
     }
 
@@ -70,6 +70,7 @@ public abstract class Fragment extends androidx.fragment.app.Fragment {
      *
      * @return 资源文件Id
      */
+    @LayoutRes
     protected abstract int getContentLayoutId();
 
     /**

@@ -2,6 +2,7 @@ package com.tower.smartline.common.app;
 
 import android.os.Bundle;
 
+import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -56,6 +57,7 @@ public abstract class Activity extends AppCompatActivity {
      *
      * @return 资源文件Id
      */
+    @LayoutRes
     protected abstract int getContentLayoutId();
 
     /**
@@ -83,7 +85,6 @@ public abstract class Activity extends AppCompatActivity {
     public void onBackPressed() {
         // 得到当前Activity下的所有Fragment
         List<Fragment> fragments = getSupportFragmentManager().getFragments();
-        // 判空
         if (fragments != null && fragments.size() > 0) {
             for (Fragment fragment : fragments) {
                 // 判断是否为自己封装的Fragment

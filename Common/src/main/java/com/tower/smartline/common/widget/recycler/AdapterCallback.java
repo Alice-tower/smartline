@@ -5,5 +5,5 @@ package com.tower.smartline.common.widget.recycler;
  * @since 2020/11/24 3:41
  */
 public interface AdapterCallback<Data> {
-    void update(Data data, RecyclerAdapter.ViewHolder<Data> holder);
+    void update(Data data, RecyclerAdapter.MyViewHolder<Data> holder);
 }
