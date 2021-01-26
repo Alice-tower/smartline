@@ -28,6 +28,6 @@ ext {
     versionName = '1.0.0'
 
     // 依赖版本
-    appcompatVersion = '1.2.0'
+    appcompatVersion = '1.1.0'
     butterknifeVersion = '10.2.3'
 }
