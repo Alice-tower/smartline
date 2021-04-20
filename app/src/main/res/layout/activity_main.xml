@@ -1,19 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/text_test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/actionBarWithStatusBarSize"
+        android:outlineProvider="bounds"
+        android:elevation="@dimen/len_2">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/statusBarSize"
+            android:paddingHorizontal="@dimen/len_4">
+
+            <com.tower.smartline.common.widget.PortraitView
+                android:id="@+id/im_portrait"
+                android:layout_width="@dimen/len_40"
+                android:layout_height="@dimen/len_40"
+                android:layout_margin="@dimen/len_4"
+                android:foreground="@drawable/ic_touch_menu"
+                android:padding="@dimen/len_4"
+                android:scaleType="centerCrop"
+                android:src="@drawable/default_portrait" />
+
+            <TextView
+                android:id="@+id/txt_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.Title"
+                android:text="@string/app_name" />
+
+            <ImageView
+                android:id="@+id/im_search"
+                android:layout_width="@dimen/len_40"
+                android:layout_height="@dimen/len_40"
+                android:layout_margin="@dimen/len_4"
+                android:layout_gravity="end|center_vertical"
+                android:padding="@dimen/len_10"
+                android:foreground="@drawable/ic_touch_menu"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_search"
+                app:tint="?attr/toolbarMenuIconColor"
+                tools:ignore="ContentDescription" />
+
+        </FrameLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <FrameLayout
+        android:id="@+id/lay_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/len_52"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <net.qiujuer.genius.ui.widget.FloatActionButton
+        android:id="@+id/btn_action"
+        android:layout_width="@dimen/len_52"
+        android:layout_height="@dimen/len_52"
+        android:layout_marginEnd="@dimen/len_16"
+        android:layout_marginBottom="@dimen/len_68"
+        android:padding="@dimen/len_20"
+        android:tint="@color/white"
+        android:src="@drawable/ic_group_add"
+        app:layout_anchor="@id/lay_container"
+        app:layout_anchorGravity="end|bottom"
+        app:gBackgroundColor="@color/colorAccent" />
+    
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/len_52"
+        android:layout_gravity="bottom"
+        android:background="@color/grey_200" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

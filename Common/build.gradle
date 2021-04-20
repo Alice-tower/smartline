@@ -25,15 +25,24 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
+    testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-    implementation "androidx.appcompat:appcompat:$rootProject.ext.appcompatVersion"
-    implementation "androidx.recyclerview:recyclerview:$rootProject.ext.appcompatVersion"
+    // android.support
+    implementation "androidx.appcompat:appcompat:$rootProject.ext.androidxVersion"
+    implementation "androidx.recyclerview:recyclerview:$rootProject.ext.androidxVersion"
+    implementation "com.google.android.material:material:$rootProject.ext.materialVersion"
 
     // butterknife
     implementation "com.jakewharton:butterknife:$rootProject.ext.butterknifeVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.butterknifeVersion"
 
-    testImplementation 'junit:junit:4.12'
+    // glide & circleImageView
+    implementation "com.github.bumptech.glide:glide:$rootProject.ext.glideVersion"
+    implementation "de.hdodenhof:circleimageview:$rootProject.ext.circleimageviewVersion"
+
+    // 三方UI资源库
+    implementation "net.qiujuer.genius:ui:$rootProject.ext.geniusVersion"
+    implementation "net.qiujuer.genius:res:$rootProject.ext.geniusVersion"
 }

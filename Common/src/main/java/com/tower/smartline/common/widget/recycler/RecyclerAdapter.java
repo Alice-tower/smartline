@@ -10,13 +10,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.tower.smartline.common.R;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
  * @author zpsong-tower <pingzisong2012@gmail.com>
