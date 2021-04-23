@@ -19,6 +19,8 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * RecyclerView适配器
+ *
  * @author zpsong-tower <pingzisong2012@gmail.com>
  * @since 2020/11/24 3:42
  */

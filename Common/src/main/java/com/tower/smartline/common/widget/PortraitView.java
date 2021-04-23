@@ -6,6 +6,8 @@ import android.util.AttributeSet;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
+ * 圆形头像View
+ *
  * @author zpsong-tower <pingzisong2012@gmail.com>
  * @since 2021/4/19 20:32
  */

@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.tower.smartline.push"
-        minSdkVersion 24
+        minSdkVersion 19
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -29,11 +29,12 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-    implementation project(path: ':Common')
+    implementation project(path: ':common')
 
     // android.support
     implementation "androidx.appcompat:appcompat:$rootProject.ext.androidxVersion"

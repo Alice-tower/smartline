@@ -14,6 +14,8 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
+ * 自定义Fragment基类
+ *
  * @author zpsong-tower <pingzisong2012@gmail.com>
  * @since 2020/10/28 4:39
  */

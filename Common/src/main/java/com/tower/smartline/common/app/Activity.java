@@ -12,6 +12,8 @@ import java.util.List;
 import butterknife.ButterKnife;
 
 /**
+ * 自定义Activity基类
+ *
  * @author zpsong-tower <pingzisong2012@gmail.com>
  * @since 2020/10/28 4:38
  */

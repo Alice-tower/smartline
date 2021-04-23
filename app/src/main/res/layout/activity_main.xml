@@ -12,7 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/actionBarWithStatusBarSize"
         android:outlineProvider="bounds"
-        android:elevation="@dimen/len_2">
+        android:elevation="@dimen/len_2"
+        tools:targetApi="lollipop">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -80,6 +81,13 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/len_52"
         android:layout_gravity="bottom"
-        android:background="@color/grey_200" />
+        android:background="@color/white"
+        android:elevation="@dimen/len_4"
+        android:outlineProvider="bounds"
+        android:translationZ="@dimen/len_8"
+        app:menu="@menu/navigation_items"
+        app:itemIconTint="@color/text_nav"
+        app:itemTextColor="@color/text_nav"
+        tools:targetApi="lollipop" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
