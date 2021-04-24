@@ -172,6 +172,10 @@ public class NavHelper<T> {
         // 额外字段，任意指定
         private T extra;
 
+        public Class<? extends Fragment> getClx() {
+            return clx;
+        }
+
         public T getExtra() {
             return extra;
         }

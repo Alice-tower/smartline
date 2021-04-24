@@ -13,11 +13,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.CustomViewTarget;
-import com.bumptech.glide.request.transition.Transition;
-import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.tower.smartline.common.app.Activity;
 import com.tower.smartline.common.widget.PortraitView;
 import com.tower.smartline.push.frags.main.ContactFragment;
@@ -25,10 +20,20 @@ import com.tower.smartline.push.frags.main.GroupFragment;
 import com.tower.smartline.push.frags.main.HomeFragment;
 import com.tower.smartline.push.helper.NavHelper;
 
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomViewTarget;
+import com.bumptech.glide.request.transition.Transition;
+
+import net.qiujuer.genius.ui.Ui;
 import net.qiujuer.genius.ui.widget.FloatActionButton;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import java.util.Objects;
 
 /**
  * MainActivity
@@ -40,6 +45,10 @@ public class MainActivity extends Activity
         implements BottomNavigationView.OnNavigationItemSelectedListener,
         NavHelper.OnTabChangedListener<Integer> {
     private static final String TAG = MainActivity.class.getName();
+
+    private static final int DEFAULT_NUM = 0;
+
+    private static final float ROTATION_VALUE = 360;
 
     @BindView(R.id.appbar)
     AppBarLayout mLayAppbar;
@@ -104,7 +113,7 @@ public class MainActivity extends Activity
 
         // 底部导航栏默认选中首页
         Menu menu = mNavigation.getMenu();
-        menu.performIdentifierAction(R.id.action_home, 0);
+        menu.performIdentifierAction(R.id.action_home, DEFAULT_NUM);
     }
 
     @OnClick(R.id.im_portrait)
@@ -137,13 +146,40 @@ public class MainActivity extends Activity
 
     @Override
     public void onTabChanged(@NonNull NavHelper.Tab<Integer> newTab, NavHelper.Tab<Integer> oldTab) {
-        if (this.getResources() == null) {
+        if (getResources() == null) {
             return;
         }
         try {
-            String title = this.getResources().getString(newTab.getExtra());
+            // 更改标题栏文字
+            String title = getResources().getString(newTab.getExtra());
             if (!TextUtils.isEmpty(title)) {
                 mTitle.setText(title);
+            }
+
+            // 浮动按钮动画
+            if (oldTab == null) {
+                return;
+            }
+            float translationValue = DEFAULT_NUM;
+            float rotationValue = DEFAULT_NUM;
+            if (Objects.equals(newTab.getClx(), HomeFragment.class)) {
+                translationValue = Ui.dipToPx(getResources(), getResources().getDimension(R.dimen.len_84));
+            }
+            if (Objects.equals(newTab.getClx(), GroupFragment.class)) {
+                mAction.setImageResource(R.drawable.ic_group_add);
+                mAction.setRotation(ROTATION_VALUE);
+                rotationValue = -ROTATION_VALUE;
+            }
+            if (Objects.equals(newTab.getClx(), ContactFragment.class)) {
+                mAction.setImageResource(R.drawable.ic_contact_add);
+                mAction.setRotation(-ROTATION_VALUE);
+                rotationValue = ROTATION_VALUE;
+            }
+            if (Objects.equals(newTab.getClx(), HomeFragment.class)
+                    || Objects.equals(oldTab.getClx(), HomeFragment.class)) {
+                mAction.animate().translationY(translationValue).start();
+            } else {
+                mAction.animate().rotation(rotationValue).start();
             }
         } catch (Resources.NotFoundException e) {
             Log.e(TAG, "onTabChanged: Exception");

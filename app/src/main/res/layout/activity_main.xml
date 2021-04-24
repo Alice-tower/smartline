@@ -69,9 +69,9 @@
         android:layout_height="@dimen/len_52"
         android:layout_marginEnd="@dimen/len_16"
         android:layout_marginBottom="@dimen/len_68"
+        android:translationY="@dimen/len_84"
         android:padding="@dimen/len_20"
         android:tint="@color/white"
-        android:src="@drawable/ic_group_add"
         app:layout_anchor="@id/lay_container"
         app:layout_anchorGravity="end|bottom"
         app:gBackgroundColor="@color/colorAccent" />

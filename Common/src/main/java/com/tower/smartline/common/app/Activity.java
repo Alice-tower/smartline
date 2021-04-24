@@ -87,7 +87,7 @@ public abstract class Activity extends AppCompatActivity {
     public void onBackPressed() {
         // 得到当前Activity下的所有Fragment
         List<Fragment> fragments = getSupportFragmentManager().getFragments();
-        if (fragments != null && fragments.size() > 0) {
+        if (fragments.size() > 0) {
             for (Fragment fragment : fragments) {
                 // 判断是否为自己封装的Fragment
                 if (fragment instanceof com.tower.smartline.common.app.Fragment) {
@@ -98,8 +98,6 @@ public abstract class Activity extends AppCompatActivity {
                 }
             }
         }
-
-        super.onBackPressed();
         finish();
     }
 }
