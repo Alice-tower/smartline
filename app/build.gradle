@@ -51,5 +51,4 @@ dependencies {
 
     // 三方UI资源库
     implementation "net.qiujuer.genius:ui:$rootProject.ext.geniusVersion"
-    implementation "net.qiujuer.genius:res:$rootProject.ext.geniusVersion"
 }
