@@ -24,9 +24,9 @@ import java.util.List;
  * @author zpsong-tower <pingzisong2012@gmail.com>
  * @since 2020/11/24 3:42
  */
-public abstract class RecyclerAdapter<Data>
-        extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder<Data>>
-        implements View.OnClickListener, View.OnLongClickListener, AdapterCallback<Data> {
+public abstract class MyRecyclerAdapter<Data>
+        extends RecyclerView.Adapter<MyRecyclerAdapter.MyViewHolder<Data>>
+        implements MyAdapterCallback<Data>, View.OnClickListener, View.OnLongClickListener {
     private final List<Data> mDataList;
 
     private AdapterListener<Data> mListener;
@@ -34,7 +34,7 @@ public abstract class RecyclerAdapter<Data>
     /**
      * 构造方法
      */
-    public RecyclerAdapter() {
+    public MyRecyclerAdapter() {
         this(null);
     }
 
@@ -43,7 +43,7 @@ public abstract class RecyclerAdapter<Data>
      *
      * @param listener 点击监听
      */
-    public RecyclerAdapter(AdapterListener<Data> listener) {
+    public MyRecyclerAdapter(AdapterListener<Data> listener) {
         this(new ArrayList<Data>(), listener);
     }
 
@@ -53,7 +53,7 @@ public abstract class RecyclerAdapter<Data>
      * @param dataList 数据
      * @param listener 点击监听
      */
-    public RecyclerAdapter(List<Data> dataList, AdapterListener<Data> listener) {
+    public MyRecyclerAdapter(List<Data> dataList, AdapterListener<Data> listener) {
         this.mDataList = dataList;
         this.mListener = listener;
     }
@@ -207,13 +207,24 @@ public abstract class RecyclerAdapter<Data>
     }
 
     @Override
-    public void onClick(View v) {
+    public void update(Data data, @NonNull MyViewHolder<Data> holder) {
+        // 得到ViewHolder当前对应的适配器当中的坐标
+        int pos = holder.getBindingAdapterPosition();
+        if (pos >= 0) {
+            // 进行数据的移除与更新，通知界面刷新
+            mDataList.set(pos, data);
+            notifyItemChanged(pos);
+        }
+    }
+
+    @Override
+    public void onClick(@NonNull View v) {
         Object objectHolder = v.getTag(R.id.tag_recycler_holder);
         if (mListener != null && objectHolder instanceof MyViewHolder) {
             MyViewHolder<Data> viewHolder = (MyViewHolder<Data>) objectHolder;
 
             // 得到ViewHolder当前对应的适配器当中的坐标
-            int pos = viewHolder.getAdapterPosition();
+            int pos = viewHolder.getBindingAdapterPosition();
 
             // 回调方法
             this.mListener.onItemClick(viewHolder, mDataList.get(pos));
@@ -221,13 +232,13 @@ public abstract class RecyclerAdapter<Data>
     }
 
     @Override
-    public boolean onLongClick(View v) {
+    public boolean onLongClick(@NonNull View v) {
         Object objectHolder = v.getTag(R.id.tag_recycler_holder);
         if (mListener != null && objectHolder instanceof MyViewHolder) {
             MyViewHolder<Data> viewHolder = (MyViewHolder<Data>) objectHolder;
 
             // 得到ViewHolder当前对应的适配器当中的坐标
-            int pos = viewHolder.getAdapterPosition();
+            int pos = viewHolder.getBindingAdapterPosition();
 
             // 回调方法
             this.mListener.onItemLongClick(viewHolder, mDataList.get(pos));
@@ -252,11 +263,21 @@ public abstract class RecyclerAdapter<Data>
      * @param <Data>
      */
     public interface AdapterListener<Data> {
-        // 当item点击时触发
-        void onItemClick(MyViewHolder<Data> holder, Data data);
+        /**
+         * 当item点击时触发
+         *
+         * @param holder MyViewHolder
+         * @param data 被点击项的数据
+         */
+        void onItemClick(@NonNull MyViewHolder<Data> holder, Data data);
 
-        // 当item长按时触发
-        void onItemLongClick(MyViewHolder<Data> holder, Data data);
+        /**
+         * 当item长按时触发
+         *
+         * @param holder MyViewHolder
+         * @param data 被长按项的数据
+         */
+        void onItemLongClick(@NonNull MyViewHolder<Data> holder, Data data);
     }
 
     /**
@@ -267,7 +288,7 @@ public abstract class RecyclerAdapter<Data>
     public static abstract class MyViewHolder<Data> extends RecyclerView.ViewHolder {
         private Unbinder unbinder;
 
-        private AdapterCallback<Data> callback;
+        private MyAdapterCallback<Data> callback;
 
         protected Data mData;
 
@@ -280,7 +301,7 @@ public abstract class RecyclerAdapter<Data>
          *
          * @param data 绑定的数据
          */
-        void bind(Data data) {
+        private void bind(Data data) {
             this.mData = data;
             onBind(data);
         }

@@ -1,8 +1,6 @@
 package com.tower.smartline.push;
 
-import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -136,7 +134,7 @@ public class MainActivity extends Activity
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        if (!TextUtils.isEmpty(item.getTitle())) {
+        if (item.getTitle() != null) {
             Log.i(TAG, "onNavigationItemSelected: " + item.getTitle());
         }
 
@@ -149,40 +147,35 @@ public class MainActivity extends Activity
         if (getResources() == null) {
             return;
         }
-        try {
-            // 更改标题栏文字
-            String title = getResources().getString(newTab.getExtra());
-            if (!TextUtils.isEmpty(title)) {
-                mTitle.setText(title);
-            }
 
-            // 浮动按钮动画
-            if (oldTab == null) {
-                return;
-            }
-            float translationValue = DEFAULT_NUM;
-            float rotationValue = DEFAULT_NUM;
-            if (Objects.equals(newTab.getClx(), HomeFragment.class)) {
-                translationValue = Ui.dipToPx(getResources(), getResources().getDimension(R.dimen.len_84));
-            }
-            if (Objects.equals(newTab.getClx(), GroupFragment.class)) {
-                mAction.setImageResource(R.drawable.ic_group_add);
-                mAction.setRotation(ROTATION_VALUE);
-                rotationValue = -ROTATION_VALUE;
-            }
-            if (Objects.equals(newTab.getClx(), ContactFragment.class)) {
-                mAction.setImageResource(R.drawable.ic_contact_add);
-                mAction.setRotation(-ROTATION_VALUE);
-                rotationValue = ROTATION_VALUE;
-            }
-            if (Objects.equals(newTab.getClx(), HomeFragment.class)
-                    || Objects.equals(oldTab.getClx(), HomeFragment.class)) {
-                mAction.animate().translationY(translationValue).start();
-            } else {
-                mAction.animate().rotation(rotationValue).start();
-            }
-        } catch (Resources.NotFoundException e) {
-            Log.e(TAG, "onTabChanged: Exception");
+        // 更改标题栏文字
+        String title = getResources().getString(newTab.getExtra());
+        mTitle.setText(title);
+
+        // 浮动按钮动画
+        if (oldTab == null) {
+            return;
+        }
+        float translationValue = DEFAULT_NUM;
+        float rotationValue = DEFAULT_NUM;
+        if (Objects.equals(newTab.getClx(), HomeFragment.class)) {
+            translationValue = Ui.dipToPx(getResources(), getResources().getDimension(R.dimen.len_84));
+        }
+        if (Objects.equals(newTab.getClx(), GroupFragment.class)) {
+            mAction.setImageResource(R.drawable.ic_group_add);
+            mAction.setRotation(ROTATION_VALUE);
+            rotationValue = -ROTATION_VALUE;
+        }
+        if (Objects.equals(newTab.getClx(), ContactFragment.class)) {
+            mAction.setImageResource(R.drawable.ic_contact_add);
+            mAction.setRotation(-ROTATION_VALUE);
+            rotationValue = ROTATION_VALUE;
+        }
+        if (Objects.equals(newTab.getClx(), HomeFragment.class)
+                || Objects.equals(oldTab.getClx(), HomeFragment.class)) {
+            mAction.animate().translationY(translationValue).start();
+        } else {
+            mAction.animate().rotation(rotationValue).start();
         }
     }
 }

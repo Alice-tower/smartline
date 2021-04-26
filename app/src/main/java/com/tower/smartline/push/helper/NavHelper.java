@@ -185,6 +185,13 @@ public class NavHelper<T> {
      * Tab切换结束回调接口
      */
     public interface OnTabChangedListener<T> {
+        /**
+         * Tab切换结束后的回调方法
+         * 用于处理界面Fragment以外的界面变化
+         *
+         * @param newTab 切换到的新Tab
+         * @param oldTab 切换前的Tab
+         */
         void onTabChanged(@NonNull Tab<T> newTab, Tab<T> oldTab);
     }
 }
