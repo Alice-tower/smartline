@@ -10,9 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.tower.smartline.common.R;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -104,9 +101,6 @@ public abstract class MyRecyclerAdapter<Data>
         // 设置事件点击
         root.setOnClickListener(this);
         root.setOnLongClickListener(this);
-
-        // 进行界面注解绑定
-        holder.unbinder = ButterKnife.bind(holder, root);
 
         // 绑定callback
         holder.callback = this;
@@ -286,8 +280,6 @@ public abstract class MyRecyclerAdapter<Data>
      * @param <Data> 泛型类型
      */
     public static abstract class MyViewHolder<Data> extends RecyclerView.ViewHolder {
-        private Unbinder unbinder;
-
         private MyAdapterCallback<Data> callback;
 
         protected Data mData;

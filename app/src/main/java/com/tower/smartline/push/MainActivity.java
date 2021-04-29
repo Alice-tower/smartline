@@ -4,15 +4,14 @@ import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
-import android.widget.TextView;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.tower.smartline.common.app.Activity;
-import com.tower.smartline.common.widget.PortraitView;
+import com.tower.smartline.push.databinding.ActivityMainBinding;
 import com.tower.smartline.push.frags.main.ContactFragment;
 import com.tower.smartline.push.frags.main.GroupFragment;
 import com.tower.smartline.push.frags.main.HomeFragment;
@@ -26,10 +25,6 @@ import com.bumptech.glide.request.target.CustomViewTarget;
 import com.bumptech.glide.request.transition.Transition;
 
 import net.qiujuer.genius.ui.Ui;
-import net.qiujuer.genius.ui.widget.FloatActionButton;
-
-import butterknife.BindView;
-import butterknife.OnClick;
 
 import java.util.Objects;
 
@@ -41,36 +36,21 @@ import java.util.Objects;
  */
 public class MainActivity extends Activity
         implements BottomNavigationView.OnNavigationItemSelectedListener,
-        NavHelper.OnTabChangedListener<Integer> {
+        NavHelper.OnTabChangedListener<Integer>, View.OnClickListener {
     private static final String TAG = MainActivity.class.getName();
 
     private static final int DEFAULT_NUM = 0;
 
     private static final float ROTATION_VALUE = 360;
 
-    @BindView(R.id.appbar)
-    AppBarLayout mLayAppbar;
-
-    @BindView(R.id.im_portrait)
-    PortraitView mPortrait;
-
-    @BindView(R.id.txt_title)
-    TextView mTitle;
-
-    @BindView(R.id.lay_container)
-    FrameLayout mContainer;
-
-    @BindView(R.id.btn_action)
-    FloatActionButton mAction;
-
-    @BindView(R.id.navigation)
-    BottomNavigationView mNavigation;
+    private ActivityMainBinding mBinding;
 
     private NavHelper<Integer> mNavHelper;
 
     @Override
-    protected int getContentLayoutId() {
-        return R.layout.activity_main;
+    protected View initBinding() {
+        mBinding = ActivityMainBinding.inflate(getLayoutInflater());
+        return mBinding.getRoot();
     }
 
     @Override
@@ -83,13 +63,13 @@ public class MainActivity extends Activity
         mNavHelper.add(R.id.action_home, new NavHelper.Tab<>(HomeFragment.class, R.string.title_home))
                 .add(R.id.action_group, new NavHelper.Tab<>(GroupFragment.class, R.string.title_group))
                 .add(R.id.action_contact, new NavHelper.Tab<>(ContactFragment.class, R.string.title_contact));
-        mNavigation.setOnNavigationItemSelectedListener(this);
+        mBinding.navigation.setOnNavigationItemSelectedListener(this);
 
         // 顶部TitleBar加载背景图
         Glide.with(this)
                 .load(R.drawable.bg_src_morning)
                 .centerCrop()
-                .into(new CustomViewTarget<AppBarLayout, Drawable>(mLayAppbar) {
+                .into(new CustomViewTarget<AppBarLayout, Drawable>(mBinding.appbar) {
                     @Override
                     public void onLoadFailed(@Nullable Drawable errorDrawable) {
                     }
@@ -103,6 +83,11 @@ public class MainActivity extends Activity
                     protected void onResourceCleared(@Nullable Drawable placeholder) {
                     }
                 });
+
+        // 点击监听初始化
+        mBinding.imPortrait.setOnClickListener(this);
+        mBinding.imSearch.setOnClickListener(this);
+        mBinding.btnAction.setOnClickListener(this);
     }
 
     @Override
@@ -110,24 +95,21 @@ public class MainActivity extends Activity
         super.initData();
 
         // 底部导航栏默认选中首页
-        Menu menu = mNavigation.getMenu();
+        Menu menu = mBinding.navigation.getMenu();
         menu.performIdentifierAction(R.id.action_home, DEFAULT_NUM);
     }
 
-    @OnClick(R.id.im_portrait)
-    void onPortraitClick() {
+    private void onPortraitClick() {
         Log.i(TAG, "onPortraitClick");
         Toast.makeText(this, "onPortraitClick", Toast.LENGTH_SHORT).show();
     }
 
-    @OnClick(R.id.im_search)
-    void onSearchClick() {
+    private void onSearchClick() {
         Log.i(TAG, "onSearchClick");
         Toast.makeText(this, "onSearchClick", Toast.LENGTH_SHORT).show();
     }
 
-    @OnClick(R.id.btn_action)
-    void onActionClick() {
+    private void onActionClick() {
         Log.i(TAG, "onActionClick");
         Toast.makeText(this, "onActionClick", Toast.LENGTH_SHORT).show();
     }
@@ -150,7 +132,7 @@ public class MainActivity extends Activity
 
         // 更改标题栏文字
         String title = getResources().getString(newTab.getExtra());
-        mTitle.setText(title);
+        mBinding.txtTitle.setText(title);
 
         // 浮动按钮动画
         if (oldTab == null) {
@@ -162,20 +144,37 @@ public class MainActivity extends Activity
             translationValue = Ui.dipToPx(getResources(), getResources().getDimension(R.dimen.len_84));
         }
         if (Objects.equals(newTab.getClx(), GroupFragment.class)) {
-            mAction.setImageResource(R.drawable.ic_group_add);
-            mAction.setRotation(ROTATION_VALUE);
+            mBinding.btnAction.setImageResource(R.drawable.ic_group_add);
+            mBinding.btnAction.setRotation(ROTATION_VALUE);
             rotationValue = -ROTATION_VALUE;
         }
         if (Objects.equals(newTab.getClx(), ContactFragment.class)) {
-            mAction.setImageResource(R.drawable.ic_contact_add);
-            mAction.setRotation(-ROTATION_VALUE);
+            mBinding.btnAction.setImageResource(R.drawable.ic_contact_add);
+            mBinding.btnAction.setRotation(-ROTATION_VALUE);
             rotationValue = ROTATION_VALUE;
         }
         if (Objects.equals(newTab.getClx(), HomeFragment.class)
                 || Objects.equals(oldTab.getClx(), HomeFragment.class)) {
-            mAction.animate().translationY(translationValue).start();
+            mBinding.btnAction.animate().translationY(translationValue).start();
         } else {
-            mAction.animate().rotation(rotationValue).start();
+            mBinding.btnAction.animate().rotation(rotationValue).start();
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        if (id == mBinding.imPortrait.getId()) {
+            // 头像点击
+            onPortraitClick();
+        } else if (id == mBinding.imSearch.getId()) {
+            // 搜索点击
+            onSearchClick();
+        } else if (id == mBinding.btnAction.getId()) {
+            // 浮动按钮点击
+            onActionClick();
+        } else {
+            Log.w(TAG, "onClick: illegal param");
         }
     }
 }

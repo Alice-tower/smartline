@@ -6,12 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
  * 自定义Fragment基类
@@ -22,12 +18,9 @@ import butterknife.Unbinder;
 public abstract class Fragment extends androidx.fragment.app.Fragment {
     protected View mRoot;
 
-    protected Unbinder mRootUnbinder;
-
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-
         initArgs(getArguments());
     }
 
@@ -36,16 +29,15 @@ public abstract class Fragment extends androidx.fragment.app.Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         if (mRoot == null) {
-            int layId = getContentLayoutId();
-
-            // 初始化当前的根布局，但不在创建时就添加到ViewGroup中
-            mRoot = inflater.inflate(layId, container, false);
-            initWidget(mRoot);
+            // 子类通过ViewBinding初始化根布局
+            mRoot = initBinding(inflater, container);
+            initWidget();
         } else {
             if (mRoot.getParent() != null) {
                 // 把当前Root从其父控件中移除
                 ((ViewGroup) mRoot.getParent()).removeView(mRoot);
             }
+            mRoot = initBinding(inflater, container);
         }
         return mRoot;
     }
@@ -64,31 +56,26 @@ public abstract class Fragment extends androidx.fragment.app.Fragment {
      * @param bundle 参数Bundle
      */
     protected void initArgs(Bundle bundle) {
-
     }
 
     /**
-     * 得到当前界面的资源文件Id
+     * 初始化视图绑定
      *
-     * @return 资源文件Id
+     * @return 当前界面根布局View
      */
-    @LayoutRes
-    protected abstract int getContentLayoutId();
+    @NonNull
+    protected abstract View initBinding(@NonNull LayoutInflater inflater, ViewGroup container);
 
     /**
      * 初始化控件
-     *
-     * @param root 初始化的根布局
      */
-    protected void initWidget(View root) {
-        mRootUnbinder = ButterKnife.bind(this, root);
+    protected void initWidget() {
     }
 
     /**
      * 初始化数据
      */
     protected void initData() {
-
     }
 
     /**
@@ -99,4 +86,15 @@ public abstract class Fragment extends androidx.fragment.app.Fragment {
     public boolean onBackPressed() {
         return false;
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        destroyBinding();
+    }
+
+    /**
+     * Fragment的存在时间比其视图长，需要清除对绑定类实例的所有引用
+     */
+    protected abstract void destroyBinding();
 }

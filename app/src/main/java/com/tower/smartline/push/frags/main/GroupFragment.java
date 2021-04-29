@@ -1,7 +1,13 @@
 package com.tower.smartline.push.frags.main;
 
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+
 import com.tower.smartline.common.app.Fragment;
-import com.tower.smartline.push.R;
+import com.tower.smartline.push.databinding.FragmentGroupBinding;
 
 /**
  * GroupFragment
@@ -10,13 +16,23 @@ import com.tower.smartline.push.R;
  * @since 2021/4/23 0:35
  */
 public class GroupFragment extends Fragment {
+    private FragmentGroupBinding mBinding;
 
     public GroupFragment() {
         // Required empty public constructor
     }
 
+    @NonNull
     @Override
-    protected int getContentLayoutId() {
-        return R.layout.fragment_group;
+    protected View initBinding(@NonNull LayoutInflater inflater, ViewGroup container) {
+        if (mBinding == null) {
+            mBinding = FragmentGroupBinding.inflate(inflater, container, false);
+        }
+        return mBinding.getRoot();
+    }
+
+    @Override
+    protected void destroyBinding() {
+        mBinding = null;
     }
 }

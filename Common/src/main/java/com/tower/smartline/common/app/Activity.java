@@ -1,15 +1,13 @@
 package com.tower.smartline.common.app;
 
 import android.os.Bundle;
+import android.view.View;
 
-import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import java.util.List;
-
-import butterknife.ButterKnife;
 
 /**
  * 自定义Activity基类
@@ -27,8 +25,8 @@ public abstract class Activity extends AppCompatActivity {
 
         if (initArgs(getIntent().getExtras())) {
             // 将界面Id设置到界面中
-            int layId = getContentLayoutId();
-            setContentView(layId);
+            View root = initBinding();
+            setContentView(root);
 
             initWidget();
             initData();
@@ -41,7 +39,6 @@ public abstract class Activity extends AppCompatActivity {
      * 初始化窗口
      */
     protected void initWindows() {
-
     }
 
     /**
@@ -55,25 +52,22 @@ public abstract class Activity extends AppCompatActivity {
     }
 
     /**
-     * 得到当前界面的资源文件Id
+     * 初始化视图绑定
      *
-     * @return 资源文件Id
+     * @return 当前界面根布局View
      */
-    @LayoutRes
-    protected abstract int getContentLayoutId();
+    protected abstract View initBinding();
 
     /**
      * 初始化控件
      */
     protected void initWidget() {
-        ButterKnife.bind(this);
     }
 
     /**
      * 初始化数据
      */
     protected void initData() {
-
     }
 
     @Override
