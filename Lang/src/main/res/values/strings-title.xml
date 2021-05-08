@@ -3,4 +3,6 @@
     <string name="title_home">@string/app_name</string>
     <string name="title_group">@string/action_group</string>
     <string name="title_contact">@string/action_contact</string>
+
+    <string name="title_select_gallery">选择图片</string>
 </resources>

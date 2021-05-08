@@ -26,14 +26,15 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    viewBinding {
-        enabled = true
+    buildFeatures {
+        viewBinding = true
     }
 }
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
@@ -45,10 +46,15 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:$rootProject.ext.androidxVersion"
     implementation "com.google.android.material:material:$rootProject.ext.materialVersion"
 
-    // glide & circleImageView
+    // 三方UI库
+    implementation "net.qiujuer.genius:ui:$rootProject.ext.geniusVersion"
+
+    // glide
     implementation "com.github.bumptech.glide:glide:$rootProject.ext.glideVersion"
+
+    // circleImageView
     implementation "de.hdodenhof:circleimageview:$rootProject.ext.circleimageviewVersion"
 
-    // 三方UI资源库
-    implementation "net.qiujuer.genius:ui:$rootProject.ext.geniusVersion"
+    // uCrop 图片裁剪
+    implementation "com.github.yalantis:ucrop:$rootProject.ext.ucropVersion"
 }

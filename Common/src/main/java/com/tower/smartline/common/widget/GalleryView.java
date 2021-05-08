@@ -140,13 +140,13 @@ public class GalleryView extends RecyclerView {
      *
      * @return 包含选中的图片全部Uri的String数组
      */
-    private Uri[] getSelectedUri() {
-        Uri[] Uris = new Uri[mSelectedImages.size()];
+    public Uri[] getSelectedUris() {
+        Uri[] uris = new Uri[mSelectedImages.size()];
         int index = 0;
         for (Image image : mSelectedImages) {
-            Uris[index++] = image.mUri;
+            uris[index++] = image.mUri;
         }
-        return Uris;
+        return uris;
     }
 
     /**

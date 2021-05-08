@@ -23,13 +23,13 @@
 
             <com.tower.smartline.common.widget.PortraitView
                 android:id="@+id/im_portrait"
-                android:layout_width="@dimen/len_40"
-                android:layout_height="@dimen/len_40"
+                android:layout_width="@dimen/portraitSize"
+                android:layout_height="@dimen/portraitSize"
                 android:layout_margin="@dimen/len_4"
                 android:foreground="@drawable/ic_touch_menu"
                 android:padding="@dimen/len_4"
                 android:scaleType="centerCrop"
-                android:src="@drawable/default_portrait" />
+                android:src="@drawable/default_portrait_male" />
 
             <TextView
                 android:id="@+id/txt_title"
@@ -37,8 +37,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:textAppearance="@style/TextAppearance.Title"
-                android:text="@string/app_name" />
+                android:text="@string/app_name"
+                android:textAppearance="@style/TextAppearance.Title" />
 
             <ImageView
                 android:id="@+id/im_search"

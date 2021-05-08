@@ -3,6 +3,7 @@ package com.tower.smartline.common.app;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -56,6 +57,7 @@ public abstract class Activity extends AppCompatActivity {
      *
      * @return 当前界面根布局View
      */
+    @NonNull
     protected abstract View initBinding();
 
     /**

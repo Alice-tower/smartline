@@ -60,9 +60,8 @@ public class UiTool {
                 sStatusBarHeight = res.getDimensionPixelSize(resourceId);
             }
 
-            // 未获取到则 如果还是未拿到
+            // 未获取到则通过Window拿取
             if (sStatusBarHeight <= 0) {
-                // 通过Window拿取
                 Rect rectangle = new Rect();
                 activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(rectangle);
                 if (rectangle.top > 0) {

@@ -5,12 +5,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.tower.smartline.common.app.Activity;
+import com.tower.smartline.push.activities.AccountActivity;
 import com.tower.smartline.push.databinding.ActivityMainBinding;
 import com.tower.smartline.push.frags.main.ContactFragment;
 import com.tower.smartline.push.frags.main.GroupFragment;
@@ -47,6 +47,7 @@ public class MainActivity extends Activity
 
     private NavHelper<Integer> mNavHelper;
 
+    @NonNull
     @Override
     protected View initBinding() {
         mBinding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -101,17 +102,15 @@ public class MainActivity extends Activity
 
     private void onPortraitClick() {
         Log.i(TAG, "onPortraitClick");
-        Toast.makeText(this, "onPortraitClick", Toast.LENGTH_SHORT).show();
+        AccountActivity.show(this);
     }
 
     private void onSearchClick() {
         Log.i(TAG, "onSearchClick");
-        Toast.makeText(this, "onSearchClick", Toast.LENGTH_SHORT).show();
     }
 
     private void onActionClick() {
         Log.i(TAG, "onActionClick");
-        Toast.makeText(this, "onActionClick", Toast.LENGTH_SHORT).show();
     }
 
     @Override
