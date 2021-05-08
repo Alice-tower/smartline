@@ -43,4 +43,7 @@ dependencies {
 
     // circleImageView
     implementation "de.hdodenhof:circleimageview:$rootProject.ext.circleimageviewVersion"
+
+    // 三方handler工具库
+    implementation "net.qiujuer.genius:kit-handler:$rootProject.ext.geniusVersion"
 }

@@ -1,6 +1,12 @@
 package com.tower.smartline.common.app;
 
 import android.os.SystemClock;
+import android.widget.Toast;
+
+import androidx.annotation.StringRes;
+
+import net.qiujuer.genius.kit.handler.Run;
+import net.qiujuer.genius.kit.handler.runable.Action;
 
 import java.io.File;
 
@@ -17,6 +23,7 @@ public class Application extends android.app.Application {
     public void onCreate() {
         super.onCreate();
         sInstance = this;
+
     }
 
     /**
@@ -58,5 +65,29 @@ public class Application extends android.app.Application {
         // 返回以开机时间节点为名的文件
         File path = new File(dir, SystemClock.uptimeMillis() + ".jpg");
         return path.getAbsoluteFile();
+    }
+
+    /**
+     * 显示全局Toast
+     *
+     * @param msg 字符串
+     */
+    public static void showToast(final String msg) {
+        // 确保在Ui线程执行
+        Run.onUiAsync(new Action() {
+            @Override
+            public void call() {
+                Toast.makeText(sInstance, msg, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    /**
+     * 显示全局Toast
+     *
+     * @param msgId 字符串资源Id
+     */
+    public static void showToast(@StringRes int msgId) {
+        showToast(sInstance.getResources().getString(msgId));
     }
 }

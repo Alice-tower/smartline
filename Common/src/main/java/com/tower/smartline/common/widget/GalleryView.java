@@ -9,7 +9,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +19,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tower.smartline.common.R;
+import com.tower.smartline.common.app.Application;
 import com.tower.smartline.common.widget.recycler.MyRecyclerAdapter;
 
 import com.bumptech.glide.Glide;
@@ -122,9 +122,7 @@ public class GalleryView extends RecyclerView {
             if (getResources() != null) {
                 String str = String.format(getResources()
                         .getString(R.string.label_gallery_select_max_size), MAX_IMAGE_COUNT);
-
-                // TODO 后期统一处理Toast，归一化
-                Toast.makeText(getContext(), str, Toast.LENGTH_SHORT).show();
+                Application.showToast(str);
             }
             return false;
         } else {
