@@ -1,5 +1,7 @@
-package com.tower.smartline.push;
+package com.tower.smartline.push.activities;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.Menu;
@@ -10,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.tower.smartline.common.app.Activity;
-import com.tower.smartline.push.activities.AccountActivity;
+import com.tower.smartline.push.R;
 import com.tower.smartline.push.databinding.ActivityMainBinding;
 import com.tower.smartline.push.frags.main.ContactFragment;
 import com.tower.smartline.push.frags.main.GroupFragment;
@@ -29,7 +31,7 @@ import net.qiujuer.genius.ui.Ui;
 import java.util.Objects;
 
 /**
- * MainActivity
+ * App主界面
  *
  * @author zpsong-tower <pingzisong2012@gmail.com>
  * @since 2020/10/27 4:00
@@ -46,6 +48,15 @@ public class MainActivity extends Activity
     private ActivityMainBinding mBinding;
 
     private NavHelper<Integer> mNavHelper;
+
+    /**
+     * MainActivity拉起入口
+     *
+     * @param context 上下文
+     */
+    public static void show(Context context) {
+        context.startActivity(new Intent(context, MainActivity.class));
+    }
 
     @NonNull
     @Override
@@ -130,7 +141,7 @@ public class MainActivity extends Activity
         }
 
         // 更改标题栏文字
-        String title = getResources().getString(newTab.getExtra());
+        String title = getString(newTab.getExtra());
         mBinding.txtTitle.setText(title);
 
         // 浮动按钮动画

@@ -88,6 +88,6 @@ public class Application extends android.app.Application {
      * @param msgId 字符串资源Id
      */
     public static void showToast(@StringRes int msgId) {
-        showToast(sInstance.getResources().getString(msgId));
+        showToast(sInstance.getString(msgId));
     }
 }

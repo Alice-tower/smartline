@@ -33,13 +33,13 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     implementation project(path: ':common')
+    implementation project(path: ':factory')
+    implementation project(path: ':lang')
 
     // android.support
     implementation "androidx.appcompat:appcompat:$rootProject.ext.androidxVersion"
@@ -57,4 +57,7 @@ dependencies {
 
     // uCrop 图片裁剪
     implementation "com.github.yalantis:ucrop:$rootProject.ext.ucropVersion"
+
+    // easyPermissions 权限申请
+    implementation "pub.devrel:easypermissions:$rootProject.ext.easypermissionsVersion"
 }

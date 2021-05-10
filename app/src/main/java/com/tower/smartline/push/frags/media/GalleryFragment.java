@@ -1,24 +1,16 @@
 package com.tower.smartline.push.frags.media;
 
-import android.Manifest;
-import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.loader.app.LoaderManager;
 
-import com.tower.smartline.common.tools.UiTool;
 import com.tower.smartline.push.databinding.FragmentGalleryBinding;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -57,13 +49,6 @@ public class GalleryFragment extends BottomSheetDialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        // TODO 后期统一处理权限，此处仅为调试图片选择器效果
-        if (getContext() != null && getActivity() != null) {
-            if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-            }
-        }
         mBinding.galleryView.setup(LoaderManager.getInstance(this), count -> {
             // 选中一个图片就隐藏窗口
             if (count > 0) {
@@ -106,43 +91,5 @@ public class GalleryFragment extends BottomSheetDialogFragment {
          * @param uri 选中图片的资源标志
          */
         void onSelectedImage(Uri uri);
-    }
-
-    public static class TransStatusBottomSheetDialog extends BottomSheetDialog {
-        public TransStatusBottomSheetDialog(@NonNull Context context) {
-            super(context);
-        }
-
-        public TransStatusBottomSheetDialog(@NonNull Context context, int theme) {
-            super(context, theme);
-        }
-
-        protected TransStatusBottomSheetDialog(@NonNull Context context, boolean cancelable, OnCancelListener cancelListener) {
-            super(context, cancelable, cancelListener);
-        }
-
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            final Window window = getWindow();
-            if (window == null) {
-                return;
-            }
-            Activity ownerActivity = getOwnerActivity();
-            if (ownerActivity == null) {
-                return;
-            }
-
-            // 得到屏幕高度
-            final int screenHeight = UiTool.getScreenHeight(ownerActivity);
-
-            // 得到状态栏高度
-            final int statusHeight = UiTool.getStatusBarHeight(ownerActivity);
-
-            // 计算dialog高度并设置
-            final int dialogHeight = screenHeight - statusHeight;
-            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
-                    dialogHeight <= 0 ? ViewGroup.LayoutParams.MATCH_PARENT : dialogHeight);
-        }
     }
 }

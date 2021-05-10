@@ -5,10 +5,12 @@
     android:layout_height="match_parent"
     tools:context=".frags.main.HomeFragment">
 
-<com.tower.smartline.common.widget.GalleryView
-    android:id="@+id/galleryView"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="@dimen/len_1" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:text="@string/hello_fragment_1" />
 
 </FrameLayout>
