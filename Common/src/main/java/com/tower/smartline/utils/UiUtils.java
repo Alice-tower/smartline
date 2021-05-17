@@ -1,4 +1,4 @@
-package com.tower.smartline.common.tools;
+package com.tower.smartline.utils;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,8 +13,8 @@ import android.util.Log;
  * @author zpsong-tower <pingzisong2012@gmail.com>
  * @since 2021/5/8 0:32
  */
-public class UiTool {
-    private static final String TAG = UiTool.class.getName();
+public class UiUtils {
+    private static final String TAG = UiUtils.class.getName();
 
     private static final String ANDROID = "android";
 
@@ -27,6 +27,9 @@ public class UiTool {
     private static final int ILLEGAL_VALUE = -1;
 
     private static int sStatusBarHeight = ILLEGAL_VALUE;
+
+    private UiUtils() {
+    }
 
     /**
      * 获取顶部状态栏高度

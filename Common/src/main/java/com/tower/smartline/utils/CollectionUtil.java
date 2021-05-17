@@ -18,6 +18,9 @@ import java.util.Set;
 public class CollectionUtil {
     private static final String TAG = CollectionUtil.class.getName();
 
+    private CollectionUtil() {
+    }
+
     /**
      * List集合转换为数组
      *

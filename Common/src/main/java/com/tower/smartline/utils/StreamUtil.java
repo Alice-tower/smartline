@@ -21,6 +21,9 @@ import java.io.OutputStream;
 public class StreamUtil {
     private static final String TAG = StreamUtil.class.getName();
 
+    private StreamUtil() {
+    }
+
     /**
      * 复制 File -> OutputStream
      * 转 InputStream -> OutputStream

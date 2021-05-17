@@ -30,6 +30,6 @@ dependencies {
 
     implementation project(path: ':common')
 
-    // 阿里云Oss
+    // 阿里云OSS
     implementation "com.aliyun.dpa:oss-android-sdk:$rootProject.ext.ossVersion"
 }

@@ -11,11 +11,14 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.bumptech.glide.Glide;
 import com.tower.smartline.common.app.Application;
 import com.tower.smartline.common.app.Fragment;
+import com.tower.smartline.factory.Factory;
+import com.tower.smartline.factory.net.UploadHelper;
 import com.tower.smartline.push.databinding.FragmentUpdateInfoBinding;
 import com.tower.smartline.push.frags.media.GalleryFragment;
+
+import com.bumptech.glide.Glide;
 
 import com.yalantis.ucrop.UCrop;
 
@@ -103,6 +106,11 @@ public class UpdateInfoFragment extends Fragment
                 .load(uri)
                 .centerCrop()
                 .into(mBinding.imPortrait);
+
+        // 上传头像
+        Factory.runOnAsync(() -> {
+            UploadHelper.uploadPortrait(uri);
+        });
     }
 
     @Override

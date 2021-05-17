@@ -1,10 +1,12 @@
 package com.tower.smartline.common;
 
 /**
- * 公共参数类
+ * 公共常量类
  *
  * @author zpsong-tower <pingzisong2012@gmail.com>
- * @since 2020/10/29 4:43
+ * @since 2021/5/17 7:25
  */
-public class Common {
+public class Constants {
+    private Constants() {
+    }
 }

@@ -1,2 +1,6 @@
-# smartline
-chat App
+# smartline(米线)
+
+米线为个人学习的开源App，主要功能为即时通讯，开发进度20%
+
+目前版本打包无法使用联网功能，需要在Config类中配置阿里云OSS的相关参数
+

@@ -41,7 +41,7 @@ public class MainActivity extends Activity
         NavHelper.OnTabChangedListener<Integer>, View.OnClickListener {
     private static final String TAG = MainActivity.class.getName();
 
-    private static final int DEFAULT_NUM = 0;
+    private static final int DEFAULT_VALUE = 0;
 
     private static final float ROTATION_VALUE = 360;
 
@@ -108,7 +108,7 @@ public class MainActivity extends Activity
 
         // 底部导航栏默认选中首页
         Menu menu = mBinding.navigation.getMenu();
-        menu.performIdentifierAction(R.id.action_home, DEFAULT_NUM);
+        menu.performIdentifierAction(R.id.action_home, 0);
     }
 
     private void onPortraitClick() {
@@ -148,8 +148,8 @@ public class MainActivity extends Activity
         if (oldTab == null) {
             return;
         }
-        float translationValue = DEFAULT_NUM;
-        float rotationValue = DEFAULT_NUM;
+        float translationValue = DEFAULT_VALUE;
+        float rotationValue = DEFAULT_VALUE;
         if (Objects.equals(newTab.getClx(), HomeFragment.class)) {
             translationValue = Ui.dipToPx(getResources(), getResources().getDimension(R.dimen.len_84));
         }
