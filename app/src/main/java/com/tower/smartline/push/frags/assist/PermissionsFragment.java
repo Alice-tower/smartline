@@ -27,7 +27,6 @@ import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * 权限申请弹出框
@@ -55,7 +54,7 @@ public class PermissionsFragment extends BottomSheetDialogFragment
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        return new BottomSheetDialog(Objects.requireNonNull(getContext()));
+        return new BottomSheetDialog(requireContext());
     }
 
     @Nullable
@@ -174,7 +173,7 @@ public class PermissionsFragment extends BottomSheetDialogFragment
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.RECORD_AUDIO
         };
-        if (EasyPermissions.hasPermissions(Objects.requireNonNull(getContext()), perms)) {
+        if (EasyPermissions.hasPermissions(requireContext(), perms)) {
             Application.showToast(R.string.label_permission_ok);
             refreshState();
         } else {

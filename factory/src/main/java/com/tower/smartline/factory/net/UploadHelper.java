@@ -5,6 +5,8 @@ import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.tower.smartline.common.Config;
 import com.tower.smartline.common.app.Application;
 import com.tower.smartline.utils.HashUtil;
@@ -21,7 +23,6 @@ import com.alibaba.sdk.android.oss.model.PutObjectResult;
 
 import java.io.File;
 import java.util.Date;
-import java.util.Objects;
 
 /**
  * 上传工具类
@@ -93,8 +94,11 @@ public class UploadHelper {
      * @param uri    上传文件的Uri
      * @return 存储的地址
      */
-    private static String upload(String objKey, Uri uri) {
+    private static String upload(String objKey, @NonNull Uri uri) {
         Log.d(TAG, "upload: uri: " + uri);
+        if (TextUtils.isEmpty(objKey)) {
+            return null;
+        }
 
         // 构造上传请求
         PutObjectRequest request = new PutObjectRequest(Config.OSS_BUCKET_NAME, objKey, uri);
@@ -138,7 +142,7 @@ public class UploadHelper {
      * 上传头像
      *
      * @param uri 上传文件的Uri
-     * @return 存储的地址
+     * @return 存储的地址 如为null则出错
      */
     public static String uploadPortrait(Uri uri) {
         if (uri == null) {
@@ -160,9 +164,13 @@ public class UploadHelper {
         return upload(getObjKey(uri, TYPE_AUDIO), uri);
     }
 
-    private static String getObjKey(Uri uri, int fileType) {
+    private static String getObjKey(@NonNull Uri uri, int fileType) {
+        if (uri.getPath() == null) {
+            return null;
+        }
+
         // uri MD5
-        String uriMd5 = HashUtil.getMD5String(new File(Objects.requireNonNull(uri.getPath())));
+        String uriMd5 = HashUtil.getMD5String(new File(uri.getPath()));
 
         // 年月日
         String dateString = DateFormat.format("yyyyMMdd", new Date()).toString();

@@ -22,8 +22,6 @@ import com.bumptech.glide.Glide;
 
 import com.yalantis.ucrop.UCrop;
 
-import java.util.Objects;
-
 import static android.app.Activity.RESULT_OK;
 
 /**
@@ -76,7 +74,7 @@ public class UpdateInfoFragment extends Fragment
                     .withAspectRatio(ASPECT_RATIO_VALUE, ASPECT_RATIO_VALUE) // 纵横比
                     .withMaxResultSize(MAX_RESULT_SIZE, MAX_RESULT_SIZE) // 最大尺寸
                     .withOptions(options) // 相关参数
-                    .start(Objects.requireNonNull(getActivity()));
+                    .start(requireActivity());
         })).show(getChildFragmentManager(), GalleryFragment.class.getName());
     }
 
@@ -109,7 +107,9 @@ public class UpdateInfoFragment extends Fragment
 
         // 上传头像
         Factory.runOnAsync(() -> {
-            UploadHelper.uploadPortrait(uri);
+            if (UploadHelper.uploadPortrait(uri) == null) {
+                // TODO 未拿到url 上传失败逻辑
+            }
         });
     }
 

@@ -56,7 +56,7 @@ public abstract class MyRecyclerAdapter<Data>
     }
 
     /**
-     * 复写默认的布局类型ViewType
+     * 覆写默认的布局类型ViewType
      *
      * @param position 坐标
      * @return 布局类型，约定为XML布局的Id

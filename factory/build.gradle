@@ -30,6 +30,9 @@ dependencies {
 
     implementation project(path: ':common')
 
+    // androidx.support
+    implementation 'androidx.annotation:annotation:1.2.0'
+
     // 阿里云OSS
     implementation "com.aliyun.dpa:oss-android-sdk:$rootProject.ext.ossVersion"
 }

@@ -41,9 +41,9 @@ dependencies {
     implementation project(path: ':factory')
     implementation project(path: ':lang')
 
-    // android.support
-    implementation "androidx.appcompat:appcompat:$rootProject.ext.androidxVersion"
-    implementation "androidx.recyclerview:recyclerview:$rootProject.ext.androidxVersion"
+    // androidx.support
+    implementation "androidx.appcompat:appcompat:$rootProject.ext.appcompatVersion"
+    implementation "androidx.recyclerview:recyclerview:$rootProject.ext.recyclerviewVersion"
     implementation "com.google.android.material:material:$rootProject.ext.materialVersion"
 
     // 三方UI库

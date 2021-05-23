@@ -16,8 +16,6 @@ import com.tower.smartline.push.databinding.FragmentGalleryBinding;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
-import java.util.Objects;
-
 /**
  * 图片选择Fragment
  *
@@ -36,7 +34,7 @@ public class GalleryFragment extends BottomSheetDialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        return new BottomSheetDialog(Objects.requireNonNull(getContext()));
+        return new BottomSheetDialog(requireContext());
     }
 
     @Nullable
