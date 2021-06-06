@@ -42,7 +42,7 @@ public class UiUtils {
             return sStatusBarHeight;
         }
         try {
-            final Resources res = activity.getResources();
+            Resources res = activity.getResources();
             if (res == null) {
                 return sStatusBarHeight;
             }

@@ -337,7 +337,9 @@
     <dimen name="len_0">0dp</dimen>
     <dimen name="len_1">1dp</dimen>
     <dimen name="len_2">2dp</dimen>
+    <dimen name="len_3">3dp</dimen>
     <dimen name="len_4">4dp</dimen>
+    <dimen name="len_5">5dp</dimen>
     <dimen name="len_6">6dp</dimen>
     <dimen name="len_8">8dp</dimen>
     <dimen name="len_10">10dp</dimen>

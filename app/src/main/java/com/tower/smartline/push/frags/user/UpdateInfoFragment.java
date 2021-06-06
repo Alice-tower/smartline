@@ -1,7 +1,8 @@
-package com.tower.smartline.push.frags.account;
+package com.tower.smartline.push.frags.user;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,11 +11,13 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 import com.tower.smartline.common.app.Application;
 import com.tower.smartline.common.app.Fragment;
 import com.tower.smartline.factory.Factory;
 import com.tower.smartline.factory.net.UploadHelper;
+import com.tower.smartline.push.R;
 import com.tower.smartline.push.databinding.FragmentUpdateInfoBinding;
 import com.tower.smartline.push.frags.media.GalleryFragment;
 
@@ -43,7 +46,17 @@ public class UpdateInfoFragment extends Fragment
     // 图片裁剪最大大小像素值
     private static final int MAX_RESULT_SIZE = 520;
 
+    // 性别背景选择器 男用颜色 蓝色
+    private static final int BACK_SEL_MALE = 0;
+
+    // 性别背景选择器 女用颜色 粉色
+    private static final int BACK_SEL_FEMALE = 1;
+
     private FragmentUpdateInfoBinding mBinding;
+
+    private boolean mIsMale = true;
+
+    private boolean mIsDefault = true;
 
     public UpdateInfoFragment() {
         // Required empty public constructor
@@ -61,7 +74,11 @@ public class UpdateInfoFragment extends Fragment
     @Override
     protected void initWidget() {
         super.initWidget();
+
+        // 点击监听初始化
         mBinding.imPortrait.setOnClickListener(this);
+        mBinding.imSex.setOnClickListener(this);
+        mBinding.btnSubmit.setOnClickListener(this);
     }
 
     private void onPortraitClick() {
@@ -78,14 +95,42 @@ public class UpdateInfoFragment extends Fragment
         })).show(getChildFragmentManager(), GalleryFragment.class.getName());
     }
 
+    private void onSexClick() {
+        Log.i(TAG, "onSexClick");
+        Drawable drawable;
+        if (mIsMale) {
+            // 切换为女性模式
+            drawable = ContextCompat.getDrawable(requireContext(), R.drawable.ic_sex_female);
+            mBinding.imSex.getBackground().setLevel(BACK_SEL_FEMALE);
+            if (mIsDefault) {
+                mBinding.imPortrait.setImageResource(R.drawable.default_portrait_female);
+            }
+        } else {
+            // 切换为男性模式
+            drawable = ContextCompat.getDrawable(requireContext(), R.drawable.ic_sex_male);
+            mBinding.imSex.getBackground().setLevel(BACK_SEL_MALE);
+            if (mIsDefault) {
+                mBinding.imPortrait.setImageResource(R.drawable.default_portrait_male);
+            }
+        }
+        mBinding.imSex.setImageDrawable(drawable);
+        mIsMale = !mIsMale;
+    }
+
+    private void onSubmitClick() {
+        Log.i(TAG, "onSubmitClick");
+        // TODO Presenter实现
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         // 处理UCrop回调
         if (resultCode == RESULT_OK && requestCode == UCrop.REQUEST_CROP && data != null) {
-            final Uri resultUri = UCrop.getOutput(data);
+            Uri resultUri = UCrop.getOutput(data);
             if (resultUri != null) {
+                mIsDefault = false;
                 loadPortrait(resultUri);
             }
         } else if (resultCode == UCrop.RESULT_ERROR) {
@@ -124,6 +169,12 @@ public class UpdateInfoFragment extends Fragment
         if (id == mBinding.imPortrait.getId()) {
             // 头像点击
             onPortraitClick();
+        } else if (id == mBinding.imSex.getId()) {
+            // 性别点击
+            onSexClick();
+        } else if (id == mBinding.btnSubmit.getId()) {
+            // 提交点击
+            onSubmitClick();
         } else {
             Log.w(TAG, "onClick: illegal param");
         }

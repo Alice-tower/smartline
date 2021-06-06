@@ -16,8 +16,8 @@ import androidx.core.graphics.drawable.DrawableCompat;
 import com.tower.smartline.common.app.Activity;
 import com.tower.smartline.common.app.Fragment;
 import com.tower.smartline.push.R;
-import com.tower.smartline.push.databinding.ActivityAccountBinding;
-import com.tower.smartline.push.frags.account.LoginFragment;
+import com.tower.smartline.push.databinding.ActivityUserBinding;
+import com.tower.smartline.push.frags.user.UpdateInfoFragment;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.DrawableImageViewTarget;
@@ -25,30 +25,30 @@ import com.bumptech.glide.request.target.DrawableImageViewTarget;
 import net.qiujuer.genius.ui.compat.UiCompat;
 
 /**
- * 账户Activity
+ * 用户Activity
  *
  * @author zpsong-tower <pingzisong2012@gmail.com>
- * @since 2021/4/30 7:00
+ * @since 2021/6/6 19:28
  */
-public class AccountActivity extends Activity {
-    private ActivityAccountBinding mBinding;
+public class UserActivity extends Activity {
+    private ActivityUserBinding mBinding;
 
     // 当前的Fragment
     private Fragment mCurFragment;
 
     /**
-     * 账户Activity拉起入口
+     * 用户Activity拉起入口
      *
      * @param context 上下文
      */
     public static void show(Context context) {
-        context.startActivity(new Intent(context, AccountActivity.class));
+        context.startActivity(new Intent(context, UserActivity.class));
     }
 
     @NonNull
     @Override
     protected View initBinding() {
-        mBinding = ActivityAccountBinding.inflate(getLayoutInflater());
+        mBinding = ActivityUserBinding.inflate(getLayoutInflater());
         return mBinding.getRoot();
     }
 
@@ -57,7 +57,7 @@ public class AccountActivity extends Activity {
         super.initWidget();
 
         // 初始化Fragment
-        mCurFragment = new LoginFragment();
+        mCurFragment = new UpdateInfoFragment();
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(mBinding.layContainer.getId(), mCurFragment)
@@ -90,5 +90,14 @@ public class AccountActivity extends Activity {
                         super.setResource(drawable);
                     }
                 });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (mCurFragment != null) {
+            // 回调事件向当前Fragment传递
+            mCurFragment.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }

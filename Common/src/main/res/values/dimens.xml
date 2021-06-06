@@ -4,6 +4,7 @@
     <dimen name="portraitMinSize">@dimen/len_36</dimen>
     <dimen name="portraitSize">@dimen/len_40</dimen>
     <dimen name="portraitMaxSize">@dimen/len_64</dimen>
+    <dimen name="portraitSpecialSize">@dimen/len_92</dimen>
 
     <!--状态栏高度-->
     <dimen name="statusBarSize">25dp</dimen>

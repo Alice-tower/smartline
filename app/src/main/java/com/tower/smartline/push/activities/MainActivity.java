@@ -113,7 +113,7 @@ public class MainActivity extends Activity
 
     private void onPortraitClick() {
         Log.i(TAG, "onPortraitClick");
-        AccountActivity.show(this);
+        UserActivity.show(this);
     }
 
     private void onSearchClick() {

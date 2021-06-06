@@ -52,6 +52,9 @@
             android:name=".activities.AccountActivity"
             android:theme="@style/AppTheme.Account" />
         <activity
+            android:name=".activities.UserActivity"
+            android:theme="@style/AppTheme.Account" />
+        <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:theme="@style/AppTheme" />
     </application>

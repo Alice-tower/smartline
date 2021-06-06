@@ -14,4 +14,19 @@
     <string name="label_permission_confirm">确定</string>
     <string name="label_permission_ok">授权成功</string>
     <string name="label_permission_desc">米线为个人学习的开源App，将尽全力保护您的隐私不受侵害，请授予权限以保证米线为您提供正常的即时通讯服务。</string>
+
+    <!--登录注册页面-->
+    <string name="label_login_title">登录</string>
+    <string name="label_login_register">注册</string>
+    <string name="label_login_phone">手机号</string>
+    <string name="label_login_password">密码</string>
+    <string name="label_login_username">用户名</string>
+    <string name="label_login_go_register">没有账户？去注册</string>
+    <string name="label_login_go_login">已有账户？去登录</string>
+
+    <!--用户信息-->
+    <string name="label_user_info_perfect">完善个人信息</string>
+    <string name="label_user_info_portrait">选择你的专属头像</string>
+    <string name="label_user_info_description">用一句话介绍自己</string>
+    <string name="label_user_info_submit">提交</string>
 </resources>
