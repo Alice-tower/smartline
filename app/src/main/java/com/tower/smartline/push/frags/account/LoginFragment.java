@@ -7,17 +7,21 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 
-import com.tower.smartline.common.app.Fragment;
+import com.tower.smartline.common.app.PresenterFragment;
+import com.tower.smartline.factory.presenter.account.ILoginContract;
+import com.tower.smartline.factory.presenter.account.LoginPresenter;
 import com.tower.smartline.push.R;
+import com.tower.smartline.push.activities.MainActivity;
 import com.tower.smartline.push.databinding.FragmentLoginBinding;
 
 /**
- * LoginFragment
+ * 登录Fragment
  *
  * @author zpsong-tower <pingzisong2012@gmail.com>
  * @since 2021/6/7 3:25
  */
-public class LoginFragment extends Fragment implements View.OnClickListener {
+public class LoginFragment extends PresenterFragment<ILoginContract.Presenter>
+        implements ILoginContract.View, View.OnClickListener {
     private static final String TAG = LoginFragment.class.getName();
 
     private FragmentLoginBinding mBinding;
@@ -26,6 +30,11 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     public LoginFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    protected ILoginContract.Presenter initPresenter() {
+        return new LoginPresenter(this);
     }
 
     @NonNull
@@ -68,10 +77,53 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     private void onSubmitClick() {
         Log.i(TAG, "onSubmitClick");
+        String phone = mBinding.editPhone.getText().toString();
+        String password = mBinding.editPassword.getText().toString();
         if (mIsLogin) {
-            // TODO Presenter实现 登录逻辑
+            // Presenter登录逻辑
+            getPresenter().login(phone, password);
         } else {
-            // TODO Presenter实现 注册逻辑
+            String username = mBinding.editUsername.getText().toString();
+
+            // Presenter注册逻辑
+            getPresenter().register(phone, password, username);
+        }
+    }
+
+    @Override
+    public void submitSuccess() {
+        // 跳转到MainActivity
+        MainActivity.show(requireContext());
+
+        // 关闭当前界面
+        requireActivity().finish();
+    }
+
+    @Override
+    public void showError(int str) {
+        // 显示错误提示 界面恢复操作
+        super.showError(str);
+        mBinding.loading.stop();
+        mBinding.btnSubmit.setEnabled(true);
+        mBinding.layGo.setEnabled(true);
+        mBinding.editPhone.setEnabled(true);
+        mBinding.editPassword.setEnabled(true);
+        if (!mIsLogin) {
+            mBinding.editUsername.setEnabled(true);
+        }
+    }
+
+    @Override
+    public void showLoading() {
+        // Loading 界面不可操作
+        super.showLoading();
+        mBinding.loading.start();
+        mBinding.btnSubmit.setEnabled(false);
+        mBinding.layGo.setEnabled(false);
+        mBinding.editPhone.setEnabled(false);
+        mBinding.editPassword.setEnabled(false);
+        if (!mIsLogin) {
+            mBinding.editUsername.setEnabled(false);
         }
     }
 

@@ -5,7 +5,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 
 import com.tower.smartline.common.app.Activity;
-import com.tower.smartline.push.activities.MainActivity;
+import com.tower.smartline.push.activities.AccountActivity;
 import com.tower.smartline.push.databinding.ActivityLauncherBinding;
 import com.tower.smartline.push.frags.assist.PermissionsFragment;
 
@@ -24,7 +24,7 @@ public class LauncherActivity extends Activity {
 
         // 检查权限
         if (PermissionsFragment.hasAllPermissions(this, getSupportFragmentManager())) {
-            MainActivity.show(this);
+            AccountActivity.show(this);
             finish();
         }
     }
