@@ -20,6 +20,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -35,4 +40,14 @@ dependencies {
 
     // 阿里云OSS
     implementation "com.aliyun.dpa:oss-android-sdk:$rootProject.ext.ossVersion"
+
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.ext.retrofitVersion"
+
+    // Gson
+    implementation "com.google.code.gson:gson:$rootProject.ext.gsonVersion"
+
+    // 三方handler工具库
+    implementation "net.qiujuer.genius:kit-handler:$rootProject.ext.geniusVersion"
 }

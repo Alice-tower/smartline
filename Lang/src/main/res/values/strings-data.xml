@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="data_account_parameter_empty">用户名不能为空</string>
-    <string name="data_account_parameters_empty">手机号和密码不能为空</string>
-    <string name="data_account_invalid_parameter_phone">请输入正确的手机号</string>
-    <string name="data_account_invalid_parameter_password">密码应在6–16位之间</string>
-    <string name="data_account_invalid_parameter_username">用户名应在1–10位之间 只支持中英文和数字</string>
-</resources>

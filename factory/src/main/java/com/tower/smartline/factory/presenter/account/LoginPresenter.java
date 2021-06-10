@@ -6,7 +6,14 @@ import androidx.annotation.NonNull;
 
 import com.tower.smartline.common.Constants;
 import com.tower.smartline.factory.R;
+import com.tower.smartline.factory.data.IDataSource;
+import com.tower.smartline.factory.data.helper.AccountHelper;
+import com.tower.smartline.factory.model.api.account.LoginModel;
+import com.tower.smartline.factory.model.api.account.RegisterModel;
+import com.tower.smartline.factory.model.response.UserCard;
 import com.tower.smartline.factory.presenter.BasePresenter;
+
+import net.qiujuer.genius.kit.handler.Run;
 
 /**
  * 登录Presenter
@@ -15,7 +22,7 @@ import com.tower.smartline.factory.presenter.BasePresenter;
  * @since 2021/6/8 0:54
  */
 public class LoginPresenter extends BasePresenter<ILoginContract.View>
-        implements ILoginContract.Presenter {
+        implements ILoginContract.Presenter, IDataSource.Callback<UserCard> {
     /**
      * 构造方法
      *
@@ -31,9 +38,8 @@ public class LoginPresenter extends BasePresenter<ILoginContract.View>
         if (!checkString(phone, password)) {
             return;
         }
-
-        // TODO 登录逻辑
-        getView().submitSuccess();
+        LoginModel model = new LoginModel(phone, password);
+        AccountHelper.login(model, this);
     }
 
     @Override
@@ -42,26 +48,25 @@ public class LoginPresenter extends BasePresenter<ILoginContract.View>
         if (!checkString(phone, password) || !checkString(username)) {
             return;
         }
-
-        // TODO 注册逻辑
-        getView().submitSuccess();
+        RegisterModel model = new RegisterModel(phone, password, username);
+        AccountHelper.register(model, this);
     }
 
     @Override
     public boolean checkString(String phone, String password) {
         if (TextUtils.isEmpty(phone) || TextUtils.isEmpty(password)) {
             // 手机号或密码为空
-            getView().showError(R.string.data_account_parameters_empty);
+            getView().showError(R.string.toast_app_account_parameters_empty);
             return false;
         }
         if (!phone.matches(Constants.REGEX_PHONE)) {
             // 手机号非法
-            getView().showError(R.string.data_account_invalid_parameter_phone);
+            getView().showError(R.string.toast_app_account_invalid_parameter_phone);
             return false;
         }
         if (!password.matches(Constants.REGEX_PASSWORD)) {
             // 密码非法
-            getView().showError(R.string.data_account_invalid_parameter_password);
+            getView().showError(R.string.toast_app_account_invalid_parameter_password);
             return false;
         }
         return true;
@@ -71,14 +76,28 @@ public class LoginPresenter extends BasePresenter<ILoginContract.View>
     public boolean checkString(String username) {
         if (TextUtils.isEmpty(username)) {
             // 用户名为空
-            getView().showError(R.string.data_account_parameter_empty);
+            getView().showError(R.string.toast_app_account_parameter_empty);
             return false;
         }
         if (!username.matches(Constants.REGEX_USERNAME)) {
             // 用户名非法
-            getView().showError(R.string.data_account_invalid_parameter_username);
+            getView().showError(R.string.toast_app_account_invalid_parameter_username);
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void onSuccess(UserCard userCard) {
+        Run.onUiAsync(() -> {
+            getView().submitSuccess();
+        });
+    }
+
+    @Override
+    public void onFailure(int strRes) {
+        Run.onUiAsync(() -> {
+            getView().showError(strRes);
+        });
     }
 }

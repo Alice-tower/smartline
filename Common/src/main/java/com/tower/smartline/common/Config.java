@@ -11,6 +11,11 @@ public class Config {
     }
 
     /**
+     * SmartService 网络请求地址
+     */
+    public static final String API_URL = "";
+
+    /**
      * 阿里云OSS 终端地址
      */
     public static final String OSS_ENDPOINT = "";
