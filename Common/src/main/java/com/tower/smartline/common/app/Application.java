@@ -6,7 +6,6 @@ import android.widget.Toast;
 import androidx.annotation.StringRes;
 
 import net.qiujuer.genius.kit.handler.Run;
-import net.qiujuer.genius.kit.handler.runable.Action;
 
 import java.io.File;
 
@@ -73,11 +72,8 @@ public class Application extends android.app.Application {
      */
     public static void showToast(final String msg) {
         // 确保在Ui线程执行
-        Run.onUiAsync(new Action() {
-            @Override
-            public void call() {
-                Toast.makeText(sInstance, msg, Toast.LENGTH_SHORT).show();
-            }
+        Run.onUiAsync(() -> {
+            Toast.makeText(sInstance, msg, Toast.LENGTH_SHORT).show();
         });
     }
 

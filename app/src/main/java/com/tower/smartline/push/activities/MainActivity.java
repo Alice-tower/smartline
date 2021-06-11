@@ -173,6 +173,9 @@ public class MainActivity extends Activity
 
     @Override
     public void onClick(View v) {
+        if (v == null) {
+            return;
+        }
         int id = v.getId();
         if (id == mBinding.imPortrait.getId()) {
             // 头像点击
@@ -184,7 +187,7 @@ public class MainActivity extends Activity
             // 浮动按钮点击
             onActionClick();
         } else {
-            Log.w(TAG, "onClick: illegal param");
+            Log.w(TAG, "onClick: illegal param: " + id);
         }
     }
 }

@@ -134,6 +134,9 @@ public class LoginFragment extends PresenterFragment<ILoginContract.Presenter>
 
     @Override
     public void onClick(View v) {
+        if (v == null) {
+            return;
+        }
         int id = v.getId();
         if (id == mBinding.layGo.getId()) {
             // 去注册/去登录点击
@@ -142,7 +145,7 @@ public class LoginFragment extends PresenterFragment<ILoginContract.Presenter>
             // 登录/注册点击
             onSubmitClick();
         } else {
-            Log.w(TAG, "onClick: illegal param");
+            Log.w(TAG, "onClick: illegal param: " + id);
         }
     }
 }

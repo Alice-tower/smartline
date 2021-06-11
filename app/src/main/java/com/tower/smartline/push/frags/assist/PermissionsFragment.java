@@ -229,12 +229,15 @@ public class PermissionsFragment extends BottomSheetDialogFragment
 
     @Override
     public void onClick(View v) {
+        if (v == null) {
+            return;
+        }
         int id = v.getId();
         if (id == mBinding.btnConfirm.getId()) {
             // 确定点击
             onConfirmClick();
         } else {
-            Log.w(TAG, "onClick: illegal param");
+            Log.w(TAG, "onClick: illegal param: " + id);
         }
     }
 }

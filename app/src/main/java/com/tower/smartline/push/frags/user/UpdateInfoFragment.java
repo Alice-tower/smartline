@@ -165,6 +165,9 @@ public class UpdateInfoFragment extends Fragment
 
     @Override
     public void onClick(View v) {
+        if (v == null) {
+            return;
+        }
         int id = v.getId();
         if (id == mBinding.imPortrait.getId()) {
             // 头像点击
@@ -176,7 +179,7 @@ public class UpdateInfoFragment extends Fragment
             // 提交点击
             onSubmitClick();
         } else {
-            Log.w(TAG, "onClick: illegal param");
+            Log.w(TAG, "onClick: illegal param: " + id);
         }
     }
 }

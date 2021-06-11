@@ -65,7 +65,7 @@ public class UserActivity extends Activity {
 
         // 初始化背景
         Glide.with(this)
-                .load(R.drawable.bg_src_evening)
+                .load(R.drawable.bg_src_morning)
                 .centerCrop() //居中剪切
                 .into(new DrawableImageViewTarget(mBinding.imBg) {
                     @Override

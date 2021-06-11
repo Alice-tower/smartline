@@ -126,7 +126,7 @@ public class StreamUtil {
             }
             return true;
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e(TAG, "copy: Exception");
         } finally {
             close(inputStream);
             close(outputStream);

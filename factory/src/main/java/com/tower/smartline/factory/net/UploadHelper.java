@@ -190,7 +190,7 @@ public class UploadHelper {
                 formatString = FOLDER_AUDIO + dateString + CHAR_SLASH + uriMd5 + FORMAT_MP3;
                 break;
             default:
-                Log.w(TAG, "getObjKey: illegal param");
+                Log.w(TAG, "getObjKey: illegal param: " + fileType);
         }
         return formatString;
     }

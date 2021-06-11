@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:paddingTop="@dimen/statusBarSize"
     android:paddingBottom="@dimen/len_28"
-    tools:background="@drawable/bg_src_evening"
+    tools:background="@drawable/bg_src_morning"
     tools:context=".frags.account.LoginFragment">
 
     <androidx.appcompat.widget.Toolbar

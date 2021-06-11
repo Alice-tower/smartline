@@ -211,6 +211,7 @@ public abstract class MyRecyclerAdapter<Data>
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void onClick(@NonNull View v) {
         Object objectHolder = v.getTag(R.id.tag_recycler_holder);
@@ -225,6 +226,7 @@ public abstract class MyRecyclerAdapter<Data>
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public boolean onLongClick(@NonNull View v) {
         Object objectHolder = v.getTag(R.id.tag_recycler_holder);
@@ -261,7 +263,7 @@ public abstract class MyRecyclerAdapter<Data>
          * 当item点击时触发
          *
          * @param holder MyViewHolder
-         * @param data 被点击项的数据
+         * @param data   被点击项的数据
          */
         void onItemClick(@NonNull MyViewHolder<Data> holder, Data data);
 
@@ -269,7 +271,7 @@ public abstract class MyRecyclerAdapter<Data>
          * 当item长按时触发
          *
          * @param holder MyViewHolder
-         * @param data 被长按项的数据
+         * @param data   被长按项的数据
          */
         void onItemLongClick(@NonNull MyViewHolder<Data> holder, Data data);
     }
