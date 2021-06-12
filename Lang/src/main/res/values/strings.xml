@@ -4,4 +4,8 @@
     <string name="hello_fragment_1">Hello HomeFragment</string>
     <string name="hello_fragment_2">Hello GroupFragment</string>
     <string name="hello_fragment_3">Hello ContactFragment</string>
+
+    <string name="launcher_alert_title">警告</string>
+    <string name="launcher_alert_message">请阅读本开源项目的README，配置相关的Config参数，否则App将无法提供服务</string>
+    <string name="launcher_alert_confirm">确定</string>
 </resources>

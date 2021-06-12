@@ -1,5 +1,7 @@
 package com.tower.smartline.common;
 
+import android.text.TextUtils;
+
 /**
  * 参数配置类
  *
@@ -34,4 +36,18 @@ public class Config {
      * 阿里云OSS 仓库名
      */
     public static final String OSS_BUCKET_NAME = "";
+
+    /**
+     * 判断Config参数是否存在空值
+     * 提醒没有阅读README的开发者配置参数
+     *
+     * @return Config参数是否存在空值
+     */
+    public static boolean isEmpty() {
+        return TextUtils.isEmpty(API_URL)
+                || TextUtils.isEmpty(OSS_ENDPOINT)
+                || TextUtils.isEmpty(OSS_ACCESS_KEY_ID)
+                || TextUtils.isEmpty(OSS_ACCESS_KEY_SECRET)
+                || TextUtils.isEmpty(OSS_BUCKET_NAME);
+    }
 }
