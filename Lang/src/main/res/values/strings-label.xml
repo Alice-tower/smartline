@@ -5,10 +5,10 @@
     <!--权限相关-->
     <string name="label_permission_network">网络访问</string>
     <string name="label_permission_network_desc">用于访问服务器数据</string>
-    <string name="label_permission_read">读取文件</string>
-    <string name="label_permission_read_desc">用于设置头像与发送图片</string>
-    <string name="label_permission_write">写入文件</string>
-    <string name="label_permission_write_desc">用于文件缓存与记录日志</string>
+    <string name="label_permission_state">手机状态</string>
+    <string name="label_permission_state_desc">用于识别用户个体</string>
+    <string name="label_permission_storage">读写文件</string>
+    <string name="label_permission_storage_desc">用于上传图片与数据备份</string>
     <string name="label_permission_record_audio">麦克风</string>
     <string name="label_permission_record_audio_desc">用于语音聊天</string>
     <string name="label_permission_confirm">确定</string>

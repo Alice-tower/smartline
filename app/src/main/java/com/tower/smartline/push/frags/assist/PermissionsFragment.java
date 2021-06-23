@@ -82,8 +82,8 @@ public class PermissionsFragment extends BottomSheetDialogFragment
      */
     public static boolean hasAllPermissions(Context context, FragmentManager manager) {
         sHasAllPermissions = hasNetworkPerm(context)
-                && hasReadPerm(context)
-                && hasWritePerm(context)
+                && hasStatePerm(context)
+                && hasStoragePerm(context)
                 && hasRecordAudioPerm(context);
         if (!sHasAllPermissions) {
             show(manager, false);
@@ -95,10 +95,10 @@ public class PermissionsFragment extends BottomSheetDialogFragment
         Context context = getContext();
         mBinding.imStatePermissionNetwork
                 .setVisibility(hasNetworkPerm(context) ? View.VISIBLE : View.GONE);
-        mBinding.imStatePermissionRead
-                .setVisibility(hasReadPerm(context) ? View.VISIBLE : View.GONE);
-        mBinding.imStatePermissionWrite
-                .setVisibility(hasWritePerm(context) ? View.VISIBLE : View.GONE);
+        mBinding.imStatePermissionState
+                .setVisibility(hasStatePerm(context) ? View.VISIBLE : View.GONE);
+        mBinding.imStatePermissionStorage
+                .setVisibility(hasStoragePerm(context) ? View.VISIBLE : View.GONE);
         mBinding.imStatePermissionRecordAudio
                 .setVisibility(hasRecordAudioPerm(context) ? View.VISIBLE : View.GONE);
     }
@@ -117,24 +117,25 @@ public class PermissionsFragment extends BottomSheetDialogFragment
     }
 
     /**
-     * 获取是否有读取权限
+     * 获取是否有状态权限
      *
      * @param context 上下文
-     * @return 是否有读取权限
+     * @return 是否有状态权限
      */
-    private static boolean hasReadPerm(Context context) {
+    private static boolean hasStatePerm(Context context) {
         return EasyPermissions.hasPermissions(context,
-                Manifest.permission.READ_EXTERNAL_STORAGE);
+                Manifest.permission.READ_PHONE_STATE);
     }
 
     /**
-     * 获取是否有写入权限
+     * 获取是否有存储权限
      *
      * @param context 上下文
      * @return 是否有写入权限
      */
-    private static boolean hasWritePerm(Context context) {
+    private static boolean hasStoragePerm(Context context) {
         return EasyPermissions.hasPermissions(context,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 
@@ -169,6 +170,7 @@ public class PermissionsFragment extends BottomSheetDialogFragment
                 Manifest.permission.INTERNET,
                 Manifest.permission.ACCESS_NETWORK_STATE,
                 Manifest.permission.ACCESS_WIFI_STATE,
+                Manifest.permission.READ_PHONE_STATE,
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.RECORD_AUDIO

@@ -25,6 +25,7 @@
 
     <!--遮罩-->
     <color name="maskChatHeader">@color/black_alpha_48</color>
+    <color name="launcherDefault">@color/black_alpha_208</color>
     <color name="navIconTintLight">@color/white_alpha_240</color>
 
     <!--过滤-->
