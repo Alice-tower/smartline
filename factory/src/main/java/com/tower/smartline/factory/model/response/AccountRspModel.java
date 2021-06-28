@@ -1,5 +1,7 @@
 package com.tower.smartline.factory.model.response;
 
+import androidx.annotation.NonNull;
+
 /**
  * AccountRspModel
  *
@@ -38,5 +40,15 @@ public class AccountRspModel {
 
     public void setBind(boolean bind) {
         isBind = bind;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "AccountRspModel{" +
+                "userCard=" + userCard +
+                ", token='" + token + '\'' +
+                ", isBind=" + isBind +
+                '}';
     }
 }

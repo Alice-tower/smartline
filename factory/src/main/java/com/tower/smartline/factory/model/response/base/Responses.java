@@ -27,7 +27,7 @@ public class Responses {
             return false;
         }
 
-        // 打印错误码 错误说明 服务器响应时间
+        // 打印错误码 错误说明 服务器响应时间 安全方面考虑 不含result
         Log.i(TAG, "isSuccess: " + rsp);
 
         // 错误码为不成功 调用失败回调显示Toast

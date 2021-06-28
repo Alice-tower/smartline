@@ -50,4 +50,9 @@ dependencies {
 
     // 三方handler工具库
     implementation "net.qiujuer.genius:kit-handler:$rootProject.ext.geniusVersion"
+
+    // DBFlow
+    annotationProcessor "com.github.Raizlabs.DBFlow:dbflow-processor:${rootProject.ext.dbflowVersion}"
+    implementation "com.github.Raizlabs.DBFlow:dbflow-core:${rootProject.ext.dbflowVersion}"
+    implementation "com.github.Raizlabs.DBFlow:dbflow:${rootProject.ext.dbflowVersion}"
 }

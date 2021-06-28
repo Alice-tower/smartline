@@ -12,6 +12,18 @@ android {
         versionName rootProject.ext.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        //个推相关参数
+        manifestPlaceholders = [
+                GETUI_APP_ID    : "需要开发者自行配置",
+                GETUI_APP_KEY   : "需要开发者自行配置",
+                GETUI_APP_SECRET: "需要开发者自行配置",
+                PACKAGE_NAME    : "需要开发者自行配置"
+        ]
+
+        ndk {
+            abiFilters "x86", "x86_64", "arm64-v8a", "armeabi-v7a", 'armeabi'
+        }
     }
 
     buildTypes {
@@ -60,4 +72,7 @@ dependencies {
 
     // easyPermissions 权限申请
     implementation "pub.devrel:easypermissions:$rootProject.ext.easypermissionsVersion"
+
+    // 个推
+    implementation "com.getui:sdk:$rootProject.ext.getuiVersion"
 }

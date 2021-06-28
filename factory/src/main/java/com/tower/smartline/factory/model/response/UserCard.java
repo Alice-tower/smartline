@@ -1,5 +1,9 @@
 package com.tower.smartline.factory.model.response;
 
+import androidx.annotation.NonNull;
+
+import com.tower.smartline.factory.model.db.UserEntity;
+
 import java.util.Date;
 
 /**
@@ -35,6 +39,29 @@ public class UserCard {
 
     // 是否已关注该用户
     private boolean isFollow;
+
+    /**
+     * 将当前UserCard内数据转化为UserEntity
+     *
+     * @return UserEntity
+     */
+    @NonNull
+    public UserEntity toUserEntity() {
+        UserEntity user = new UserEntity();
+        user.setId(id);
+        user.setName(name);
+        user.setPortrait(portrait);
+        user.setDescription(description);
+        user.setSex(sex);
+        user.setFollow(isFollow);
+        user.setUpdateAt(updateAt);
+        user.setFollowers(followersNum);
+        user.setFollowing(followingNum);
+
+        // UserEntity内nickname未被填充
+        // user.setNickname(null);
+        return user;
+    }
 
     public String getId() {
         return id;
@@ -106,5 +133,21 @@ public class UserCard {
 
     public void setFollow(boolean follow) {
         isFollow = follow;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "UserCard{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", portrait='" + portrait + '\'' +
+                ", description='" + description + '\'' +
+                ", sex=" + sex +
+                ", updateAt=" + updateAt +
+                ", followingNum=" + followingNum +
+                ", followersNum=" + followersNum +
+                ", isFollow=" + isFollow +
+                '}';
     }
 }

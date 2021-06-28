@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
 import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -13,6 +14,7 @@ import androidx.annotation.Nullable;
 
 import com.tower.smartline.common.Config;
 import com.tower.smartline.common.app.Activity;
+import com.tower.smartline.factory.persistence.Account;
 import com.tower.smartline.push.activities.AccountActivity;
 import com.tower.smartline.push.databinding.ActivityLauncherBinding;
 import com.tower.smartline.push.frags.assist.PermissionsFragment;
@@ -29,9 +31,6 @@ public class LauncherActivity extends Activity {
 
     // 动画是否播放结束
     private boolean mIsAnimationOver = false;
-
-    // PushId是否准备就绪
-    private boolean mIsPushIdOver = false;
 
     // Config参数是否可用
     private boolean mIsConfigAvailable = false;
@@ -51,6 +50,8 @@ public class LauncherActivity extends Activity {
     @Override
     protected void initWidget() {
         super.initWidget();
+
+        // 显示版本号
         mBinding.txtVersion.setText(BuildConfig.VERSION_NAME);
 
         // 加载背景图
@@ -89,10 +90,7 @@ public class LauncherActivity extends Activity {
         });
         animator.start();
 
-        // TODO 准备PushId参数
-        mIsPushIdOver = true;
-
-        // 计时器初始化
+        // 计时器初始化 循环周期500ms
         if (mTimer != null) {
             mTimer.cancel();
         }
@@ -101,11 +99,12 @@ public class LauncherActivity extends Activity {
             mTimer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    if (mIsConfigAvailable && mIsAnimationOver && mIsPushIdOver) {
+                    if (mIsConfigAvailable && mIsAnimationOver
+                            && !TextUtils.isEmpty(Account.getPushId())) {
                         // Config参数不为空 渐变动画结束 PushId准备就绪
                         mTimer.cancel();
-                        mIsTimerOver = true;
                         checkPermission();
+                        mIsTimerOver = true;
                     }
                 }
             }, 0, 500);
@@ -133,6 +132,7 @@ public class LauncherActivity extends Activity {
      */
     private void checkPermission() {
         if (PermissionsFragment.hasAllPermissions(this, getSupportFragmentManager())) {
+            // TODO 通过检查PushId Token等相关持久化参数 实现免登录
             AccountActivity.show(this);
             finish();
         }

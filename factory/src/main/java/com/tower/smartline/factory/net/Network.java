@@ -1,9 +1,12 @@
 package com.tower.smartline.factory.net;
 
+import android.text.TextUtils;
+
 import androidx.annotation.NonNull;
 
 import com.tower.smartline.common.Config;
 import com.tower.smartline.factory.Factory;
+import com.tower.smartline.factory.persistence.Account;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -79,17 +82,16 @@ public class Network {
                         .connectTimeout(CLIENT_TIMEOUT_SECONDS, TimeUnit.SECONDS)
                         .writeTimeout(CLIENT_TIMEOUT_SECONDS, TimeUnit.SECONDS)
                         .readTimeout(CLIENT_TIMEOUT_SECONDS, TimeUnit.SECONDS)
-                        .addInterceptor(new Interceptor() {
-                            @NonNull
-                            @Override
-                            public Response intercept(@NonNull Chain chain) throws IOException {
-                                // 拦截请求添加Header TODO 数据库待完善 添加Token
-                                Request original = chain.request();
-                                Request.Builder newBuilder = original.newBuilder();
-                                newBuilder.addHeader("Content-Type", "application/json");
-                                Request newRequest = newBuilder.build();
-                                return chain.proceed(newRequest);
+                        .addInterceptor(chain -> {
+                            // 拦截请求添加Header
+                            Request original = chain.request();
+                            Request.Builder newBuilder = original.newBuilder();
+                            newBuilder.addHeader("Content-Type", "application/json");
+                            if (!TextUtils.isEmpty(Account.getToken())) {
+                                newBuilder.addHeader("token", Account.getToken());
                             }
+                            Request newRequest = newBuilder.build();
+                            return chain.proceed(newRequest);
                         })
                         .build();
             }

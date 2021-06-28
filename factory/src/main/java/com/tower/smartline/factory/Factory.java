@@ -1,9 +1,16 @@
 package com.tower.smartline.factory;
 
+import com.tower.smartline.common.app.Application;
+import com.tower.smartline.factory.persistence.Account;
+
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import com.raizlabs.android.dbflow.config.FlowConfig;
+import com.raizlabs.android.dbflow.config.FlowManager;
+import com.raizlabs.android.dbflow.structure.ModelAdapter;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -37,8 +44,7 @@ public class Factory {
                 .setExclusionStrategies(new ExclusionStrategy() {
                     @Override
                     public boolean shouldSkipField(FieldAttributes f) {
-                        // TODO 数据库待完善
-                        return false;
+                        return f.getDeclaredClass().equals(ModelAdapter.class);
                     }
 
                     @Override
@@ -50,6 +56,20 @@ public class Factory {
     }
 
     /**
+     * Factory中App启动时所需的初始化
+     */
+    public static void setup() {
+        // 打开数据库
+        FlowConfig config = new FlowConfig.Builder(Application.getInstance())
+                .openDatabasesOnInit(true)
+                .build();
+        FlowManager.init(config);
+
+        // 加载SharedPreferences持久化数据
+        Account.load();
+    }
+
+    /**
      * 线程池异步运行方法
      *
      * @param runnable Runnable
@@ -57,7 +77,6 @@ public class Factory {
     public static void runOnAsync(Runnable runnable) {
         INSTANCE.executor.execute(runnable);
     }
-
 
     /**
      * 获取全局Gson

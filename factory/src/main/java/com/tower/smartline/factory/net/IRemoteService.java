@@ -8,6 +8,7 @@ import com.tower.smartline.factory.model.response.base.ResponseModel;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 /**
  * 所有的网络请求接口
@@ -33,4 +34,13 @@ public interface IRemoteService {
      */
     @POST("account/register")
     Call<ResponseModel<AccountRspModel>> accountRegister(@Body RegisterModel model);
+
+    /**
+     * 绑定设备Id
+     *
+     * @param pushId 设备Id
+     * @return ResponseModel<AccountRspModel>
+     */
+    @POST("account/bind/{pushId}")
+    Call<ResponseModel<AccountRspModel>> accountBind(@Path(encoded = true, value = "pushId") String pushId);
 }

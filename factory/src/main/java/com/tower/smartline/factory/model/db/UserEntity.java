@@ -1,5 +1,10 @@
 package com.tower.smartline.factory.model.db;
 
+import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.PrimaryKey;
+import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.structure.BaseModel;
+
 import java.util.Date;
 
 /**
@@ -8,8 +13,8 @@ import java.util.Date;
  * @author zpsong-tower <pingzisong2012@gmail.com>
  * @since 2021/6/9 5:17
  */
-// TODO 数据库
-public class UserEntity {
+@Table(database = AppDatabase.class)
+public class UserEntity extends BaseModel {
     /**
      * 性别_未知
      */
@@ -26,34 +31,44 @@ public class UserEntity {
     public static final int SEX_TYPE_FEMALE = 2;
 
     // Id
+    @PrimaryKey
     private String id;
 
     // 用户名
+    @Column
     private String name;
 
     // 头像
+    @Column
     private String portrait;
 
     // 个性签名
+    @Column
     private String description;
 
     // 性别
+    @Column
     private int sex = SEX_TYPE_UNKNOWN;
 
     // 关注数
+    @Column
     private int following;
 
     // 粉丝数
+    @Column
     private int followers;
 
     // 我对当前User的备注名
+    @Column
     private String nickname;
 
     // 我是否关注了当前User
+    @Column
     private boolean isFollow;
 
     // 修改时间
-    private Date modifyAt;
+    @Column
+    private Date updateAt;
 
     public String getId() {
         return id;
@@ -127,12 +142,12 @@ public class UserEntity {
         isFollow = follow;
     }
 
-    public Date getModifyAt() {
-        return modifyAt;
+    public Date getUpdateAt() {
+        return updateAt;
     }
 
-    public void setModifyAt(Date modifyAt) {
-        this.modifyAt = modifyAt;
+    public void setUpdateAt(Date updateAt) {
+        this.updateAt = updateAt;
     }
 
     @Override
@@ -140,7 +155,19 @@ public class UserEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserEntity that = (UserEntity) o;
-        return id != null ? id.equals(that.id) : that.id == null;
+        if (sex != that.sex) return false;
+        if (following != that.following) return false;
+        if (followers != that.followers) return false;
+        if (isFollow != that.isFollow) return false;
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (portrait != null ? !portrait.equals(that.portrait) : that.portrait != null)
+            return false;
+        if (description != null ? !description.equals(that.description) : that.description != null)
+            return false;
+        if (nickname != null ? !nickname.equals(that.nickname) : that.nickname != null)
+            return false;
+        return updateAt != null ? updateAt.equals(that.updateAt) : that.updateAt == null;
     }
 
     @Override

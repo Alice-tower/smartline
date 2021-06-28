@@ -40,7 +40,7 @@ public abstract class MyCallback<T> implements Callback<ResponseModel<T>> {
 
     /**
      * 对判空和失败错误码做处理
-     * 建议子类调用 {@link #getBodyOrHandled()} 方法获得处理结果和响应Body
+     * 建议子类调用 {@link #getBodyOrHandled()} 或 {@link #getResultOrHandled()} 获得处理结果和所需数据
      *
      * @param call     Call
      * @param response Response
