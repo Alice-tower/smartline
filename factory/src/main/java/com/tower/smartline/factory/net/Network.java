@@ -2,21 +2,16 @@ package com.tower.smartline.factory.net;
 
 import android.text.TextUtils;
 
-import androidx.annotation.NonNull;
-
 import com.tower.smartline.common.Config;
 import com.tower.smartline.factory.Factory;
 import com.tower.smartline.factory.persistence.Account;
 
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.Response;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -48,7 +43,7 @@ public class Network {
     /**
      * 返回一个请求代理
      *
-     * @return RemoteService
+     * @return IRemoteService
      */
     public static IRemoteService remote() {
         return INSTANCE.getRetrofit().create(IRemoteService.class);

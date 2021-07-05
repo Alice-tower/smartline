@@ -14,10 +14,11 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 import com.tower.smartline.common.app.Application;
-import com.tower.smartline.common.app.Fragment;
-import com.tower.smartline.factory.Factory;
-import com.tower.smartline.factory.net.UploadHelper;
+import com.tower.smartline.common.app.PresenterFragment;
+import com.tower.smartline.factory.presenter.user.IUpdateInfoContract;
+import com.tower.smartline.factory.presenter.user.UpdateInfoPresenter;
 import com.tower.smartline.push.R;
+import com.tower.smartline.push.activities.MainActivity;
 import com.tower.smartline.push.databinding.FragmentUpdateInfoBinding;
 import com.tower.smartline.push.frags.media.GalleryFragment;
 
@@ -33,8 +34,8 @@ import static android.app.Activity.RESULT_OK;
  * @author zpsong-tower <pingzisong2012@gmail.com>
  * @since 2021/4/30 7:10
  */
-public class UpdateInfoFragment extends Fragment
-        implements View.OnClickListener {
+public class UpdateInfoFragment extends PresenterFragment<IUpdateInfoContract.Presenter>
+        implements IUpdateInfoContract.View, View.OnClickListener {
     private static final String TAG = UpdateInfoFragment.class.getName();
 
     // 图片压缩质量值[0-100]
@@ -54,12 +55,20 @@ public class UpdateInfoFragment extends Fragment
 
     private FragmentUpdateInfoBinding mBinding;
 
+    // 头像图片本地资源标识
+    private Uri mPortraitUri;
+
     private boolean mIsMale = true;
 
     private boolean mIsDefault = true;
 
     public UpdateInfoFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    protected IUpdateInfoContract.Presenter initPresenter() {
+        return new UpdateInfoPresenter(this);
     }
 
     @NonNull
@@ -119,7 +128,14 @@ public class UpdateInfoFragment extends Fragment
 
     private void onSubmitClick() {
         Log.i(TAG, "onSubmitClick");
-        // TODO Presenter实现
+        String desc = mBinding.editDesc.getText().toString();
+        getPresenter().update(mPortraitUri, desc, mIsMale);
+    }
+
+    @Override
+    public void submitSuccess() {
+        MainActivity.show(requireContext());
+        requireActivity().finish();
     }
 
     @Override
@@ -135,6 +151,7 @@ public class UpdateInfoFragment extends Fragment
             }
         } else if (resultCode == UCrop.RESULT_ERROR) {
             Log.e(TAG, "onActivityResult: UCrop RESULT_ERROR");
+            Application.showToast(R.string.toast_common_unknown_error);
         }
     }
 
@@ -144,18 +161,34 @@ public class UpdateInfoFragment extends Fragment
      * @param uri 头像裁剪后的资源标志
      */
     private void loadPortrait(Uri uri) {
+        mPortraitUri = uri;
         Glide.with(this)
                 .asBitmap()
                 .load(uri)
                 .centerCrop()
                 .into(mBinding.imPortrait);
+    }
 
-        // 上传头像
-        Factory.runOnAsync(() -> {
-            if (UploadHelper.uploadPortrait(uri) == null) {
-                // TODO 未拿到url 上传失败逻辑
-            }
-        });
+    @Override
+    public void showError(int str) {
+        // 显示错误提示 界面恢复操作
+        super.showError(str);
+        mBinding.loading.stop();
+        mBinding.btnSubmit.setEnabled(true);
+        mBinding.imPortrait.setEnabled(true);
+        mBinding.editDesc.setEnabled(true);
+        mBinding.imSex.setEnabled(true);
+    }
+
+    @Override
+    public void showLoading() {
+        // Loading 界面不可操作
+        super.showLoading();
+        mBinding.loading.start();
+        mBinding.btnSubmit.setEnabled(false);
+        mBinding.imPortrait.setEnabled(false);
+        mBinding.editDesc.setEnabled(false);
+        mBinding.imSex.setEnabled(false);
     }
 
     @Override

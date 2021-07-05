@@ -3,6 +3,7 @@ package com.tower.smartline.factory.persistence;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.tower.smartline.common.app.Application;
 import com.tower.smartline.factory.model.db.UserEntity;
@@ -85,6 +86,22 @@ public class Account {
      */
     public static boolean isLogin() {
         return !TextUtils.isEmpty(userId) && !TextUtils.isEmpty(token);
+    }
+
+    /**
+     * 是否已经完善了用户信息
+     * 校验头像和性别
+     *
+     * @return True 是完成了
+     */
+    public static boolean isComplete() {
+        if (isLogin()) {
+            UserEntity self = getUser();
+            return !TextUtils.isEmpty(self.getPortrait())
+                    && self.getSex() != UserEntity.SEX_TYPE_UNKNOWN;
+        }
+        Log.w(TAG, "isComplete: isLogin == false");
+        return false;
     }
 
     /**

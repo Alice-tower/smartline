@@ -2,12 +2,15 @@ package com.tower.smartline.factory.net;
 
 import com.tower.smartline.factory.model.api.account.LoginModel;
 import com.tower.smartline.factory.model.api.account.RegisterModel;
+import com.tower.smartline.factory.model.api.user.UpdateInfoModel;
 import com.tower.smartline.factory.model.response.AccountRspModel;
+import com.tower.smartline.factory.model.response.UserCard;
 import com.tower.smartline.factory.model.response.base.ResponseModel;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 /**
@@ -43,4 +46,13 @@ public interface IRemoteService {
      */
     @POST("account/bind/{pushId}")
     Call<ResponseModel<AccountRspModel>> accountBind(@Path(encoded = true, value = "pushId") String pushId);
+
+    /**
+     * 更新用户个人信息
+     *
+     * @param model UpdateInfoModel
+     * @return ResponseModel<UserCard>
+     */
+    @PUT("user")
+    Call<ResponseModel<UserCard>> userUpdate(@Body UpdateInfoModel model);
 }

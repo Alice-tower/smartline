@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="toast_common_unknown_error">未知错误</string>
     <!--网络请求相关-->
-    <string name="toast_net_something_wrong">未知错误</string>
     <string name="toast_net_network_exception">网络有点问题，请稍后再试</string>
     <string name="toast_net_unknown_error">服务器异常，请稍后再试</string>
     <string name="toast_net_service_exception">服务器异常，请稍后再试</string>
@@ -11,6 +11,8 @@
     <string name="toast_net_param_name_exist">该用户名已被占用</string>
     <string name="toast_net_param_account_invalid">手机号或密码错误</string>
     <string name="toast_net_search_no_such_user">该用户不存在</string>
+    <!--oss上传相关-->
+    <string name="toast_oss_upload_error">上传失败，请稍后再试</string>
     <!--登录注册相关-->
     <string name="toast_app_account_parameter_empty">用户名不能为空</string>
     <string name="toast_app_account_parameters_empty">手机号和密码不能为空</string>

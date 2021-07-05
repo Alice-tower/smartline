@@ -68,7 +68,7 @@ public class Responses {
                 callback.onFailure(R.string.toast_net_param_account_invalid);
                 break;
             default:
-                callback.onFailure(R.string.toast_net_something_wrong);
+                callback.onFailure(R.string.toast_common_unknown_error);
                 break;
         }
     }

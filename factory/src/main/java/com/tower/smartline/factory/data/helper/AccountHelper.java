@@ -28,7 +28,7 @@ public class AccountHelper {
     private static final String TAG = AccountHelper.class.getName();
 
     /**
-     * 登录接口
+     * 登录
      *
      * @param model    LoginModel
      * @param callback 回调
@@ -56,7 +56,7 @@ public class AccountHelper {
     }
 
     /**
-     * 注册接口
+     * 注册
      *
      * @param model    RegisterModel
      * @param callback 回调

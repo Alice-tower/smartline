@@ -12,6 +12,16 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * @since 2021/4/19 20:32
  */
 public class PortraitView extends CircleImageView {
+    /**
+     * 男性默认头像标识
+     */
+    public static final String DEFAULT_MALE = "1";
+
+    /**
+     * 女性默认头像标识
+     */
+    public static final String DEFAULT_FEMALE = "2";
+
     public PortraitView(Context context) {
         super(context);
     }

@@ -3,6 +3,7 @@ package com.tower.smartline.push.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.tower.smartline.common.app.Activity;
+import com.tower.smartline.factory.persistence.Account;
 import com.tower.smartline.push.R;
 import com.tower.smartline.push.databinding.ActivityMainBinding;
 import com.tower.smartline.push.frags.main.ContactFragment;
@@ -56,6 +58,16 @@ public class MainActivity extends Activity
      */
     public static void show(Context context) {
         context.startActivity(new Intent(context, MainActivity.class));
+    }
+
+    @Override
+    protected boolean initArgs(Bundle bundle) {
+        if (!Account.isComplete()) {
+            // 用户信息不完整
+            UserActivity.show(this);
+            return false;
+        }
+        return super.initArgs(bundle);
     }
 
     @NonNull
@@ -113,7 +125,6 @@ public class MainActivity extends Activity
 
     private void onPortraitClick() {
         Log.i(TAG, "onPortraitClick");
-        UserActivity.show(this);
     }
 
     private void onSearchClick() {
