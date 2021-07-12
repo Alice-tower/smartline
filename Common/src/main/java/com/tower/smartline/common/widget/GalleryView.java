@@ -121,7 +121,7 @@ public class GalleryView extends RecyclerView {
         } else if (mSelectedImages.size() >= MAX_IMAGE_COUNT) {
             if (getResources() != null) {
                 String str = String.format(getResources()
-                        .getString(R.string.label_gallery_select_max_size), MAX_IMAGE_COUNT);
+                        .getString(R.string.toast_app_gallery_select_max_size), MAX_IMAGE_COUNT);
                 Application.showToast(str);
             }
             return false;

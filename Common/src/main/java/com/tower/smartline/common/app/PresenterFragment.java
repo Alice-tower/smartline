@@ -31,13 +31,17 @@ public abstract class PresenterFragment<P extends IBaseContract.Presenter> exten
 
     @Override
     public void showError(int str) {
-        // TODO 占位布局 全屏错误提示
+        if (mEmptyView != null) {
+            mEmptyView.showError();
+        }
         Application.showToast(str);
     }
 
     @Override
     public void showLoading() {
-        // TODO 占位布局 全屏加载提示
+        if (mEmptyView != null) {
+            mEmptyView.showLoading();
+        }
     }
 
     @Override

@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.tower.smartline.common.widget.EmptyView;
+
 /**
  * 自定义Fragment基类
  *
@@ -17,6 +19,8 @@ import androidx.annotation.Nullable;
  */
 public abstract class Fragment extends androidx.fragment.app.Fragment {
     protected View mRoot;
+
+    protected EmptyView mEmptyView;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -97,4 +101,13 @@ public abstract class Fragment extends androidx.fragment.app.Fragment {
      * Fragment的存在时间比其视图长，需要清除对绑定类实例的所有引用
      */
     protected abstract void destroyBinding();
+
+    /**
+     * 设置空布局
+     *
+     * @param emptyView 空布局
+     */
+    public void setEmptyView(EmptyView emptyView) {
+        this.mEmptyView = emptyView;
+    }
 }

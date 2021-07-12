@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--主界面顶部-->
     <string name="title_home">@string/app_name</string>
     <string name="title_group">@string/action_group</string>
     <string name="title_contact">@string/action_contact</string>
 
+    <!--图片选择器-->
     <string name="title_select_gallery">选择图片</string>
+
+    <!--权限申请页-->
     <string name="title_assist_permissions">授予权限</string>
 </resources>
