@@ -99,6 +99,7 @@ public abstract class Fragment extends androidx.fragment.app.Fragment {
 
     /**
      * Fragment的存在时间比其视图长，需要清除对绑定类实例的所有引用
+     * 即 mBinding = null
      */
     protected abstract void destroyBinding();
 

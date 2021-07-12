@@ -10,4 +10,7 @@
 
     <!--权限申请页-->
     <string name="title_assist_permissions">授予权限</string>
+
+    <!--搜索页面-->
+    <string name="title_search">搜索</string>
 </resources>

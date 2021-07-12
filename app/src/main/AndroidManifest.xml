@@ -46,8 +46,8 @@
             android:enabled="true"
             android:exported="true"
             android:label="AppPushService"
-            android:process=":pushservice"
-            android:permission="1000" />
+            android:permission="1000"
+            android:process=":pushservice" />
         <!-- 个推的消息送达服务 用以接收AppPushService处理后的有效消息接收 -->
         <service
             android:name=".AppMessageReceiverService"
@@ -74,6 +74,10 @@
         <activity
             android:name=".activities.UserActivity"
             android:theme="@style/AppTheme.Account" />
+        <activity
+            android:name=".activities.SearchActivity"
+            android:label="@string/title_search"
+            android:theme="@style/AppTheme.TransStatusBar" />
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:theme="@style/AppTheme" />

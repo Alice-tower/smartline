@@ -129,6 +129,7 @@ public class MainActivity extends Activity
 
     private void onSearchClick() {
         Log.i(TAG, "onSearchClick");
+        SearchActivity.show(this, SearchActivity.TYPE_MAIN);
     }
 
     private void onActionClick() {
