@@ -1,6 +1,6 @@
 package com.tower.smartline.factory;
 
-import com.tower.smartline.common.app.Application;
+import com.tower.smartline.common.app.MyApplication;
 import com.tower.smartline.factory.persistence.Account;
 
 import com.google.gson.ExclusionStrategy;
@@ -60,7 +60,7 @@ public class Factory {
      */
     public static void setup() {
         // 打开数据库
-        FlowConfig config = new FlowConfig.Builder(Application.getInstance())
+        FlowConfig config = new FlowConfig.Builder(MyApplication.getInstance())
                 .openDatabasesOnInit(true)
                 .build();
         FlowManager.init(config);

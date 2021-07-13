@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -145,12 +144,6 @@ public class SearchActivity extends ToolbarActivity {
         @Override
         public int getCount() {
             return FRAGS_COUNT;
-        }
-
-        @Nullable
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return null;
         }
     }
 }

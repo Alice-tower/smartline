@@ -13,5 +13,5 @@ public interface MyAdapterCallback<Data> {
      * @param data 更新的数据
      * @param holder 更新数据的ViewHolder
      */
-    void update(Data data, MyRecyclerAdapter.MyViewHolder<Data> holder);
+    void update(Data data, BaseRecyclerAdapter.BaseRecyclerViewHolder<Data> holder);
 }

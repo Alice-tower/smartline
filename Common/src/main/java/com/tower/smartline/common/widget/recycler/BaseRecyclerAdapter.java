@@ -21,8 +21,8 @@ import java.util.List;
  * @author zpsong-tower <pingzisong2012@gmail.com>
  * @since 2020/11/24 3:42
  */
-public abstract class MyRecyclerAdapter<Data>
-        extends RecyclerView.Adapter<MyRecyclerAdapter.MyViewHolder<Data>>
+public abstract class BaseRecyclerAdapter<Data>
+        extends RecyclerView.Adapter<BaseRecyclerAdapter.BaseRecyclerViewHolder<Data>>
         implements MyAdapterCallback<Data>, View.OnClickListener, View.OnLongClickListener {
     private final List<Data> mDataList;
 
@@ -31,7 +31,7 @@ public abstract class MyRecyclerAdapter<Data>
     /**
      * 构造方法
      */
-    public MyRecyclerAdapter() {
+    public BaseRecyclerAdapter() {
         this(null);
     }
 
@@ -40,7 +40,7 @@ public abstract class MyRecyclerAdapter<Data>
      *
      * @param listener 点击监听
      */
-    public MyRecyclerAdapter(AdapterListener<Data> listener) {
+    public BaseRecyclerAdapter(AdapterListener<Data> listener) {
         this(new ArrayList<Data>(), listener);
     }
 
@@ -50,7 +50,7 @@ public abstract class MyRecyclerAdapter<Data>
      * @param dataList 数据
      * @param listener 点击监听
      */
-    public MyRecyclerAdapter(List<Data> dataList, AdapterListener<Data> listener) {
+    public BaseRecyclerAdapter(List<Data> dataList, AdapterListener<Data> listener) {
         this.mDataList = dataList;
         this.mListener = listener;
     }
@@ -85,7 +85,7 @@ public abstract class MyRecyclerAdapter<Data>
      */
     @NonNull
     @Override
-    public MyViewHolder<Data> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BaseRecyclerViewHolder<Data> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // 得到LayoutInflater用于把XML初始化为View
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
@@ -93,7 +93,7 @@ public abstract class MyRecyclerAdapter<Data>
         View root = inflater.inflate(viewType, parent, false);
 
         // 通过子类必须实现的方法得到一个ViewHolder
-        MyViewHolder<Data> holder = onCreateViewHolder(root, viewType);
+        BaseRecyclerViewHolder<Data> holder = onCreateViewHolder(root, viewType);
 
         // 设置View的Tag为ViewHolder，进行双向绑定
         root.setTag(R.id.tag_recycler_holder, holder);
@@ -115,7 +115,7 @@ public abstract class MyRecyclerAdapter<Data>
      * @param viewType 布局类型，约定为XML布局的Id
      * @return ViewHolder
      */
-    protected abstract MyViewHolder<Data> onCreateViewHolder(View root, int viewType);
+    protected abstract BaseRecyclerViewHolder<Data> onCreateViewHolder(View root, int viewType);
 
     /**
      * 绑定数据到一个Holder上
@@ -124,7 +124,7 @@ public abstract class MyRecyclerAdapter<Data>
      * @param position 坐标
      */
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder<Data> holder, int position) {
+    public void onBindViewHolder(@NonNull BaseRecyclerViewHolder<Data> holder, int position) {
         // 得到需要绑定的数据
         Data data = mDataList.get(position);
 
@@ -201,7 +201,7 @@ public abstract class MyRecyclerAdapter<Data>
     }
 
     @Override
-    public void update(Data data, @NonNull MyViewHolder<Data> holder) {
+    public void update(Data data, @NonNull BaseRecyclerViewHolder<Data> holder) {
         // 得到ViewHolder当前对应的适配器当中的坐标
         int pos = holder.getBindingAdapterPosition();
         if (pos >= 0) {
@@ -215,8 +215,8 @@ public abstract class MyRecyclerAdapter<Data>
     @Override
     public void onClick(@NonNull View v) {
         Object objectHolder = v.getTag(R.id.tag_recycler_holder);
-        if (mListener != null && objectHolder instanceof MyViewHolder) {
-            MyViewHolder<Data> viewHolder = (MyViewHolder<Data>) objectHolder;
+        if (mListener != null && objectHolder instanceof BaseRecyclerAdapter.BaseRecyclerViewHolder) {
+            BaseRecyclerViewHolder<Data> viewHolder = (BaseRecyclerViewHolder<Data>) objectHolder;
 
             // 得到ViewHolder当前对应的适配器当中的坐标
             int pos = viewHolder.getBindingAdapterPosition();
@@ -230,8 +230,8 @@ public abstract class MyRecyclerAdapter<Data>
     @Override
     public boolean onLongClick(@NonNull View v) {
         Object objectHolder = v.getTag(R.id.tag_recycler_holder);
-        if (mListener != null && objectHolder instanceof MyViewHolder) {
-            MyViewHolder<Data> viewHolder = (MyViewHolder<Data>) objectHolder;
+        if (mListener != null && objectHolder instanceof BaseRecyclerAdapter.BaseRecyclerViewHolder) {
+            BaseRecyclerViewHolder<Data> viewHolder = (BaseRecyclerViewHolder<Data>) objectHolder;
 
             // 得到ViewHolder当前对应的适配器当中的坐标
             int pos = viewHolder.getBindingAdapterPosition();
@@ -265,7 +265,7 @@ public abstract class MyRecyclerAdapter<Data>
          * @param holder MyViewHolder
          * @param data   被点击项的数据
          */
-        void onItemClick(@NonNull MyViewHolder<Data> holder, Data data);
+        void onItemClick(@NonNull BaseRecyclerViewHolder<Data> holder, Data data);
 
         /**
          * 当item长按时触发
@@ -273,7 +273,7 @@ public abstract class MyRecyclerAdapter<Data>
          * @param holder MyViewHolder
          * @param data   被长按项的数据
          */
-        void onItemLongClick(@NonNull MyViewHolder<Data> holder, Data data);
+        void onItemLongClick(@NonNull BaseRecyclerViewHolder<Data> holder, Data data);
     }
 
     /**
@@ -281,12 +281,12 @@ public abstract class MyRecyclerAdapter<Data>
      *
      * @param <Data> 泛型类型
      */
-    public static abstract class MyViewHolder<Data> extends RecyclerView.ViewHolder {
+    public static abstract class BaseRecyclerViewHolder<Data> extends RecyclerView.ViewHolder {
         private MyAdapterCallback<Data> callback;
 
         protected Data mData;
 
-        public MyViewHolder(@NonNull View itemView) {
+        public BaseRecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
         }
 

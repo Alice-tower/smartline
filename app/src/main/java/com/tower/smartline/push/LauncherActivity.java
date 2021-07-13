@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.tower.smartline.common.Config;
-import com.tower.smartline.common.app.Activity;
+import com.tower.smartline.common.app.BaseActivity;
 import com.tower.smartline.factory.persistence.Account;
 import com.tower.smartline.push.activities.AccountActivity;
 import com.tower.smartline.push.databinding.ActivityLauncherBinding;
@@ -26,7 +26,7 @@ import com.bumptech.glide.request.transition.Transition;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class LauncherActivity extends Activity {
+public class LauncherActivity extends BaseActivity {
     private ActivityLauncherBinding mBinding;
 
     // 动画是否播放结束

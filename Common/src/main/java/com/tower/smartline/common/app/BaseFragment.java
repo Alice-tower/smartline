@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.tower.smartline.common.widget.EmptyView;
 
@@ -17,7 +18,7 @@ import com.tower.smartline.common.widget.EmptyView;
  * @author zpsong-tower <pingzisong2012@gmail.com>
  * @since 2020/10/28 4:39
  */
-public abstract class Fragment extends androidx.fragment.app.Fragment {
+public abstract class BaseFragment extends Fragment {
     protected View mRoot;
 
     protected EmptyView mEmptyView;

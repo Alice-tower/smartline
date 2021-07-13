@@ -1,5 +1,6 @@
 package com.tower.smartline.common.app;
 
+import android.app.Application;
 import android.os.SystemClock;
 import android.widget.Toast;
 
@@ -15,8 +16,8 @@ import java.io.File;
  * @author zpsong-tower <pingzisong2012@gmail.com>
  * @since 2021/5/8 2:33
  */
-public class Application extends android.app.Application {
-    private static Application sInstance;
+public class MyApplication extends Application {
+    private static MyApplication sInstance;
 
     @Override
     public void onCreate() {
@@ -29,7 +30,7 @@ public class Application extends android.app.Application {
      *
      * @return Application
      */
-    public static Application getInstance() {
+    public static MyApplication getInstance() {
         return sInstance;
     }
 

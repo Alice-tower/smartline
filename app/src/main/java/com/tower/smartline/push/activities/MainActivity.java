@@ -12,7 +12,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.tower.smartline.common.app.Activity;
+import com.tower.smartline.common.app.BaseActivity;
 import com.tower.smartline.factory.persistence.Account;
 import com.tower.smartline.push.R;
 import com.tower.smartline.push.databinding.ActivityMainBinding;
@@ -38,7 +38,7 @@ import java.util.Objects;
  * @author zpsong-tower <pingzisong2012@gmail.com>
  * @since 2020/10/27 4:00
  */
-public class MainActivity extends Activity
+public class MainActivity extends BaseActivity
         implements BottomNavigationView.OnNavigationItemSelectedListener,
         NavHelper.OnTabChangedListener<Integer>, View.OnClickListener {
     private static final String TAG = MainActivity.class.getName();

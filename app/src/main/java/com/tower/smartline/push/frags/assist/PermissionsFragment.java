@@ -15,7 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
-import com.tower.smartline.common.app.Application;
+import com.tower.smartline.common.app.MyApplication;
 import com.tower.smartline.push.R;
 import com.tower.smartline.push.databinding.FragmentPermissionsBinding;
 
@@ -176,7 +176,7 @@ public class PermissionsFragment extends BottomSheetDialogFragment
                 Manifest.permission.RECORD_AUDIO
         };
         if (EasyPermissions.hasPermissions(requireContext(), perms)) {
-            Application.showToast(R.string.label_permission_ok);
+            MyApplication.showToast(R.string.label_permission_ok);
             refreshState();
         } else {
             EasyPermissions.requestPermissions(this,

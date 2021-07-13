@@ -11,7 +11,7 @@ import com.tower.smartline.common.R;
  * @author zpsong-tower <pingzisong2012@gmail.com>
  * @since 2021/7/7 15:18
  */
-public abstract class ToolbarActivity extends Activity {
+public abstract class ToolbarActivity extends BaseActivity {
     protected Toolbar mToolbar;
 
     @Override

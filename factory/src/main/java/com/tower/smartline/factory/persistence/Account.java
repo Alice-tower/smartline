@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.tower.smartline.common.app.Application;
+import com.tower.smartline.common.app.MyApplication;
 import com.tower.smartline.factory.model.db.UserEntity;
 import com.tower.smartline.factory.model.db.UserEntity_Table;
 
@@ -44,7 +44,7 @@ public class Account {
      * 存储数据到XML 数据持久化
      */
     private static void save() {
-        SharedPreferences sp = Application.getInstance()
+        SharedPreferences sp = MyApplication.getInstance()
                 .getSharedPreferences(TAG, Context.MODE_PRIVATE);
         sp.edit()
                 .putString(KEY_PUSH_ID, pushId)
@@ -58,7 +58,7 @@ public class Account {
      * 加载数据
      */
     public static void load() {
-        SharedPreferences sp = Application.getInstance()
+        SharedPreferences sp = MyApplication.getInstance()
                 .getSharedPreferences(TAG, Context.MODE_PRIVATE);
         pushId = sp.getString(KEY_PUSH_ID, "");
         isBind = sp.getBoolean(KEY_IS_BIND, false);

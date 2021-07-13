@@ -12,7 +12,7 @@ import com.tower.smartline.factory.presenter.IBaseContract;
  * @author zpsong-tower <pingzisong2012@gmail.com>
  * @since 2021/6/8 10:10
  */
-public abstract class PresenterFragment<P extends IBaseContract.Presenter> extends Fragment
+public abstract class PresenterFragment<P extends IBaseContract.Presenter> extends BaseFragment
         implements IBaseContract.View<P> {
     private P mPresenter;
 
@@ -34,7 +34,7 @@ public abstract class PresenterFragment<P extends IBaseContract.Presenter> exten
         if (mEmptyView != null) {
             mEmptyView.showError();
         }
-        Application.showToast(str);
+        MyApplication.showToast(str);
     }
 
     @Override

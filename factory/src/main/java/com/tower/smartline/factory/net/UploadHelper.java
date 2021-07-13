@@ -8,7 +8,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.tower.smartline.common.Config;
-import com.tower.smartline.common.app.Application;
+import com.tower.smartline.common.app.MyApplication;
 import com.tower.smartline.utils.HashUtil;
 
 import com.alibaba.sdk.android.oss.ClientConfiguration;
@@ -82,7 +82,7 @@ public class UploadHelper {
             conf.setSocketTimeout(15 * 1000); // socket超时
             conf.setMaxConcurrentRequest(5); // 最大并发请求数
             conf.setMaxErrorRetry(2); // 失败后最大重试次数
-            sOSSClient = new OSSClient(Application.getInstance(), Config.OSS_ENDPOINT, credentialProvider, conf);
+            sOSSClient = new OSSClient(MyApplication.getInstance(), Config.OSS_ENDPOINT, credentialProvider, conf);
         }
         return sOSSClient;
     }

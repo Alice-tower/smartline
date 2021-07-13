@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 
-import com.tower.smartline.common.app.Fragment;
+import com.tower.smartline.common.app.BaseFragment;
 import com.tower.smartline.push.databinding.FragmentGroupBinding;
 
 /**
@@ -15,7 +15,7 @@ import com.tower.smartline.push.databinding.FragmentGroupBinding;
  * @author zpsong-tower <pingzisong2012@gmail.com>
  * @since 2021/4/23 0:35
  */
-public class GroupFragment extends Fragment {
+public class GroupFragment extends BaseFragment {
     private FragmentGroupBinding mBinding;
 
     public GroupFragment() {

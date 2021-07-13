@@ -12,9 +12,9 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.fragment.app.Fragment;
 
-import com.tower.smartline.common.app.Activity;
-import com.tower.smartline.common.app.Fragment;
+import com.tower.smartline.common.app.BaseActivity;
 import com.tower.smartline.push.R;
 import com.tower.smartline.push.databinding.ActivityUserBinding;
 import com.tower.smartline.push.frags.user.UpdateInfoFragment;
@@ -30,7 +30,7 @@ import net.qiujuer.genius.ui.compat.UiCompat;
  * @author zpsong-tower <pingzisong2012@gmail.com>
  * @since 2021/6/6 19:28
  */
-public class UserActivity extends Activity {
+public class UserActivity extends BaseActivity {
     private ActivityUserBinding mBinding;
 
     // 当前的Fragment

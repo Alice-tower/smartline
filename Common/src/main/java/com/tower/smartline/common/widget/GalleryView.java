@@ -19,8 +19,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tower.smartline.common.R;
-import com.tower.smartline.common.app.Application;
-import com.tower.smartline.common.widget.recycler.MyRecyclerAdapter;
+import com.tower.smartline.common.app.MyApplication;
+import com.tower.smartline.common.widget.recycler.BaseRecyclerAdapter;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -50,7 +50,7 @@ public class GalleryView extends RecyclerView {
 
     private static final int INDEX_SIZE = 1;
 
-    private RecyclerAdapter mAdapter = new RecyclerAdapter();
+    private GalleryRecyclerAdapter mAdapter = new GalleryRecyclerAdapter();
 
     private LoaderCallback mLoaderCallback = new LoaderCallback();
 
@@ -78,9 +78,9 @@ public class GalleryView extends RecyclerView {
      */
     private void init() {
         setLayoutManager(new GridLayoutManager(getContext(), COLUMNS_NUM));
-        mAdapter.setListener(new MyRecyclerAdapter.AdapterListener<Image>() {
+        mAdapter.setListener(new BaseRecyclerAdapter.AdapterListener<Image>() {
             @Override
-            public void onItemClick(@NonNull MyRecyclerAdapter.MyViewHolder<Image> holder, Image image) {
+            public void onItemClick(@NonNull BaseRecyclerAdapter.BaseRecyclerViewHolder<Image> holder, Image image) {
                 // 更新对应Cell的状态，若达到最大选中数量则不刷新界面
                 if (onItemSelectClick(image)) {
                     holder.updateData(image);
@@ -88,7 +88,7 @@ public class GalleryView extends RecyclerView {
             }
 
             @Override
-            public void onItemLongClick(@NonNull MyRecyclerAdapter.MyViewHolder<Image> holder, Image image) {
+            public void onItemLongClick(@NonNull BaseRecyclerAdapter.BaseRecyclerViewHolder<Image> holder, Image image) {
             }
         });
         setAdapter(mAdapter);
@@ -122,7 +122,7 @@ public class GalleryView extends RecyclerView {
             if (getResources() != null) {
                 String str = String.format(getResources()
                         .getString(R.string.toast_app_gallery_select_max_size), MAX_IMAGE_COUNT);
-                Application.showToast(str);
+                MyApplication.showToast(str);
             }
             return false;
         } else {
@@ -177,26 +177,26 @@ public class GalleryView extends RecyclerView {
     }
 
 
-    private class RecyclerAdapter extends MyRecyclerAdapter<Image> {
+    private class GalleryRecyclerAdapter extends BaseRecyclerAdapter<Image> {
         @Override
         protected int getItemViewType(int position, Image image) {
             return R.layout.cell_gallery;
         }
 
         @Override
-        protected MyViewHolder<Image> onCreateViewHolder(View root, int viewType) {
-            return new ViewHolder(root);
+        protected BaseRecyclerViewHolder<Image> onCreateViewHolder(View root, int viewType) {
+            return new GalleryViewHolder(root);
         }
     }
 
-    private class ViewHolder extends MyRecyclerAdapter.MyViewHolder<Image> {
+    private class GalleryViewHolder extends BaseRecyclerAdapter.BaseRecyclerViewHolder<Image> {
         private ImageView mPic;
 
         private View mShade;
 
         private CheckBox mSelected;
 
-        public ViewHolder(@NonNull View itemView) {
+        public GalleryViewHolder(@NonNull View itemView) {
             super(itemView);
             mPic = itemView.findViewById(R.id.im_image);
             mShade = itemView.findViewById(R.id.view_shade);

@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
-import com.tower.smartline.common.app.Application;
+import com.tower.smartline.common.app.MyApplication;
 import com.tower.smartline.common.app.PresenterFragment;
 import com.tower.smartline.factory.presenter.user.IUpdateInfoContract;
 import com.tower.smartline.factory.presenter.user.UpdateInfoPresenter;
@@ -96,7 +96,7 @@ public class UpdateInfoFragment extends PresenterFragment<IUpdateInfoContract.Pr
             UCrop.Options options = new UCrop.Options();
             options.setCompressionFormat(Bitmap.CompressFormat.JPEG);
             options.setCompressionQuality(COMPRESSION_QUALITY_VALUE);
-            UCrop.of(uri, Uri.fromFile(Application.getPortraitTmpFile()))
+            UCrop.of(uri, Uri.fromFile(MyApplication.getPortraitTmpFile()))
                     .withAspectRatio(ASPECT_RATIO_VALUE, ASPECT_RATIO_VALUE) // 纵横比
                     .withMaxResultSize(MAX_RESULT_SIZE, MAX_RESULT_SIZE) // 最大尺寸
                     .withOptions(options) // 相关参数
@@ -151,7 +151,7 @@ public class UpdateInfoFragment extends PresenterFragment<IUpdateInfoContract.Pr
             }
         } else if (resultCode == UCrop.RESULT_ERROR) {
             Log.e(TAG, "onActivityResult: UCrop RESULT_ERROR");
-            Application.showToast(R.string.toast_common_unknown_error);
+            MyApplication.showToast(R.string.toast_common_unknown_error);
         }
     }
 

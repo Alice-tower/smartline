@@ -6,7 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.tower.smartline.common.app.Application;
+import com.tower.smartline.common.app.MyApplication;
 import com.tower.smartline.factory.Factory;
 
 import com.igexin.sdk.PushManager;
@@ -17,7 +17,7 @@ import com.igexin.sdk.PushManager;
  * @author zpsong-tower <pingzisong2012@gmail.com>
  * @since 2021/5/8 3:10
  */
-public class App extends Application {
+public class App extends MyApplication {
     @Override
     public void onCreate() {
         super.onCreate();

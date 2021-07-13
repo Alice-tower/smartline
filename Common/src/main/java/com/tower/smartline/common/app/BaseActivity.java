@@ -16,7 +16,7 @@ import java.util.List;
  * @author zpsong-tower <pingzisong2012@gmail.com>
  * @since 2020/10/28 4:38
  */
-public abstract class Activity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,8 +86,8 @@ public abstract class Activity extends AppCompatActivity {
         if (fragments.size() > 0) {
             for (Fragment fragment : fragments) {
                 // 判断是否为自己封装的Fragment
-                if (fragment instanceof com.tower.smartline.common.app.Fragment) {
-                    if (((com.tower.smartline.common.app.Fragment) fragment).onBackPressed()) {
+                if (fragment instanceof BaseFragment) {
+                    if (((BaseFragment) fragment).onBackPressed()) {
                         // 判断是Fragment是否自己拦截了返回按钮，若是则直接Return
                         return;
                     }
