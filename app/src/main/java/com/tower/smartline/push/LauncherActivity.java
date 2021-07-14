@@ -79,7 +79,7 @@ public class LauncherActivity extends BaseActivity {
         super.initData();
 
         // 遮罩渐变动画
-        ObjectAnimator animator = ObjectAnimator.ofFloat(mBinding.imgFg, "alpha", 1f, 0f);
+        ObjectAnimator animator = ObjectAnimator.ofFloat(mBinding.imFg, "alpha", 1f, 0f);
         animator.setDuration(3000);
         animator.addListener(new AnimatorListenerAdapter() {
             @Override

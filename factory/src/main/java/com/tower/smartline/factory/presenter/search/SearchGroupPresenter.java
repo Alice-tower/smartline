@@ -1,6 +1,7 @@
 package com.tower.smartline.factory.presenter.search;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.tower.smartline.factory.presenter.BasePresenter;
 
@@ -22,7 +23,7 @@ public class SearchGroupPresenter extends BasePresenter<ISearchContract.GroupVie
     }
 
     @Override
-    public void search(String content) {
+    public void search(@Nullable String content) {
 
     }
 }

@@ -1,5 +1,7 @@
 package com.tower.smartline.factory.presenter.search;
 
+import androidx.annotation.Nullable;
+
 import com.tower.smartline.factory.model.response.GroupCard;
 import com.tower.smartline.factory.model.response.UserCard;
 import com.tower.smartline.factory.presenter.IBaseContract;
@@ -49,6 +51,6 @@ public interface ISearchContract {
          *
          * @param content 用户键入的内容
          */
-        void search(String content);
+        void search(@Nullable String content);
     }
 }

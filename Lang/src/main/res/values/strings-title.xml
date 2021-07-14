@@ -13,4 +13,7 @@
 
     <!--搜索页面-->
     <string name="title_search">搜索</string>
+    <string name="title_search_main">综合</string>
+    <string name="title_search_user">找人</string>
+    <string name="title_search_group">找群</string>
 </resources>

@@ -1,12 +1,19 @@
 package com.tower.smartline.push.activities;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -56,9 +63,6 @@ public class SearchActivity extends ToolbarActivity {
 
     private int mType;
 
-    // 当前的Fragment
-    private Fragment mCurFragment;
-
     /**
      * 搜索Activity拉起入口
      *
@@ -91,6 +95,8 @@ public class SearchActivity extends ToolbarActivity {
         super.initWidget();
 
         // ViewPager初始化
+        mBinding.vpContainer.setAdapter(new SearchPagerAdapter(getSupportFragmentManager()));
+        mBinding.vpContainer.setCurrentItem(mType, false);
 
         // TabLayout初始化
         mBinding.tlTab.setTabMode(TabLayout.MODE_FIXED);
@@ -100,16 +106,50 @@ public class SearchActivity extends ToolbarActivity {
         mBinding.tlTab.setupWithViewPager(mBinding.vpContainer);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // 初始化带有搜索的菜单
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.search, menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        View actionView = searchItem.getActionView();
+        Object sysService = getSystemService(Context.SEARCH_SERVICE);
+        if (actionView instanceof SearchView && sysService instanceof SearchManager) {
+            ((SearchView) actionView).setSearchableInfo(
+                    ((SearchManager) sysService).getSearchableInfo(getComponentName()));
+            ((SearchView) actionView).setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    // 当点击了提交按钮的时候
+                    search(query);
+                    return true;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String s) {
+                    // 当键入文字改变时，不会即时搜索，只在搜索框为空时搜索一次
+                    if (TextUtils.isEmpty(s)) {
+                        search("");
+                        return true;
+                    }
+                    return false;
+                }
+            });
+        }
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
     /**
-     * 搜索的Fragment必须实现的接口
+     * 将搜索任务分配给对应的Fragment
+     *
+     * @param content 用户键入的内容
      */
-    public interface ISearchFragment {
-        /**
-         * 搜索
-         *
-         * @param content 用户键入的内容
-         */
-        void search(String content);
+    private void search(@Nullable String content) {
+        Fragment curFragment = mFragsArray[mBinding.vpContainer.getCurrentItem()];
+        if (curFragment instanceof ISearchFragment) {
+            ((ISearchFragment) curFragment).search(content);
+        }
     }
 
     private class SearchPagerAdapter extends FragmentPagerAdapter {
@@ -145,5 +185,32 @@ public class SearchActivity extends ToolbarActivity {
         public int getCount() {
             return FRAGS_COUNT;
         }
+
+        @Nullable
+        @Override
+        public CharSequence getPageTitle(int position) {
+            if (position == TYPE_MAIN) {
+                return getString(R.string.title_search_main);
+            } else if (position == TYPE_USER) {
+                return getString(R.string.title_search_user);
+            } else if (position == TYPE_GROUP) {
+                return getString(R.string.title_search_group);
+            } else {
+                Log.w(TAG, "getPageTitle: illegal param: " + position);
+                return "";
+            }
+        }
+    }
+
+    /**
+     * 搜索的Fragment必须实现的接口
+     */
+    public interface ISearchFragment {
+        /**
+         * 搜索
+         *
+         * @param content 用户键入的内容
+         */
+        void search(@Nullable String content);
     }
 }

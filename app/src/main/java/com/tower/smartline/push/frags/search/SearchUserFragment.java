@@ -5,11 +5,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.tower.smartline.common.app.PresenterFragment;
 import com.tower.smartline.factory.model.response.UserCard;
 import com.tower.smartline.factory.presenter.search.ISearchContract;
+import com.tower.smartline.factory.presenter.search.SearchUserPresenter;
 import com.tower.smartline.push.activities.SearchActivity;
+import com.tower.smartline.push.databinding.FragmentSearchUserBinding;
 
 import java.util.List;
 
@@ -21,20 +24,28 @@ import java.util.List;
  */
 public class SearchUserFragment extends PresenterFragment<ISearchContract.Presenter>
         implements SearchActivity.ISearchFragment, ISearchContract.UserView {
+    private FragmentSearchUserBinding mBinding;
+
     @Override
     protected ISearchContract.Presenter initPresenter() {
-        return null;
+        return new SearchUserPresenter(this);
     }
 
     @NonNull
     @Override
     protected View initBinding(@NonNull LayoutInflater inflater, ViewGroup container) {
-        return null;
+        if (mBinding == null) {
+            mBinding = FragmentSearchUserBinding.inflate(inflater, container, false);
+        }
+        return mBinding.getRoot();
     }
 
     @Override
-    protected void destroyBinding() {
+    protected void initWidget() {
+        super.initWidget();
 
+        // 设置空布局
+        setEmptyView(mBinding.empty);
     }
 
     @Override
@@ -43,7 +54,12 @@ public class SearchUserFragment extends PresenterFragment<ISearchContract.Presen
     }
 
     @Override
-    public void search(String content) {
+    public void search(@Nullable String content) {
 
+    }
+
+    @Override
+    protected void destroyBinding() {
+        mBinding = null;
     }
 }

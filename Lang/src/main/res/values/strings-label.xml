@@ -32,4 +32,7 @@
     <string name="label_user_info_portrait">选择你的专属头像</string>
     <string name="label_user_info_description">用一句话介绍自己</string>
     <string name="label_user_info_submit">提交</string>
+
+    <!--搜索相关-->
+    <string name="label_search_create_group">创建群聊</string>
 </resources>

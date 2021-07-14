@@ -43,13 +43,27 @@ public class MainActivity extends BaseActivity
         NavHelper.OnTabChangedListener<Integer>, View.OnClickListener {
     private static final String TAG = MainActivity.class.getName();
 
+    // 当前页为 首页
+    private static final int TYPE_HOME = 0;
+
+    // 当前页为 群组
+    private static final int TYPE_GROUP = 1;
+
+    // 当前页为 联系人
+    private static final int TYPE_CONTACT = 2;
+
+    // 悬浮按钮旋转弹出动画初始值
     private static final int DEFAULT_VALUE = 0;
 
+    // 悬浮按钮旋转动画处理值
     private static final float ROTATION_VALUE = 360;
 
     private ActivityMainBinding mBinding;
 
     private NavHelper<Integer> mNavHelper;
+
+    // 当前页面类型
+    private int mType = TYPE_HOME;
 
     /**
      * MainActivity拉起入口
@@ -133,7 +147,12 @@ public class MainActivity extends BaseActivity
     }
 
     private void onActionClick() {
-        Log.i(TAG, "onActionClick");
+        Log.i(TAG, "onActionClick: type = " + mType);
+        if (mType == TYPE_GROUP) {
+            SearchActivity.show(this, SearchActivity.TYPE_GROUP);
+        } else if (mType == TYPE_CONTACT) {
+            SearchActivity.show(this, SearchActivity.TYPE_USER);
+        }
     }
 
     @Override
@@ -148,12 +167,10 @@ public class MainActivity extends BaseActivity
 
     @Override
     public void onTabChanged(@NonNull NavHelper.Tab<Integer> newTab, NavHelper.Tab<Integer> oldTab) {
-        if (getResources() == null) {
-            return;
-        }
+        String title = getString(newTab.getExtra());
+        Log.w(TAG, "onTabChanged: " + title);
 
         // 更改标题栏文字
-        String title = getString(newTab.getExtra());
         mBinding.txtTitle.setText(title);
 
         // 浮动按钮动画
@@ -163,14 +180,15 @@ public class MainActivity extends BaseActivity
         float translationValue = DEFAULT_VALUE;
         float rotationValue = DEFAULT_VALUE;
         if (Objects.equals(newTab.getClx(), HomeFragment.class)) {
+            mType = TYPE_HOME; // 记录当前页面类型
             translationValue = Ui.dipToPx(getResources(), getResources().getDimension(R.dimen.len_84));
-        }
-        if (Objects.equals(newTab.getClx(), GroupFragment.class)) {
+        } else if (Objects.equals(newTab.getClx(), GroupFragment.class)) {
+            mType = TYPE_GROUP; // 记录当前页面类型
             mBinding.btnAction.setImageResource(R.drawable.ic_group_add);
             mBinding.btnAction.setRotation(ROTATION_VALUE);
             rotationValue = -ROTATION_VALUE;
-        }
-        if (Objects.equals(newTab.getClx(), ContactFragment.class)) {
+        } else if (Objects.equals(newTab.getClx(), ContactFragment.class)) {
+            mType = TYPE_CONTACT; // 记录当前页面类型
             mBinding.btnAction.setImageResource(R.drawable.ic_contact_add);
             mBinding.btnAction.setRotation(-ROTATION_VALUE);
             rotationValue = ROTATION_VALUE;

@@ -11,6 +11,6 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:textColor="@color/black"
-        android:text="@string/hello_fragment_2" />
+        android:text="@string/hello_fragment" />
 
 </FrameLayout>

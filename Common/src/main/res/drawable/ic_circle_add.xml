@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <corners android:radius="@dimen/len_40" />
+            <solid android:color="@color/textSecond" />
+        </shape>
+    </item>
+    <item>
+        <inset
+            android:drawable="@drawable/ic_add"
+            android:insetLeft="@dimen/len_1"
+            android:insetTop="@dimen/len_1"
+            android:insetRight="@dimen/len_1"
+            android:insetBottom="@dimen/len_1" />
+    </item>
+</layer-list>

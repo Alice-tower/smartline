@@ -6,19 +6,19 @@ import androidx.annotation.Nullable;
 import com.tower.smartline.factory.presenter.BasePresenter;
 
 /**
- * SearchUserPresenter
+ * SearchMainPresenter
  *
  * @author zpsong-tower <pingzisong2012@gmail.com>
- * @since 2021/7/12 16:14
+ * @since 2021/7/13 14:41
  */
-public class SearchUserPresenter extends BasePresenter<ISearchContract.UserView>
+public class SearchMainPresenter extends BasePresenter<ISearchContract.MainView>
         implements ISearchContract.Presenter {
     /**
      * 构造方法
      *
      * @param view Presenter需要绑定的View层实例
      */
-    public SearchUserPresenter(@NonNull ISearchContract.UserView view) {
+    public SearchMainPresenter(@NonNull ISearchContract.MainView view) {
         super(view);
     }
 
