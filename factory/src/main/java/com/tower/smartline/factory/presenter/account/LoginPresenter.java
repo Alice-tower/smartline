@@ -35,7 +35,7 @@ public class LoginPresenter extends BasePresenter<ILoginContract.View>
     @Override
     public void login(String phone, String password) {
         start();
-        if (!checkString(phone, password)) {
+        if (getView() == null || !checkString(phone, password)) {
             return;
         }
         LoginModel model = new LoginModel(phone, password);
@@ -45,7 +45,7 @@ public class LoginPresenter extends BasePresenter<ILoginContract.View>
     @Override
     public void register(String phone, String password, String username) {
         start();
-        if (!checkString(phone, password) || !checkString(username)) {
+        if (getView() == null || !checkString(phone, password) || !checkString(username)) {
             return;
         }
         RegisterModel model = new RegisterModel(phone, password, username);
@@ -90,14 +90,18 @@ public class LoginPresenter extends BasePresenter<ILoginContract.View>
     @Override
     public void onSuccess(UserCard userCard) {
         Run.onUiAsync(() -> {
-            getView().submitSuccess();
+            if (getView() != null) {
+                getView().submitSuccess();
+            }
         });
     }
 
     @Override
     public void onFailure(int strRes) {
         Run.onUiAsync(() -> {
-            getView().showError(strRes);
+            if (getView() != null) {
+                getView().showError(strRes);
+            }
         });
     }
 }

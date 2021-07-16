@@ -129,7 +129,7 @@ public class SearchActivity extends ToolbarActivity {
                 public boolean onQueryTextChange(String s) {
                     // 当键入文字改变时，不会即时搜索，只在搜索框为空时搜索一次
                     if (TextUtils.isEmpty(s)) {
-                        search("");
+                        search(s);
                         return true;
                     }
                     return false;

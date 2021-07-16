@@ -147,7 +147,7 @@ public class MainActivity extends BaseActivity
     }
 
     private void onActionClick() {
-        Log.i(TAG, "onActionClick: type = " + mType);
+        Log.i(TAG, "onActionClick: type: " + mType);
         if (mType == TYPE_GROUP) {
             SearchActivity.show(this, SearchActivity.TYPE_GROUP);
         } else if (mType == TYPE_CONTACT) {

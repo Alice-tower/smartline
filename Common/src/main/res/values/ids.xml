@@ -5,4 +5,8 @@
 
     <!--Toolbar的默认id名-->
     <item name="toolbar" type="id" />
+
+    <!--默认头像的drawable名字-->
+    <item name="default_portrait_male" type="drawable" />
+    <item name="default_portrait_female" type="drawable" />
 </resources>

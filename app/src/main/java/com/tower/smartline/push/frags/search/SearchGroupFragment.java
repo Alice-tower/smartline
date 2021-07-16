@@ -29,6 +29,10 @@ public class SearchGroupFragment extends PresenterFragment<ISearchContract.Prese
 
     FragmentSearchGroupBinding mBinding;
 
+    public SearchGroupFragment() {
+        // Required empty public constructor
+    }
+
     @Override
     protected ISearchContract.Presenter initPresenter() {
         return new SearchGroupPresenter(this);

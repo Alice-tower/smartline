@@ -41,7 +41,7 @@ public abstract class BaseRecyclerAdapter<Data>
      * @param listener 点击监听
      */
     public BaseRecyclerAdapter(AdapterListener<Data> listener) {
-        this(new ArrayList<Data>(), listener);
+        this(new ArrayList<>(), listener);
     }
 
     /**
@@ -284,7 +284,7 @@ public abstract class BaseRecyclerAdapter<Data>
     public static abstract class BaseRecyclerViewHolder<Data> extends RecyclerView.ViewHolder {
         private MyAdapterCallback<Data> callback;
 
-        protected Data mData;
+        private Data mData;
 
         public BaseRecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -316,6 +316,10 @@ public abstract class BaseRecyclerAdapter<Data>
             if (this.callback != null) {
                 this.callback.update(data, this);
             }
+        }
+
+        public Data getData() {
+            return mData;
         }
     }
 }

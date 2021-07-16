@@ -7,8 +7,11 @@ import com.tower.smartline.factory.model.response.AccountRspModel;
 import com.tower.smartline.factory.model.response.UserCard;
 import com.tower.smartline.factory.model.response.base.ResponseModel;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -55,4 +58,39 @@ public interface IRemoteService {
      */
     @PUT("user")
     Call<ResponseModel<UserCard>> userUpdate(@Body UpdateInfoModel model);
+
+    /**
+     * 查询指定Id的用户信息
+     *
+     * @param userId 查询的用户Id
+     * @return ResponseModel<UserCard>
+     */
+    @GET("user/{userId}")
+    Call<ResponseModel<UserCard>> userInfo(@Path("userId") String userId);
+
+    /**
+     * 查询指定用户名的用户信息 (模糊查询 单页最多返回20个)
+     *
+     * @param name 用户名
+     * @return ResponseModel<List < UserCard>>
+     */
+    @GET("user/search/{name}")
+    Call<ResponseModel<List<UserCard>>> userSearch(@Path("name") String name);
+
+    /**
+     * 关注人(目前设计为自动互关)
+     *
+     * @param userId 被关注人的Id
+     * @return ResponseModel<UserCard>
+     */
+    @PUT("user/follow/{userId}")
+    Call<ResponseModel<UserCard>> userFollow(@Path("userId") String userId);
+
+    /**
+     * 拉取联系人列表(关注的人列表)
+     *
+     * @return ResponseModel<List < UserCard>>
+     */
+    @GET("user/contact")
+    Call<ResponseModel<List<UserCard>>> userContacts();
 }

@@ -22,7 +22,7 @@ public interface IUpdateInfoContract {
         /**
          * 更新个人信息
          *
-         * @param portraitUri 头像路径（外网链接）
+         * @param portraitUri 头像路径 (外网链接)
          * @param desc 个性签名
          * @param isMale 性别 True为男性 False为女性
          */

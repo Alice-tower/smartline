@@ -35,8 +35,8 @@ public class AccountHelper {
      */
     public static void login(LoginModel model, IDataSource.Callback<UserCard> callback) {
         Log.i(TAG, "login: start");
-        if (model == null || callback == null) {
-            Log.w(TAG, "login: model == null || callback == null");
+        if (model == null) {
+            Log.w(TAG, "login: model == null");
             return;
         }
         Network.remote()
@@ -63,8 +63,8 @@ public class AccountHelper {
      */
     public static void register(RegisterModel model, IDataSource.Callback<UserCard> callback) {
         Log.i(TAG, "register: start");
-        if (model == null || callback == null) {
-            Log.w(TAG, "register: model == null || callback == null");
+        if (model == null) {
+            Log.w(TAG, "register: model == null");
             return;
         }
         Network.remote()

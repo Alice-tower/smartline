@@ -41,11 +41,7 @@ public abstract class BasePresenter<V extends IBaseContract.View> implements IBa
      *
      * @return View
      */
-    @NonNull
     protected final V getView() {
-        if (mView == null) {
-            throw new IllegalStateException("BasePresenter " + this + " didn't bind a view.");
-        }
         return mView;
     }
 

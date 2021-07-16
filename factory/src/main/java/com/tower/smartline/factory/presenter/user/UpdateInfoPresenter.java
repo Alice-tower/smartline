@@ -72,14 +72,18 @@ public class UpdateInfoPresenter extends BasePresenter<IUpdateInfoContract.View>
     @Override
     public void onSuccess(UserCard userCard) {
         Run.onUiAsync(() -> {
-            getView().submitSuccess();
+            if (getView() != null) {
+                getView().submitSuccess();
+            }
         });
     }
 
     @Override
     public void onFailure(int strRes) {
         Run.onUiAsync(() -> {
-            getView().showError(strRes);
+            if (getView() != null) {
+                getView().showError(strRes);
+            }
         });
     }
 }

@@ -27,6 +27,10 @@ public class SearchMainFragment extends PresenterFragment<ISearchContract.Presen
         implements SearchActivity.ISearchFragment, ISearchContract.MainView {
     private FragmentSearchMainBinding mBinding;
 
+    public SearchMainFragment() {
+        // Required empty public constructor
+    }
+
     @Override
     protected ISearchContract.Presenter initPresenter() {
         return new SearchMainPresenter(this);
