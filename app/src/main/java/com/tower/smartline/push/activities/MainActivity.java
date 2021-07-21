@@ -46,11 +46,11 @@ public class MainActivity extends BaseActivity
     // 当前页为 首页
     private static final int TYPE_HOME = 0;
 
-    // 当前页为 群组
-    private static final int TYPE_GROUP = 1;
-
     // 当前页为 联系人
-    private static final int TYPE_CONTACT = 2;
+    private static final int TYPE_CONTACT = 1;
+
+    // 当前页为 群组
+    private static final int TYPE_GROUP = 2;
 
     // 悬浮按钮旋转弹出动画初始值
     private static final int DEFAULT_VALUE = 0;
@@ -99,8 +99,8 @@ public class MainActivity extends BaseActivity
         mNavHelper = new NavHelper<>(this, R.id.lay_container,
                 getSupportFragmentManager(), this);
         mNavHelper.add(R.id.action_home, new NavHelper.Tab<>(HomeFragment.class, R.string.title_home))
-                .add(R.id.action_group, new NavHelper.Tab<>(GroupFragment.class, R.string.title_group))
-                .add(R.id.action_contact, new NavHelper.Tab<>(ContactFragment.class, R.string.title_contact));
+                .add(R.id.action_contact, new NavHelper.Tab<>(ContactFragment.class, R.string.title_contact))
+                .add(R.id.action_group, new NavHelper.Tab<>(GroupFragment.class, R.string.title_group));
         mBinding.navigation.setOnNavigationItemSelectedListener(this);
 
         // 顶部TitleBar加载背景图
@@ -148,10 +148,10 @@ public class MainActivity extends BaseActivity
 
     private void onActionClick() {
         Log.i(TAG, "onActionClick: type: " + mType);
-        if (mType == TYPE_GROUP) {
-            SearchActivity.show(this, SearchActivity.TYPE_GROUP);
-        } else if (mType == TYPE_CONTACT) {
+        if (mType == TYPE_CONTACT) {
             SearchActivity.show(this, SearchActivity.TYPE_USER);
+        } else if (mType == TYPE_GROUP) {
+            SearchActivity.show(this, SearchActivity.TYPE_GROUP);
         }
     }
 
@@ -182,14 +182,14 @@ public class MainActivity extends BaseActivity
         if (Objects.equals(newTab.getClx(), HomeFragment.class)) {
             mType = TYPE_HOME; // 记录当前页面类型
             translationValue = Ui.dipToPx(getResources(), getResources().getDimension(R.dimen.len_84));
-        } else if (Objects.equals(newTab.getClx(), GroupFragment.class)) {
-            mType = TYPE_GROUP; // 记录当前页面类型
-            mBinding.btnAction.setImageResource(R.drawable.ic_group_add);
-            mBinding.btnAction.setRotation(ROTATION_VALUE);
-            rotationValue = -ROTATION_VALUE;
         } else if (Objects.equals(newTab.getClx(), ContactFragment.class)) {
             mType = TYPE_CONTACT; // 记录当前页面类型
             mBinding.btnAction.setImageResource(R.drawable.ic_contact_add);
+            mBinding.btnAction.setRotation(ROTATION_VALUE);
+            rotationValue = -ROTATION_VALUE;
+        } else if (Objects.equals(newTab.getClx(), GroupFragment.class)) {
+            mType = TYPE_GROUP; // 记录当前页面类型
+            mBinding.btnAction.setImageResource(R.drawable.ic_group_add);
             mBinding.btnAction.setRotation(-ROTATION_VALUE);
             rotationValue = ROTATION_VALUE;
         }
