@@ -75,6 +75,9 @@
             android:name=".activities.UserActivity"
             android:theme="@style/AppTheme.Account" />
         <activity
+            android:name=".activities.MessageActivity"
+            android:theme="@style/AppTheme.Message" />
+        <activity
             android:name=".activities.SearchActivity"
             android:label="@string/title_search"
             android:theme="@style/AppTheme.TransStatusBar" />

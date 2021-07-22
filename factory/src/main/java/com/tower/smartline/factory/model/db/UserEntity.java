@@ -79,7 +79,7 @@ public class UserEntity extends BaseModel {
     }
 
     public String getName() {
-        return name;
+        return  name;
     }
 
     public void setName(String name) {

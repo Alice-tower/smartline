@@ -29,7 +29,7 @@
                 android:foreground="@drawable/ic_touch_menu"
                 android:padding="@dimen/len_4"
                 android:scaleType="centerCrop"
-                android:src="@drawable/default_portrait_male" />
+                android:src="@color/textSecond" />
 
             <TextView
                 android:id="@+id/txt_title"

@@ -5,12 +5,21 @@
     android:layout_height="match_parent"
     tools:context=".frags.main.ContactFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:textColor="@color/black"
-        android:text="@string/hello_fragment" />
+        android:background="@drawable/bg_main_recycler"
+        android:clipToPadding="false"
+        android:elevation="1dp"
+        android:outlineProvider="bounds"
+        android:paddingVertical="@dimen/len_12"
+        android:visibility="gone"
+        tools:targetApi="lollipop" />
+
+    <com.tower.smartline.common.widget.EmptyView
+        android:id="@+id/empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </FrameLayout>

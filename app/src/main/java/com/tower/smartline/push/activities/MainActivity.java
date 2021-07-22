@@ -71,6 +71,9 @@ public class MainActivity extends BaseActivity
      * @param context 上下文
      */
     public static void show(Context context) {
+        if (context == null) {
+            return;
+        }
         context.startActivity(new Intent(context, MainActivity.class));
     }
 

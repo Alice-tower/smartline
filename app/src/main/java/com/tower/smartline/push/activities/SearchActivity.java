@@ -69,6 +69,9 @@ public class SearchActivity extends ToolbarActivity {
      * @param context 上下文
      */
     public static void show(Context context, int type) {
+        if (context == null) {
+            return;
+        }
         Intent intent = new Intent(context, SearchActivity.class);
         intent.putExtra(EXTRA_TYPE, type);
         context.startActivity(intent);
