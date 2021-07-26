@@ -18,5 +18,5 @@ public class AppDatabase {
     /**
      * 版本号
      */
-    public static final int VERSION = 1;
+    public static final int VERSION = 2;
 }

@@ -36,7 +36,8 @@ dependencies {
     implementation project(path: ':common')
 
     // androidx.support
-    implementation 'androidx.annotation:annotation:1.2.0'
+    implementation "androidx.annotation:annotation:$rootProject.ext.annotationVersion"
+    implementation "androidx.recyclerview:recyclerview:$rootProject.ext.recyclerviewVersion"
 
     // 阿里云OSS
     implementation "com.aliyun.dpa:oss-android-sdk:$rootProject.ext.ossVersion"

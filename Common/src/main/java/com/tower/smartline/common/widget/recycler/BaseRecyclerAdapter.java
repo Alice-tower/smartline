@@ -143,6 +143,15 @@ public abstract class BaseRecyclerAdapter<Data>
     }
 
     /**
+     * 得到当前集合
+     *
+     * @return List<Data>
+     */
+    public List<Data> getItems() {
+        return mDataList;
+    }
+
+    /**
      * 插入一条数据并通知刷新
      *
      * @param data 插入数据

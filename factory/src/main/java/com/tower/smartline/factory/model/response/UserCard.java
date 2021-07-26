@@ -2,6 +2,7 @@ package com.tower.smartline.factory.model.response;
 
 import androidx.annotation.NonNull;
 
+import com.tower.smartline.factory.model.IUserInfo;
 import com.tower.smartline.factory.model.db.UserEntity;
 
 import java.util.Date;
@@ -12,7 +13,7 @@ import java.util.Date;
  * @author zpsong-tower <pingzisong2012@gmail.com>
  * @since 2021/6/9 6:41
  */
-public class UserCard {
+public class UserCard implements IUserInfo {
     // Id
     private String id;
 
@@ -28,8 +29,8 @@ public class UserCard {
     // 性别
     private int sex;
 
-    // 最后更新用户信息时间
-    private Date updateAt;
+    // 是否已关注该用户
+    private boolean isFollow;
 
     // 关注数
     private int followingNum;
@@ -37,8 +38,8 @@ public class UserCard {
     // 粉丝数
     private int followersNum;
 
-    // 是否已关注该用户
-    private boolean isFollow;
+    // 最后更新用户信息时间
+    private Date updateAt;
 
     /**
      * 将当前UserCard内数据转化为UserEntity
@@ -54,12 +55,13 @@ public class UserCard {
         user.setDescription(description);
         user.setSex(sex);
         user.setFollow(isFollow);
+        user.setFollowersNum(followersNum);
+        user.setFollowingNum(followingNum);
         user.setUpdateAt(updateAt);
-        user.setFollowers(followersNum);
-        user.setFollowing(followingNum);
 
         // UserEntity内nickname未被填充
         // user.setNickname(null);
+
         return user;
     }
 
@@ -103,12 +105,12 @@ public class UserCard {
         this.sex = sex;
     }
 
-    public Date getUpdateAt() {
-        return updateAt;
+    public boolean isFollow() {
+        return isFollow;
     }
 
-    public void setUpdateAt(Date updateAt) {
-        this.updateAt = updateAt;
+    public void setFollow(boolean follow) {
+        isFollow = follow;
     }
 
     public int getFollowingNum() {
@@ -127,12 +129,12 @@ public class UserCard {
         this.followersNum = followersNum;
     }
 
-    public boolean isFollow() {
-        return isFollow;
+    public Date getUpdateAt() {
+        return updateAt;
     }
 
-    public void setFollow(boolean follow) {
-        isFollow = follow;
+    public void setUpdateAt(Date updateAt) {
+        this.updateAt = updateAt;
     }
 
     @NonNull

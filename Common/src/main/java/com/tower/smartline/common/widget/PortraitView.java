@@ -9,6 +9,7 @@ import com.tower.smartline.common.R;
 
 import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.RequestManager;
+import com.tower.smartline.factory.model.IUserInfo;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -51,10 +52,26 @@ public class PortraitView extends CircleImageView {
     /**
      * 填充圆形头像View的内容
      *
+     * @param manager  manager Glide.with()
+     * @param user IUserInfo
+     */
+    public void setup(RequestManager manager, IUserInfo user) {
+        if (user == null) {
+            return;
+        }
+        setup(manager, user.getPortrait());
+    }
+
+    /**
+     * 填充圆形头像View的内容
+     *
      * @param manager Glide.with()
      * @param url     头像路径 (外网链接)
      */
     public void setup(RequestManager manager, String url) {
+        if (manager == null) {
+            return;
+        }
         mUrl = url == null ? "" : url;
         RequestBuilder<Drawable> builder;
         if (mUrl.equals(DEFAULT_MALE)) {

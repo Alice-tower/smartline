@@ -1,11 +1,13 @@
 package com.tower.smartline.factory.model.db;
 
+import com.tower.smartline.factory.model.IUserInfo;
+
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * UserEntity
@@ -14,7 +16,8 @@ import java.util.Date;
  * @since 2021/6/9 5:17
  */
 @Table(database = AppDatabase.class)
-public class UserEntity extends BaseModel {
+public class UserEntity extends BaseDbModel<UserEntity>
+        implements IUserInfo {
     /**
      * 性别_未知
      */
@@ -50,14 +53,6 @@ public class UserEntity extends BaseModel {
     @Column
     private int sex = SEX_TYPE_UNKNOWN;
 
-    // 关注数
-    @Column
-    private int following;
-
-    // 粉丝数
-    @Column
-    private int followers;
-
     // 我对当前User的备注名
     @Column
     private String nickname;
@@ -65,6 +60,14 @@ public class UserEntity extends BaseModel {
     // 我是否关注了当前User
     @Column
     private boolean isFollow;
+
+    // 关注数
+    @Column
+    private int followingNum;
+
+    // 粉丝数
+    @Column
+    private int followersNum;
 
     // 修改时间
     @Column
@@ -79,7 +82,7 @@ public class UserEntity extends BaseModel {
     }
 
     public String getName() {
-        return  name;
+        return name;
     }
 
     public void setName(String name) {
@@ -110,22 +113,6 @@ public class UserEntity extends BaseModel {
         this.sex = sex;
     }
 
-    public int getFollowing() {
-        return following;
-    }
-
-    public void setFollowing(int following) {
-        this.following = following;
-    }
-
-    public int getFollowers() {
-        return followers;
-    }
-
-    public void setFollowers(int followers) {
-        this.followers = followers;
-    }
-
     public String getNickname() {
         return nickname;
     }
@@ -142,6 +129,22 @@ public class UserEntity extends BaseModel {
         isFollow = follow;
     }
 
+    public int getFollowingNum() {
+        return followingNum;
+    }
+
+    public void setFollowingNum(int followingNum) {
+        this.followingNum = followingNum;
+    }
+
+    public int getFollowersNum() {
+        return followersNum;
+    }
+
+    public void setFollowersNum(int followersNum) {
+        this.followersNum = followersNum;
+    }
+
     public Date getUpdateAt() {
         return updateAt;
     }
@@ -156,9 +159,9 @@ public class UserEntity extends BaseModel {
         if (o == null || getClass() != o.getClass()) return false;
         UserEntity that = (UserEntity) o;
         if (sex != that.sex) return false;
-        if (following != that.following) return false;
-        if (followers != that.followers) return false;
         if (isFollow != that.isFollow) return false;
+        if (followingNum != that.followingNum) return false;
+        if (followersNum != that.followersNum) return false;
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (portrait != null ? !portrait.equals(that.portrait) : that.portrait != null)
@@ -173,5 +176,22 @@ public class UserEntity extends BaseModel {
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
+    public boolean isSame(UserEntity old) {
+        // 是否指向同一数据 主要关注 Id
+        return this == old || Objects.equals(id, old.id);
+    }
+
+    @Override
+    public boolean isUiContentSame(UserEntity old) {
+        // 显示的内容是否一致 主要关注 用户名，性别，头像，个性签名，是否已关注
+        return this == old || (Objects.equals(name, old.name)
+                && sex == old.sex
+                && Objects.equals(portrait, old.portrait)
+                && Objects.equals(description, old.description)
+                && isFollow == old.isFollow
+        );
     }
 }
