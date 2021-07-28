@@ -13,7 +13,7 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        //个推相关参数
+        // 个推相关参数
         manifestPlaceholders = [
                 GETUI_APP_ID    : "需要开发者自行配置",
                 GETUI_APP_KEY   : "需要开发者自行配置",
