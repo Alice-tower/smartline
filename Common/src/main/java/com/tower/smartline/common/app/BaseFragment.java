@@ -23,11 +23,6 @@ public abstract class BaseFragment extends Fragment {
 
     protected EmptyView mEmptyView;
 
-    /**
-     * 标识是否第一次初始化数据
-     */
-    protected boolean mIsFirst = true;
-
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -38,27 +33,18 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        if (mRoot == null) {
-            // 子类通过ViewBinding初始化根布局
-            mRoot = initBinding(inflater, container);
-            initWidget();
-        } else {
-            if (mRoot.getParent() != null) {
-                // 把当前Root从其父控件中移除
-                ((ViewGroup) mRoot.getParent()).removeView(mRoot);
-            }
-            mRoot = initBinding(inflater, container);
+        if (mRoot != null && mRoot.getParent() != null) {
+            // 把当前Root从其父控件中移除
+            ((ViewGroup) mRoot.getParent()).removeView(mRoot);
         }
+        mRoot = initBinding(inflater, container);
+        initWidget();
         return mRoot;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (mIsFirst) {
-            mIsFirst = false;
-            onFirstInit();
-        }
 
         // 当View创建完成后初始化数据
         initData();
@@ -84,12 +70,6 @@ public abstract class BaseFragment extends Fragment {
      * 初始化控件
      */
     protected void initWidget() {
-    }
-
-    /**
-     * 首次初始化数据时
-     */
-    protected void onFirstInit() {
     }
 
     /**

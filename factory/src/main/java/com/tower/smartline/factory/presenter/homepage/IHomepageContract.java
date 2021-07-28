@@ -17,6 +17,6 @@ public interface IHomepageContract {
         /**
          * 刷新数据
          */
-        void refreshData();
+        void initData();
     }
 }

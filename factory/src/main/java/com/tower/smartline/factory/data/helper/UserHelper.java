@@ -8,10 +8,12 @@ import androidx.annotation.Nullable;
 
 import com.tower.smartline.factory.data.IDataSource;
 import com.tower.smartline.factory.model.api.user.UpdateInfoModel;
+import com.tower.smartline.factory.model.db.UserEntity;
 import com.tower.smartline.factory.model.response.UserCard;
 import com.tower.smartline.factory.model.response.base.ResponseModel;
 import com.tower.smartline.factory.net.Network;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -114,5 +116,34 @@ public class UserHelper {
                         callback.onSuccess(result);
                     }
                 });
+    }
+
+    /**
+     * 获取联系人列表
+     *
+     * @param callback 回调
+     */
+    public static void getContacts(IDataSource.Callback<List<UserEntity>> callback) {
+        Log.i(TAG, "getContacts: start");
+        Network.remote().userContacts().enqueue(
+                new MyCallback<List<UserCard>>(callback) {
+                    @Override
+                    public void onResponse(@NonNull Call<ResponseModel<List<UserCard>>> call, @NonNull Response<ResponseModel<List<UserCard>>> response) {
+                        super.onResponse(call, response);
+                        List<UserCard> result = getResultOrHandled();
+                        if (result == null) {
+                            return;
+                        }
+
+                        // TODO 数据库处理 待完善
+                        List<UserEntity> entities = new ArrayList<>();
+                        for (UserCard card : result) {
+                            entities.add(card.toUserEntity());
+                        }
+
+                        callback.onSuccess(entities);
+                    }
+                }
+        );
     }
 }

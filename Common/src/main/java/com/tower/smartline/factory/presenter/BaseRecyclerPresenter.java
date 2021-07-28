@@ -12,17 +12,19 @@ import java.util.List;
 /**
  * BaseRecyclerPresenter
  *
+ * @param <Data> RecyclerView数据集合中的数据类型
+ * @param <V>    MVP模式中的View
  * @author zpsong-tower <pingzisong2012@gmail.com>
  * @since 2021/7/26 18:50
  */
-public abstract class BaseRecyclerPresenter<Data, View extends IBaseContract.RecyclableView<BaseRecyclerPresenter<Data, View>, Data>>
-        extends BasePresenter<View> {
+public abstract class BaseRecyclerPresenter<Data, V extends IBaseContract.RecyclableView<? extends IBaseContract.Presenter, Data>>
+        extends BasePresenter<V> {
     /**
      * 构造方法
      *
      * @param view Presenter需要绑定的View层实例
      */
-    public BaseRecyclerPresenter(@NonNull View view) {
+    public BaseRecyclerPresenter(@NonNull V view) {
         super(view);
     }
 
@@ -31,7 +33,7 @@ public abstract class BaseRecyclerPresenter<Data, View extends IBaseContract.Rec
      *
      * @param dataList 新数据
      */
-    protected void refreshData(final List<Data> dataList) {
+    protected void refreshData(List<Data> dataList) {
         Run.onUiAsync(() -> {
             if (getView() == null) {
                 return;

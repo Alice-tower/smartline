@@ -18,6 +18,7 @@ import java.util.List;
 /**
  * RecyclerView适配器
  *
+ * @param <Data> RecyclerView数据集合中的数据类型
  * @author zpsong-tower <pingzisong2012@gmail.com>
  * @since 2020/11/24 3:42
  */
@@ -288,7 +289,7 @@ public abstract class BaseRecyclerAdapter<Data>
     /**
      * 自定义的ViewHolder
      *
-     * @param <Data> 泛型类型
+     * @param <Data> RecyclerView数据集合中的数据类型
      */
     public static abstract class BaseRecyclerViewHolder<Data> extends RecyclerView.ViewHolder {
         private MyAdapterCallback<Data> callback;

@@ -70,19 +70,21 @@ public class SearchUserFragment extends PresenterFragment<ISearchContract.Presen
         super.initWidget();
 
         // 初始化Recycler
-        mBinding.recycler.setLayoutManager(
-                new LinearLayoutManager(requireContext()));
-        mBinding.recycler.setAdapter(mAdapter = new BaseRecyclerAdapter<UserCard>() {
-            @Override
-            protected int getItemViewType(int position, UserCard userCard) {
-                return R.layout.cell_search_list;
-            }
+        mBinding.recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
+        if (mAdapter == null) {
+            mAdapter = new BaseRecyclerAdapter<UserCard>() {
+                @Override
+                protected int getItemViewType(int position, UserCard userCard) {
+                    return R.layout.cell_search_list;
+                }
 
-            @Override
-            protected BaseRecyclerViewHolder<UserCard> onCreateViewHolder(View root, int viewType) {
-                return new SearchUserViewHolder(root);
-            }
-        });
+                @Override
+                protected BaseRecyclerViewHolder<UserCard> onCreateViewHolder(View root, int viewType) {
+                    return new SearchUserViewHolder(root);
+                }
+            };
+        }
+        mBinding.recycler.setAdapter(mAdapter);
 
         // 设置空布局
         mBinding.empty.bind(mBinding.recycler);

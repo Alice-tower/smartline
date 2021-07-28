@@ -7,13 +7,14 @@ import java.util.List;
 /**
  * DiffUiDataCallback
  *
+ * @param <E> RecyclerView数据集合中需要被比较的类型
  * @author zpsong-tower <pingzisong2012@gmail.com>
  * @since 2021/7/25 10:52
  */
-public class DiffUiDataCallback<T extends DiffUiDataCallback.UiDataDiffer<T>> extends DiffUtil.Callback {
-    private List<T> mOldList, mNewList;
+public class DiffUiDataCallback<E extends DiffUiDataCallback.UiDataDiffer<E>> extends DiffUtil.Callback {
+    private List<E> mOldList, mNewList;
 
-    public DiffUiDataCallback(List<T> mOldList, List<T> mNewList) {
+    public DiffUiDataCallback(List<E> mOldList, List<E> mNewList) {
         this.mOldList = mOldList;
         this.mNewList = mNewList;
     }
@@ -30,31 +31,31 @@ public class DiffUiDataCallback<T extends DiffUiDataCallback.UiDataDiffer<T>> ex
 
     @Override
     public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-        T oldItem = mOldList.get(oldItemPosition);
-        T newItem = mNewList.get(newItemPosition);
+        E oldItem = mOldList.get(oldItemPosition);
+        E newItem = mNewList.get(newItemPosition);
         return newItem.isSame(oldItem);
     }
 
     @Override
     public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-        T oldItem = mOldList.get(oldItemPosition);
-        T newItem = mNewList.get(newItemPosition);
+        E oldItem = mOldList.get(oldItemPosition);
+        E newItem = mNewList.get(newItemPosition);
         return newItem.isUiContentSame(oldItem);
     }
 
     /**
      * 需要被比较的类型的接口
      *
-     * @param <T> 需要被比较的类型，即实现该接口的类本身
+     * @param <E> 需要被比较的类型，即实现该接口的类本身
      */
-    public interface UiDataDiffer<T> {
+    public interface UiDataDiffer<E> {
         /**
          * 指向是否为同一数据
          *
          * @param old 旧数据
          * @return True为相同，False为不同
          */
-        boolean isSame(T old);
+        boolean isSame(E old);
 
         /**
          * Ui相关的数据内容是否相同
@@ -62,6 +63,6 @@ public class DiffUiDataCallback<T extends DiffUiDataCallback.UiDataDiffer<T>> ex
          * @param old 旧数据
          * @return True为相同，False为不同
          */
-        boolean isUiContentSame(T old);
+        boolean isUiContentSame(E old);
     }
 }

@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 /**
  * MVP模式 Presenter抽象类
  *
+ * @param <V> MVP模式中的View
  * @author zpsong-tower <pingzisong2012@gmail.com>
  * @since 2021/6/8 9:41
  */

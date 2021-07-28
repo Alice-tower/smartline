@@ -35,6 +35,9 @@ public class ContactFragment extends PresenterFragment<IHomepageContract.Present
 
     private BaseRecyclerAdapter<UserEntity> mAdapter;
 
+    // 标识是否第一次初始化数据
+    private boolean mIsFirst = true;
+
     public ContactFragment() {
         // Required empty public constructor
     }
@@ -59,27 +62,30 @@ public class ContactFragment extends PresenterFragment<IHomepageContract.Present
 
         // 初始化Recycler
         mBinding.recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
-        mBinding.recycler.setAdapter(mAdapter = new BaseRecyclerAdapter<UserEntity>() {
-            @Override
-            protected int getItemViewType(int position, UserEntity userEntity) {
-                return R.layout.cell_contact_list;
-            }
+        if (mAdapter == null) {
+            mAdapter = new BaseRecyclerAdapter<UserEntity>() {
+                @Override
+                protected int getItemViewType(int position, UserEntity userEntity) {
+                    return R.layout.cell_contact_list;
+                }
 
-            @Override
-            protected BaseRecyclerViewHolder<UserEntity> onCreateViewHolder(View root, int viewType) {
-                return new ContactViewHolder(root);
-            }
-        });
-        mAdapter.setListener(new BaseRecyclerAdapter.AdapterListener<UserEntity>() {
-            @Override
-            public void onItemClick(@NonNull BaseRecyclerAdapter.BaseRecyclerViewHolder<UserEntity> holder, UserEntity userEntity) {
-                MessageActivity.show(requireContext(), userEntity);
-            }
+                @Override
+                protected BaseRecyclerViewHolder<UserEntity> onCreateViewHolder(View root, int viewType) {
+                    return new ContactViewHolder(root);
+                }
+            };
+            mAdapter.setListener(new BaseRecyclerAdapter.AdapterListener<UserEntity>() {
+                @Override
+                public void onItemClick(@NonNull BaseRecyclerAdapter.BaseRecyclerViewHolder<UserEntity> holder, UserEntity userEntity) {
+                    MessageActivity.show(requireContext(), userEntity);
+                }
 
-            @Override
-            public void onItemLongClick(@NonNull BaseRecyclerAdapter.BaseRecyclerViewHolder<UserEntity> holder, UserEntity userEntity) {
-            }
-        });
+                @Override
+                public void onItemLongClick(@NonNull BaseRecyclerAdapter.BaseRecyclerViewHolder<UserEntity> holder, UserEntity userEntity) {
+                }
+            });
+        }
+        mBinding.recycler.setAdapter(mAdapter);
 
         // 设置空布局
         mBinding.empty.bind(mBinding.recycler);
@@ -87,11 +93,16 @@ public class ContactFragment extends PresenterFragment<IHomepageContract.Present
     }
 
     @Override
-    protected void onFirstInit() {
-        super.onFirstInit();
-
-        // Fragment首次初始化时加载一次数据
-        getPresenter().refreshData();
+    protected void initData() {
+        super.initData();
+        if (mIsFirst) {
+            // Fragment首次初始化时加载一次数据
+            getPresenter().initData();
+            mIsFirst = false;
+        } else {
+            // 重新切换到该Fragment 刷新空界面内容
+            onAdapterDataChanged();
+        }
     }
 
     @Override

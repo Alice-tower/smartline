@@ -17,6 +17,7 @@ import retrofit2.Response;
 /**
  * 自定义Retrofit回调接口的基类
  *
+ * @param <T> 网络请求返回Result的类型
  * @author zpsong-tower <pingzisong2012@gmail.com>
  * @since 2021/6/11 5:45
  */

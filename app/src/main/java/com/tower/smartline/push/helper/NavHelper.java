@@ -8,10 +8,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+
 /**
  * BottomNavigationView辅助类
  * 解决对Fragment的调度与重用
  *
+ * @param <T> Tab类 泛型额外参数，跟随定义的Tab可任意指定
  * @author zpsong-tower <pingzisong2012@gmail.com>
  * @since 2021/4/23 1:53
  */

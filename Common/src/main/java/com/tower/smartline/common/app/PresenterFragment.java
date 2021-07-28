@@ -9,6 +9,7 @@ import com.tower.smartline.factory.presenter.IBaseContract;
 /**
  * MVP模式 View Fragment抽象类
  *
+ * @param <P> MVP模式中的Presenter
  * @author zpsong-tower <pingzisong2012@gmail.com>
  * @since 2021/6/8 10:10
  */

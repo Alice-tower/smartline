@@ -7,11 +7,11 @@ import java.util.Date;
 /**
  * 响应Model
  *
- * @param <R> 响应携带的数据的模型
+ * @param <T> 网络请求返回Result的类型
  * @author zpsong-tower <pingzisong2012@gmail.com>
  * @since 2021/6/9 6:42
  */
-public class ResponseModel<R> {
+public class ResponseModel<T> {
     // 响应错误码
     private int code;
 
@@ -19,7 +19,7 @@ public class ResponseModel<R> {
     private String msg;
 
     // 携带的数据
-    private R result;
+    private T result;
 
     // 服务侧响应时间
     private Date time;
@@ -40,11 +40,11 @@ public class ResponseModel<R> {
         this.msg = msg;
     }
 
-    public R getResult() {
+    public T getResult() {
         return result;
     }
 
-    public void setResult(R result) {
+    public void setResult(T result) {
         this.result = result;
     }
 
