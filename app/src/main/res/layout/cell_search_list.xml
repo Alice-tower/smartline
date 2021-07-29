@@ -30,7 +30,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         android:textColor="@color/textAccent"
         android:textSize="@dimen/fontNameSize"
-        tools:text="@string/app_name" />
+        tools:text="username" />
 
     <ImageView
         android:id="@+id/im_follow"

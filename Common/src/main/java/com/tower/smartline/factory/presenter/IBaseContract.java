@@ -18,6 +18,13 @@ public interface IBaseContract {
      */
     interface View<P extends Presenter> {
         /**
+         * 初始化Presenter
+         *
+         * @return Presenter
+         */
+        P initPresenter();
+
+        /**
          * 提示错误Toast
          *
          * @param str 字符串资源
@@ -28,6 +35,11 @@ public interface IBaseContract {
          * 显示Loading
          */
         void showLoading();
+
+        /**
+         * 隐藏Loading
+         */
+        void hideLoading();
 
         /**
          * 设置Presenter

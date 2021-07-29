@@ -67,7 +67,7 @@ public class UpdateInfoFragment extends PresenterFragment<IUpdateInfoContract.Pr
     }
 
     @Override
-    protected IUpdateInfoContract.Presenter initPresenter() {
+    public IUpdateInfoContract.Presenter initPresenter() {
         return new UpdateInfoPresenter(this);
     }
 
@@ -173,11 +173,7 @@ public class UpdateInfoFragment extends PresenterFragment<IUpdateInfoContract.Pr
     public void showError(int str) {
         // 显示错误提示 界面恢复操作
         super.showError(str);
-        mBinding.loading.stop();
-        mBinding.btnSubmit.setEnabled(true);
-        mBinding.imPortrait.setEnabled(true);
-        mBinding.editDesc.setEnabled(true);
-        mBinding.imSex.setEnabled(true);
+        hideLoading();
     }
 
     @Override
@@ -189,6 +185,16 @@ public class UpdateInfoFragment extends PresenterFragment<IUpdateInfoContract.Pr
         mBinding.imPortrait.setEnabled(false);
         mBinding.editDesc.setEnabled(false);
         mBinding.imSex.setEnabled(false);
+    }
+
+    @Override
+    public void hideLoading() {
+        super.hideLoading();
+        mBinding.loading.stop();
+        mBinding.btnSubmit.setEnabled(true);
+        mBinding.imPortrait.setEnabled(true);
+        mBinding.editDesc.setEnabled(true);
+        mBinding.imSex.setEnabled(true);
     }
 
     @Override

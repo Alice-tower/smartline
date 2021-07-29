@@ -23,13 +23,6 @@ public abstract class PresenterFragment<P extends IBaseContract.Presenter> exten
         mPresenter = initPresenter();
     }
 
-    /**
-     * 初始化Presenter
-     *
-     * @return Presenter
-     */
-    protected abstract P initPresenter();
-
     @Override
     public void showError(int str) {
         if (mEmptyView != null) {
@@ -42,6 +35,22 @@ public abstract class PresenterFragment<P extends IBaseContract.Presenter> exten
     public void showLoading() {
         if (mEmptyView != null) {
             mEmptyView.showLoading();
+        }
+    }
+
+    @Override
+    public void hideLoading() {
+        hideLoading(true);
+    }
+
+    /**
+     * 隐藏Loading
+     *
+     * @param isOk 是否成功加载不为空的数据
+     */
+    public void hideLoading(boolean isOk) {
+        if (mEmptyView != null) {
+            mEmptyView.showOkOrEmpty(isOk);
         }
     }
 

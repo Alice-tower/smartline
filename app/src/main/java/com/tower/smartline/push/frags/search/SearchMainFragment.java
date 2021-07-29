@@ -32,7 +32,7 @@ public class SearchMainFragment extends PresenterFragment<ISearchContract.Presen
     }
 
     @Override
-    protected ISearchContract.Presenter initPresenter() {
+    public ISearchContract.Presenter initPresenter() {
         return new SearchMainPresenter(this);
     }
 

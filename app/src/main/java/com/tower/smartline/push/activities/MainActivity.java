@@ -79,12 +79,13 @@ public class MainActivity extends BaseActivity
 
     @Override
     protected boolean initArgs(Bundle bundle) {
-        if (!Account.isComplete()) {
-            // 用户信息不完整
-            UserActivity.show(this);
-            return false;
+        if (Account.isComplete()) {
+            return super.initArgs(bundle);
         }
-        return super.initArgs(bundle);
+
+        // 用户信息不完整 拉起用户信息完善页面
+        UserActivity.show(this);
+        return false;
     }
 
     @NonNull
@@ -138,10 +139,14 @@ public class MainActivity extends BaseActivity
         // 底部导航栏默认选中首页
         Menu menu = mBinding.navigation.getMenu();
         menu.performIdentifierAction(R.id.action_home, 0);
+
+        // 初始化头像加载
+        mBinding.imPortrait.setup(Glide.with(this), Account.getUser());
     }
 
     private void onPortraitClick() {
         Log.i(TAG, "onPortraitClick");
+        PersonalActivity.show(this, Account.getUserId());
     }
 
     private void onSearchClick() {

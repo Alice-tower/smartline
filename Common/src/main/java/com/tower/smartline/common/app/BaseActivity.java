@@ -8,6 +8,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.tower.smartline.common.widget.EmptyView;
+
 import java.util.List;
 
 /**
@@ -17,6 +19,8 @@ import java.util.List;
  * @since 2020/10/28 4:38
  */
 public abstract class BaseActivity extends AppCompatActivity {
+    protected EmptyView mEmptyView;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,5 +99,16 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
         }
         finish();
+    }
+
+    /**
+     * 设置空布局
+     *
+     * @param emptyView 空布局
+     * @param views     空布局绑定的数据布局
+     */
+    public void setEmptyView(EmptyView emptyView, View... views) {
+        emptyView.bind(views);
+        this.mEmptyView = emptyView;
     }
 }

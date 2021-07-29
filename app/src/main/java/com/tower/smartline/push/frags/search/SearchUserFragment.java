@@ -21,6 +21,7 @@ import com.tower.smartline.factory.presenter.search.SearchUserPresenter;
 import com.tower.smartline.factory.presenter.user.FollowPresenter;
 import com.tower.smartline.factory.presenter.user.IFollowContract;
 import com.tower.smartline.push.R;
+import com.tower.smartline.push.activities.PersonalActivity;
 import com.tower.smartline.push.activities.SearchActivity;
 import com.tower.smartline.push.databinding.FragmentSearchUserBinding;
 
@@ -52,7 +53,7 @@ public class SearchUserFragment extends PresenterFragment<ISearchContract.Presen
     }
 
     @Override
-    protected ISearchContract.Presenter initPresenter() {
+    public ISearchContract.Presenter initPresenter() {
         return new SearchUserPresenter(this);
     }
 
@@ -87,8 +88,7 @@ public class SearchUserFragment extends PresenterFragment<ISearchContract.Presen
         mBinding.recycler.setAdapter(mAdapter);
 
         // 设置空布局
-        mBinding.empty.bind(mBinding.recycler);
-        setEmptyView(mBinding.empty);
+        setEmptyView(mBinding.empty, mBinding.recycler);
     }
 
     @Override
@@ -108,7 +108,7 @@ public class SearchUserFragment extends PresenterFragment<ISearchContract.Presen
     public void searchUserSuccess(List<UserCard> userCards) {
         // 替换并显示新的搜索数据 若数据为空则显示空布局
         mAdapter.replace(userCards);
-        mBinding.empty.showOkOrEmpty(mAdapter.getItemCount() > 0);
+        hideLoading(mAdapter.getItemCount() > 0);
     }
 
     @Override
@@ -135,7 +135,7 @@ public class SearchUserFragment extends PresenterFragment<ISearchContract.Presen
             mFollow = itemView.findViewById(R.id.im_follow);
 
             // Presenter初始化
-            mPresenter = new FollowPresenter(this);
+            mPresenter = initPresenter();
 
             // 点击监听初始化
             mPortrait.setOnClickListener(this);
@@ -150,13 +150,14 @@ public class SearchUserFragment extends PresenterFragment<ISearchContract.Presen
         }
 
         @Override
+        public IFollowContract.Presenter initPresenter() {
+            return new FollowPresenter(this);
+        }
+
+        @Override
         public void showError(int str) {
-            if (mFollow.getDrawable() instanceof LoadingDrawable) {
-                // 停止动画 还原按钮
-                ((LoadingDrawable) mFollow.getDrawable()).stop();
-                mFollow.setImageResource(R.drawable.sel_opt_done_add);
-            }
             MyApplication.showToast(str);
+            hideLoading();
         }
 
         @Override
@@ -175,17 +176,22 @@ public class SearchUserFragment extends PresenterFragment<ISearchContract.Presen
         }
 
         @Override
+        public void hideLoading() {
+            if (mFollow.getDrawable() instanceof LoadingDrawable) {
+                // 停止动画 还原按钮
+                ((LoadingDrawable) mFollow.getDrawable()).stop();
+                mFollow.setImageResource(R.drawable.sel_opt_done_add);
+            }
+        }
+
+        @Override
         public void setPresenter(IFollowContract.Presenter presenter) {
             mPresenter = presenter;
         }
 
         @Override
         public void followSuccess(UserCard userCard) {
-            if (mFollow.getDrawable() instanceof LoadingDrawable) {
-                // 停止动画 还原按钮
-                ((LoadingDrawable) mFollow.getDrawable()).stop();
-                mFollow.setImageResource(R.drawable.sel_opt_done_add);
-            }
+            hideLoading();
 
             // 更新界面数据
             updateData(userCard);
@@ -193,8 +199,9 @@ public class SearchUserFragment extends PresenterFragment<ISearchContract.Presen
 
         private void onPortraitClick() {
             Log.i(TAG, "onPortraitClick: itemId: " + getItemId());
-
-            // TODO 展示用户信息
+            if (getData() != null) {
+                PersonalActivity.show(requireContext(), getData().getId());
+            }
         }
 
         private void onFollowClick() {

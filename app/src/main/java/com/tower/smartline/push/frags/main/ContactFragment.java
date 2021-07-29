@@ -17,6 +17,7 @@ import com.tower.smartline.factory.presenter.homepage.ContactPresenter;
 import com.tower.smartline.factory.presenter.homepage.IHomepageContract;
 import com.tower.smartline.push.R;
 import com.tower.smartline.push.activities.MessageActivity;
+import com.tower.smartline.push.activities.PersonalActivity;
 import com.tower.smartline.push.databinding.FragmentContactBinding;
 
 import com.bumptech.glide.Glide;
@@ -43,7 +44,7 @@ public class ContactFragment extends PresenterFragment<IHomepageContract.Present
     }
 
     @Override
-    protected IHomepageContract.Presenter initPresenter() {
+    public IHomepageContract.Presenter initPresenter() {
         return new ContactPresenter(this);
     }
 
@@ -88,8 +89,7 @@ public class ContactFragment extends PresenterFragment<IHomepageContract.Present
         mBinding.recycler.setAdapter(mAdapter);
 
         // 设置空布局
-        mBinding.empty.bind(mBinding.recycler);
-        setEmptyView(mBinding.empty);
+        setEmptyView(mBinding.empty, mBinding.recycler);
     }
 
     @Override
@@ -116,7 +116,7 @@ public class ContactFragment extends PresenterFragment<IHomepageContract.Present
             Log.w(TAG, "onAdapterDataChanged: mAdapter == null");
             return;
         }
-        mBinding.empty.showOkOrEmpty(mAdapter.getItemCount() > 0);
+        hideLoading(mAdapter.getItemCount() > 0);
     }
 
     @Override
@@ -151,8 +151,9 @@ public class ContactFragment extends PresenterFragment<IHomepageContract.Present
 
         private void onPortraitClick() {
             Log.i(TAG, "onPortraitClick: itemId: " + getItemId());
-
-            // TODO 展示用户信息
+            if (getData() != null) {
+                PersonalActivity.show(requireContext(), getData().getId());
+            }
         }
 
         @Override

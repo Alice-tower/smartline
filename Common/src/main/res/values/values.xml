@@ -387,4 +387,5 @@
     <dimen name="len_156">156dp</dimen>
     <dimen name="len_172">172dp</dimen>
     <dimen name="len_188">188dp</dimen>
+    <dimen name="len_256">256dp</dimen>
 </resources>

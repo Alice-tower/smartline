@@ -14,10 +14,11 @@ import com.tower.smartline.common.R;
 public abstract class ToolbarActivity extends BaseActivity {
     protected Toolbar mToolbar;
 
+    private ActionBar mActionBar;
+
     @Override
     protected void initWidget() {
         super.initWidget();
-
         mToolbar = findViewById(R.id.toolbar);
         initToolbar();
     }
@@ -32,12 +33,23 @@ public abstract class ToolbarActivity extends BaseActivity {
         initTitleNeedBack();
     }
 
+    /**
+     * 设置左上角的返回按钮为实际的返回效果
+     */
     protected void initTitleNeedBack() {
-        // 设置左上角的返回按钮为实际的返回效果
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeButtonEnabled(true);
+        mActionBar = getSupportActionBar();
+        if (mActionBar != null) {
+            mActionBar.setDisplayHomeAsUpEnabled(true);
+            mActionBar.setHomeButtonEnabled(true);
+        }
+    }
+
+    /**
+     * 去除默认Title显示
+     */
+    protected void hideToolbarTitle() {
+        if (mActionBar != null) {
+            mActionBar.setDisplayShowTitleEnabled(false);
         }
     }
 }

@@ -34,7 +34,7 @@ public class SearchGroupFragment extends PresenterFragment<ISearchContract.Prese
     }
 
     @Override
-    protected ISearchContract.Presenter initPresenter() {
+    public ISearchContract.Presenter initPresenter() {
         return new SearchGroupPresenter(this);
     }
 
@@ -51,7 +51,7 @@ public class SearchGroupFragment extends PresenterFragment<ISearchContract.Prese
     protected void initWidget() {
         super.initWidget();
 
-        // 设置空布局
+        // 设置空布局 TODO 绑定数据
         setEmptyView(mBinding.empty);
 
         // 点击监听初始化

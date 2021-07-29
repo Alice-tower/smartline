@@ -33,7 +33,7 @@ public class LoginFragment extends PresenterFragment<ILoginContract.Presenter>
     }
 
     @Override
-    protected ILoginContract.Presenter initPresenter() {
+    public ILoginContract.Presenter initPresenter() {
         return new LoginPresenter(this);
     }
 
@@ -103,14 +103,7 @@ public class LoginFragment extends PresenterFragment<ILoginContract.Presenter>
     public void showError(int str) {
         // 显示错误提示 界面恢复操作
         super.showError(str);
-        mBinding.loading.stop();
-        mBinding.btnSubmit.setEnabled(true);
-        mBinding.layGo.setEnabled(true);
-        mBinding.editPhone.setEnabled(true);
-        mBinding.editPassword.setEnabled(true);
-        if (!mIsLogin) {
-            mBinding.editUsername.setEnabled(true);
-        }
+        hideLoading();
     }
 
     @Override
@@ -124,6 +117,19 @@ public class LoginFragment extends PresenterFragment<ILoginContract.Presenter>
         mBinding.editPassword.setEnabled(false);
         if (!mIsLogin) {
             mBinding.editUsername.setEnabled(false);
+        }
+    }
+
+    @Override
+    public void hideLoading() {
+        super.hideLoading();
+        mBinding.loading.stop();
+        mBinding.btnSubmit.setEnabled(true);
+        mBinding.layGo.setEnabled(true);
+        mBinding.editPhone.setEnabled(true);
+        mBinding.editPassword.setEnabled(true);
+        if (!mIsLogin) {
+            mBinding.editUsername.setEnabled(true);
         }
     }
 

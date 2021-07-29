@@ -79,9 +79,11 @@ public class SearchActivity extends ToolbarActivity {
 
     @Override
     protected boolean initArgs(Bundle bundle) {
-        mType = bundle.getInt(EXTRA_TYPE);
-        if (mType == TYPE_MAIN || mType == TYPE_USER || mType == TYPE_GROUP) {
-            return super.initArgs(bundle);
+        if (bundle != null) {
+            mType = bundle.getInt(EXTRA_TYPE);
+            if (mType == TYPE_MAIN || mType == TYPE_USER || mType == TYPE_GROUP) {
+                return super.initArgs(bundle);
+            }
         }
         return false;
     }

@@ -82,6 +82,9 @@
             android:label="@string/title_search"
             android:theme="@style/AppTheme.TransStatusBar" />
         <activity
+            android:name=".activities.PersonalActivity"
+            android:theme="@style/AppTheme.TransStatusBar" />
+        <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:theme="@style/AppTheme" />
     </application>
