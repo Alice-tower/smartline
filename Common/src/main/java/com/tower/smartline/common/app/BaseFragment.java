@@ -106,7 +106,9 @@ public abstract class BaseFragment extends Fragment {
      * @param views     空布局绑定的数据布局
      */
     public void setEmptyView(EmptyView emptyView, View... views) {
-        emptyView.bind(views);
+        if (emptyView != null) {
+            emptyView.bind(views);
+        }
         this.mEmptyView = emptyView;
     }
 }

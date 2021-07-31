@@ -57,6 +57,36 @@ public class UserHelper {
                 });
     }
 
+    /**
+     * 查询指定Id的用户信息
+     *
+     * @param id       用户Id
+     * @param callback 回调
+     */
+    public static void info(String id, IDataSource.Callback<UserCard> callback) {
+        Log.i(TAG, "info: start");
+        if (TextUtils.isEmpty(id)) {
+            Log.w(TAG, "info: id == null");
+            return;
+        }
+        Network.remote()
+                .userInfo(id)
+                .enqueue(new MyCallback<UserCard>(callback) {
+                    @Override
+                    public void onResponse(@NonNull Call<ResponseModel<UserCard>> call,
+                                           @NonNull Response<ResponseModel<UserCard>> response) {
+                        super.onResponse(call, response);
+                        UserCard result = getResultOrHandled();
+                        if (result == null) {
+                            return;
+                        }
+
+                        // TODO 分本地数据库和网络两套查询
+                        result.toUserEntity().save();
+                        callback.onSuccess(result);
+                    }
+                });
+    }
 
     /**
      * 根据用户名模糊搜索

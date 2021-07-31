@@ -67,7 +67,7 @@
             android:textColor="@color/textPrimary" />
 
         <TextView
-            android:id="@+id/txt_follows"
+            android:id="@+id/txt_followers"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/len_8"
@@ -87,7 +87,7 @@
         tools:text="description" />
 
     <net.qiujuer.genius.ui.widget.Button
-        android:id="@+id/btn_follow_or_chat"
+        android:id="@+id/btn_bottom"
         android:layout_width="@dimen/len_172"
         android:layout_height="@dimen/len_44"
         android:layout_marginBottom="@dimen/len_16"
@@ -123,4 +123,11 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.4" />
+
+    <com.tower.smartline.common.widget.EmptyView
+        android:id="@+id/empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:visibility="gone" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

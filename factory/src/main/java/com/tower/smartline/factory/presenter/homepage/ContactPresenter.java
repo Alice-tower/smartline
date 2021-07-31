@@ -38,7 +38,13 @@ public class ContactPresenter extends BaseRecyclerPresenter<UserEntity, IHomepag
     @Override
     public void onSuccess(List<UserEntity> users) {
         // TODO 本地数据库与比较刷新
-        refreshData(users);
+        Run.onUiAsync(() -> {
+            if (getView() != null) {
+                refreshData(users);
+                getView().firstInitDataSuccess();
+            }
+        });
+
     }
 
     @Override
@@ -47,6 +53,7 @@ public class ContactPresenter extends BaseRecyclerPresenter<UserEntity, IHomepag
         Run.onUiAsync(() -> {
             if (getView() != null) {
                 getView().showError(strRes);
+                getView().firstInitDataSuccess();
             }
         });
     }

@@ -39,6 +39,9 @@ public class ContactFragment extends PresenterFragment<IHomepageContract.Present
     // 标识是否第一次初始化数据
     private boolean mIsFirst = true;
 
+    // 标识是否第一次初始化数据成功 (已拿到数据)
+    private boolean mIsFirstSuccess = false;
+
     public ContactFragment() {
         // Required empty public constructor
     }
@@ -99,10 +102,18 @@ public class ContactFragment extends PresenterFragment<IHomepageContract.Present
             // Fragment首次初始化时加载一次数据
             getPresenter().initData();
             mIsFirst = false;
+        } else if (!mIsFirstSuccess) {
+            // 重新切换到该Fragment 还未拿到数据 显示加载动画
+            showLoading();
         } else {
             // 重新切换到该Fragment 刷新空界面内容
             onAdapterDataChanged();
         }
+    }
+
+    @Override
+    public void firstInitDataSuccess() {
+        mIsFirstSuccess = true;
     }
 
     @Override

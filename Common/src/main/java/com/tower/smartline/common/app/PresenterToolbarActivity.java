@@ -23,17 +23,33 @@ public abstract class PresenterToolbarActivity<P extends IBaseContract.Presenter
 
     @Override
     public void showError(int str) {
-
+        if (mEmptyView != null) {
+            mEmptyView.showError();
+        }
+        MyApplication.showToast(str);
     }
 
     @Override
     public void showLoading() {
-
+        if (mEmptyView != null) {
+            mEmptyView.showLoading();
+        }
     }
 
     @Override
     public void hideLoading() {
+        hideLoading(true);
+    }
 
+    /**
+     * 隐藏Loading
+     *
+     * @param isOk 是否成功加载不为空的数据
+     */
+    public void hideLoading(boolean isOk) {
+        if (mEmptyView != null) {
+            mEmptyView.showOkOrEmpty(isOk);
+        }
     }
 
     @Override

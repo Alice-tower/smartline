@@ -11,6 +11,10 @@ import com.tower.smartline.factory.presenter.IBaseContract;
  */
 public interface IHomepageContract {
     interface View extends IBaseContract.RecyclableView<Presenter, UserEntity> {
+        /**
+         * 首次
+         */
+        void firstInitDataSuccess();
     }
 
     interface Presenter extends IBaseContract.Presenter {
