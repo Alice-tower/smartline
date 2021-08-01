@@ -6,9 +6,11 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.tower.smartline.factory.data.IDataSource;
 import com.tower.smartline.factory.model.api.user.UpdateInfoModel;
 import com.tower.smartline.factory.model.db.UserEntity;
+import com.tower.smartline.factory.model.db.UserEntity_Table;
 import com.tower.smartline.factory.model.response.UserCard;
 import com.tower.smartline.factory.model.response.base.ResponseModel;
 import com.tower.smartline.factory.net.Network;
@@ -51,37 +53,6 @@ public class UserHelper {
                         if (result == null) {
                             return;
                         }
-                        result.toUserEntity().save();
-                        callback.onSuccess(result);
-                    }
-                });
-    }
-
-    /**
-     * 查询指定Id的用户信息
-     *
-     * @param id       用户Id
-     * @param callback 回调
-     */
-    public static void info(String id, IDataSource.Callback<UserCard> callback) {
-        Log.i(TAG, "info: start");
-        if (TextUtils.isEmpty(id)) {
-            Log.w(TAG, "info: id == null");
-            return;
-        }
-        Network.remote()
-                .userInfo(id)
-                .enqueue(new MyCallback<UserCard>(callback) {
-                    @Override
-                    public void onResponse(@NonNull Call<ResponseModel<UserCard>> call,
-                                           @NonNull Response<ResponseModel<UserCard>> response) {
-                        super.onResponse(call, response);
-                        UserCard result = getResultOrHandled();
-                        if (result == null) {
-                            return;
-                        }
-
-                        // TODO 分本地数据库和网络两套查询
                         result.toUserEntity().save();
                         callback.onSuccess(result);
                     }
@@ -175,5 +146,67 @@ public class UserHelper {
                     }
                 }
         );
+    }
+
+    /**
+     * 查询指定Id的用户信息 (网络)
+     *
+     * @param id       用户Id
+     * @param callback 回调
+     */
+    public static void info(String id, IDataSource.Callback<UserEntity> callback) {
+        Log.i(TAG, "info: start");
+        if (TextUtils.isEmpty(id)) {
+            Log.w(TAG, "info: id == null");
+            return;
+        }
+        Network.remote()
+                .userInfo(id)
+                .enqueue(new MyCallback<UserCard>(callback) {
+                    @Override
+                    public void onResponse(@NonNull Call<ResponseModel<UserCard>> call,
+                                           @NonNull Response<ResponseModel<UserCard>> response) {
+                        super.onResponse(call, response);
+                        UserCard result = getResultOrHandled();
+                        if (result == null) {
+                            return;
+                        }
+
+                        UserEntity userEntity = result.toUserEntity();
+                        userEntity.save();
+                        callback.onSuccess(userEntity);
+                    }
+                });
+    }
+
+    /**
+     * 查询指定Id的用户信息 (优先本地，其次网络)
+     *
+     * @param id 用户Id
+     */
+    public static void infoFirstOfLocal(String id, IDataSource.Callback<UserEntity> callback) {
+        if (TextUtils.isEmpty(id) || callback == null) {
+            Log.w(TAG, "infoFirstOfLocal: id == null || callback == null");
+            return;
+        }
+        UserEntity userEntity = infoFromLocal(id);
+        if (userEntity != null) {
+            callback.onSuccess(userEntity);
+        } else {
+            info(id, callback);
+        }
+    }
+
+    /**
+     * 查询指定Id的用户信息 (本地)
+     *
+     * @param id 用户Id
+     */
+    @Nullable
+    private static UserEntity infoFromLocal(String id) {
+        return SQLite.select()
+                .from(UserEntity.class)
+                .where(UserEntity_Table.id.eq(id))
+                .querySingle();
     }
 }

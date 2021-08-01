@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.tower.smartline.factory.data.IDataSource;
 import com.tower.smartline.factory.data.helper.UserHelper;
+import com.tower.smartline.factory.model.db.UserEntity;
 import com.tower.smartline.factory.model.response.UserCard;
 import com.tower.smartline.factory.persistence.Account;
 import com.tower.smartline.factory.presenter.BasePresenter;
@@ -41,9 +42,9 @@ public class PersonalInfoPresenter extends BasePresenter<IPersonalInfoContract.V
         UserHelper.follow(id, new FollowCallback());
     }
 
-    private class loadInfoCallback implements IDataSource.Callback<UserCard> {
+    private class loadInfoCallback implements IDataSource.Callback<UserEntity> {
         @Override
-        public void onSuccess(UserCard userEntity) {
+        public void onSuccess(UserEntity userEntity) {
             Run.onUiAsync(() -> {
                 if (getView() != null && userEntity != null) {
                     int type;
