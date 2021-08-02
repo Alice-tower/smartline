@@ -27,8 +27,8 @@ task clean(type: Delete) {
 
 ext {
     // 版本号
-    versionCode = 3
-    versionName = '0.2.0'
+    versionCode = 4
+    versionName = '0.3.0'
 
     // 依赖版本
     appcompatVersion = '1.2.0'
