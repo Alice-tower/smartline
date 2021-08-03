@@ -9,6 +9,7 @@ import com.tower.smartline.factory.R;
 import com.tower.smartline.factory.data.IDataSource;
 import com.tower.smartline.factory.model.api.account.LoginModel;
 import com.tower.smartline.factory.model.api.account.RegisterModel;
+import com.tower.smartline.factory.model.db.UserEntity;
 import com.tower.smartline.factory.model.response.AccountCard;
 import com.tower.smartline.factory.model.response.UserCard;
 import com.tower.smartline.factory.model.response.base.ResponseModel;
@@ -133,7 +134,7 @@ public class AccountHelper {
         }
 
         // 存储用户信息到数据库
-        userCard.toUserEntity().save();
+        DbHelper.save(UserEntity.class, userCard.toUserEntity());
 
         // 存储登录信息到SharedPreferences
         Account.loginSave(userCard.getId(), rsp.getToken());

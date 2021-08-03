@@ -6,7 +6,6 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.tower.smartline.factory.data.IDataSource;
 import com.tower.smartline.factory.model.api.user.UpdateInfoModel;
 import com.tower.smartline.factory.model.db.UserEntity;
@@ -14,6 +13,8 @@ import com.tower.smartline.factory.model.db.UserEntity_Table;
 import com.tower.smartline.factory.model.response.UserCard;
 import com.tower.smartline.factory.model.response.base.ResponseModel;
 import com.tower.smartline.factory.net.Network;
+
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +54,7 @@ public class UserHelper {
                         if (result == null) {
                             return;
                         }
-                        result.toUserEntity().save();
+                        DbHelper.save(UserEntity.class, result.toUserEntity());
                         callback.onSuccess(result);
                     }
                 });
@@ -112,8 +113,8 @@ public class UserHelper {
                             return;
                         }
 
-                        // TODO 通知联系人列表刷新
-                        result.toUserEntity().save();
+                        // 保存并通知联系人列表刷新
+                        DbHelper.save(UserEntity.class, result.toUserEntity());
                         callback.onSuccess(result);
                     }
                 });
@@ -173,7 +174,7 @@ public class UserHelper {
                         }
 
                         UserEntity userEntity = result.toUserEntity();
-                        userEntity.save();
+                        DbHelper.save(UserEntity.class, userEntity);
                         callback.onSuccess(userEntity);
                     }
                 });
