@@ -9,7 +9,7 @@ import com.tower.smartline.factory.R;
 import com.tower.smartline.factory.data.IDataSource;
 import com.tower.smartline.factory.model.api.account.LoginModel;
 import com.tower.smartline.factory.model.api.account.RegisterModel;
-import com.tower.smartline.factory.model.response.AccountRspModel;
+import com.tower.smartline.factory.model.response.AccountCard;
 import com.tower.smartline.factory.model.response.UserCard;
 import com.tower.smartline.factory.model.response.base.ResponseModel;
 import com.tower.smartline.factory.net.Network;
@@ -41,12 +41,12 @@ public class AccountHelper {
         }
         Network.remote()
                 .accountLogin(model)
-                .enqueue(new MyCallback<AccountRspModel>(callback) {
+                .enqueue(new MyCallback<AccountCard>(callback) {
                     @Override
-                    public void onResponse(@NonNull Call<ResponseModel<AccountRspModel>> call,
-                                           @NonNull Response<ResponseModel<AccountRspModel>> response) {
+                    public void onResponse(@NonNull Call<ResponseModel<AccountCard>> call,
+                                           @NonNull Response<ResponseModel<AccountCard>> response) {
                         super.onResponse(call, response);
-                        AccountRspModel result = getResultOrHandled();
+                        AccountCard result = getResultOrHandled();
                         if (result == null) {
                             return;
                         }
@@ -69,12 +69,12 @@ public class AccountHelper {
         }
         Network.remote()
                 .accountRegister(model)
-                .enqueue(new MyCallback<AccountRspModel>(callback) {
+                .enqueue(new MyCallback<AccountCard>(callback) {
                     @Override
-                    public void onResponse(@NonNull Call<ResponseModel<AccountRspModel>> call,
-                                           @NonNull Response<ResponseModel<AccountRspModel>> response) {
+                    public void onResponse(@NonNull Call<ResponseModel<AccountCard>> call,
+                                           @NonNull Response<ResponseModel<AccountCard>> response) {
                         super.onResponse(call, response);
-                        AccountRspModel result = getResultOrHandled();
+                        AccountCard result = getResultOrHandled();
                         if (result == null) {
                             return;
                         }
@@ -97,12 +97,12 @@ public class AccountHelper {
         }
         Network.remote()
                 .accountBind(pushId)
-                .enqueue(new MyCallback<AccountRspModel>(callback) {
+                .enqueue(new MyCallback<AccountCard>(callback) {
                     @Override
-                    public void onResponse(@NonNull Call<ResponseModel<AccountRspModel>> call,
-                                           @NonNull Response<ResponseModel<AccountRspModel>> response) {
+                    public void onResponse(@NonNull Call<ResponseModel<AccountCard>> call,
+                                           @NonNull Response<ResponseModel<AccountCard>> response) {
                         super.onResponse(call, response);
-                        AccountRspModel result = getResultOrHandled();
+                        AccountCard result = getResultOrHandled();
                         if (result == null) {
                             return;
                         }
@@ -123,7 +123,7 @@ public class AccountHelper {
      * @param rsp      AccountRspModel
      * @param callback 回调
      */
-    private static void handleData(@NonNull AccountRspModel rsp,
+    private static void handleData(@NonNull AccountCard rsp,
                                    @NonNull IDataSource.Callback<UserCard> callback) {
         UserCard userCard = rsp.getUserCard();
         if (userCard == null) {

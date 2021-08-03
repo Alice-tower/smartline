@@ -41,30 +41,6 @@ public class UserCard implements IUserInfo {
     // 最后更新用户信息时间
     private Date updateAt;
 
-    /**
-     * 将当前UserCard内数据转化为UserEntity
-     *
-     * @return UserEntity
-     */
-    @NonNull
-    public UserEntity toUserEntity() {
-        UserEntity user = new UserEntity();
-        user.setId(id);
-        user.setName(name);
-        user.setPortrait(portrait);
-        user.setDescription(description);
-        user.setSex(sex);
-        user.setFollow(isFollow);
-        user.setFollowersNum(followersNum);
-        user.setFollowingNum(followingNum);
-        user.setUpdateAt(updateAt);
-
-        // UserEntity内nickname未被填充
-        // user.setNickname(null);
-
-        return user;
-    }
-
     public String getId() {
         return id;
     }
@@ -135,6 +111,30 @@ public class UserCard implements IUserInfo {
 
     public void setUpdateAt(Date updateAt) {
         this.updateAt = updateAt;
+    }
+
+    /**
+     * 将当前UserCard内数据转化为UserEntity
+     *
+     * @return UserEntity
+     */
+    @NonNull
+    public UserEntity toUserEntity() {
+        UserEntity user = new UserEntity();
+        user.setId(id);
+        user.setName(name);
+        user.setPortrait(portrait);
+        user.setDescription(description);
+        user.setSex(sex);
+        user.setFollow(isFollow);
+        user.setFollowersNum(followersNum);
+        user.setFollowingNum(followingNum);
+        user.setUpdateAt(updateAt);
+
+        // UserEntity内nickname未被填充
+        // user.setNickname(null);
+
+        return user;
     }
 
     @NonNull

@@ -62,6 +62,7 @@ public class ResponseModel<T> {
         return "ResponseModel{" +
                 "code=" + code +
                 ", msg='" + msg + '\'' +
+                // ", result=" + result +
                 ", time=" + time +
                 '}';
     }

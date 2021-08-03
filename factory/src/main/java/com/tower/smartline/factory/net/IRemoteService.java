@@ -3,7 +3,7 @@ package com.tower.smartline.factory.net;
 import com.tower.smartline.factory.model.api.account.LoginModel;
 import com.tower.smartline.factory.model.api.account.RegisterModel;
 import com.tower.smartline.factory.model.api.user.UpdateInfoModel;
-import com.tower.smartline.factory.model.response.AccountRspModel;
+import com.tower.smartline.factory.model.response.AccountCard;
 import com.tower.smartline.factory.model.response.UserCard;
 import com.tower.smartline.factory.model.response.base.ResponseModel;
 
@@ -30,7 +30,7 @@ public interface IRemoteService {
      * @return ResponseModel<AccountRspModel>
      */
     @POST("account/login")
-    Call<ResponseModel<AccountRspModel>> accountLogin(@Body LoginModel model);
+    Call<ResponseModel<AccountCard>> accountLogin(@Body LoginModel model);
 
     /**
      * 注册接口
@@ -39,7 +39,7 @@ public interface IRemoteService {
      * @return ResponseModel<AccountRspModel>
      */
     @POST("account/register")
-    Call<ResponseModel<AccountRspModel>> accountRegister(@Body RegisterModel model);
+    Call<ResponseModel<AccountCard>> accountRegister(@Body RegisterModel model);
 
     /**
      * 绑定设备Id
@@ -48,7 +48,7 @@ public interface IRemoteService {
      * @return ResponseModel<AccountRspModel>
      */
     @POST("account/bind/{pushId}")
-    Call<ResponseModel<AccountRspModel>> accountBind(@Path(encoded = true, value = "pushId") String pushId);
+    Call<ResponseModel<AccountCard>> accountBind(@Path(encoded = true, value = "pushId") String pushId);
 
     /**
      * 更新用户个人信息

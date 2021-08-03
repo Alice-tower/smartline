@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
  * @author zpsong-tower <pingzisong2012@gmail.com>
  * @since 2021/6/9 6:41
  */
-public class AccountRspModel {
+public class AccountCard {
     // UserCard
     private UserCard userCard;
 

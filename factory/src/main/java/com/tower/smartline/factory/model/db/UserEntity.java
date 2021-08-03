@@ -1,6 +1,8 @@
 package com.tower.smartline.factory.model.db;
 
 import com.tower.smartline.factory.model.IUserInfo;
+import com.tower.smartline.factory.model.db.base.AppDatabase;
+import com.tower.smartline.factory.model.db.base.BaseEntity;
 
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
@@ -16,7 +18,7 @@ import java.util.Objects;
  * @since 2021/6/9 5:17
  */
 @Table(database = AppDatabase.class)
-public class UserEntity extends BaseDbModel<UserEntity>
+public class UserEntity extends BaseEntity<UserEntity>
         implements IUserInfo {
     /**
      * 性别_未知
