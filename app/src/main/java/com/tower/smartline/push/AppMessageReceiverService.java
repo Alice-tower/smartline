@@ -3,8 +3,8 @@ package com.tower.smartline.push;
 import android.content.Context;
 import android.util.Log;
 
+import com.tower.smartline.factory.data.Dispatcher.DataCenter;
 import com.tower.smartline.factory.data.helper.AccountHelper;
-import com.tower.smartline.factory.data.helper.PushHelper;
 import com.tower.smartline.factory.persistence.Account;
 
 import com.igexin.sdk.GTIntentService;
@@ -70,7 +70,7 @@ public class AppMessageReceiverService extends GTIntentService {
         byte[] payload = msg.getPayload();
         if (payload != null) {
             String message = new String(payload);
-            PushHelper.dispatch(message);
+            DataCenter.dispatchPush(message);
         }
     }
 

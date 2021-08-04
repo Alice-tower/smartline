@@ -6,7 +6,9 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.tower.smartline.factory.R;
+import com.tower.smartline.factory.data.DbPortal;
 import com.tower.smartline.factory.data.IDataSource;
+import com.tower.smartline.factory.data.helper.base.MyCallback;
 import com.tower.smartline.factory.model.api.account.LoginModel;
 import com.tower.smartline.factory.model.api.account.RegisterModel;
 import com.tower.smartline.factory.model.db.UserEntity;
@@ -134,7 +136,7 @@ public class AccountHelper {
         }
 
         // 存储用户信息到数据库
-        DbHelper.save(UserEntity.class, userCard.toUserEntity());
+        DbPortal.save(UserEntity.class, userCard.toUserEntity());
 
         // 存储登录信息到SharedPreferences
         Account.loginSave(userCard.getId(), rsp.getToken());

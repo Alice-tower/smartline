@@ -96,20 +96,20 @@ public class GroupMemberCard {
     /**
      * 将当前GroupMemberCard内数据转化为GroupMemberEntity
      *
-     * @param group 该群成员对应的群
      * @param user  该群成员对应的用户
+     * @param group 该群成员对应的群
      * @return GroupMemberEntity
      */
     @NonNull
-    public GroupMemberEntity toGroupMemberEntity(GroupEntity group, UserEntity user) {
+    public GroupMemberEntity toGroupMemberEntity(UserEntity user, GroupEntity group) {
         GroupMemberEntity member = new GroupMemberEntity();
         member.setId(this.id);
         member.setNickName(this.nickName);
         member.setPermission(this.permission);
         member.setCreateAt(this.createAt);
         member.setUpdateAt(this.updateAt);
-        member.setGroup(group);
         member.setUser(user);
+        member.setGroup(group);
         return member;
     }
 

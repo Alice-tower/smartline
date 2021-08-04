@@ -110,7 +110,6 @@ public class Account {
      * @return UserEntity
      */
     public static UserEntity getUser() {
-        // TODO 该方法考虑迁移到DB事务包下
         if (TextUtils.isEmpty(userId)) {
             return new UserEntity();
         }

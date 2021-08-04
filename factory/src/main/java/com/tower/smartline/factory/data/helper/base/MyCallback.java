@@ -1,4 +1,4 @@
-package com.tower.smartline.factory.data.helper;
+package com.tower.smartline.factory.data.helper.base;
 
 import android.util.Log;
 
@@ -34,8 +34,9 @@ public abstract class MyCallback<T> implements Callback<ResponseModel<T>> {
      * 构造方法
      *
      * @param callback IDataSource.Callback App对成功与失败的回调
+     *                 如为Null则只是没有回调，不影响网络通信逻辑
      */
-    public MyCallback(IDataSource.Callback callback) {
+    public MyCallback(@Nullable IDataSource.Callback callback) {
         mCallback = callback;
     }
 
@@ -48,7 +49,9 @@ public abstract class MyCallback<T> implements Callback<ResponseModel<T>> {
      */
     @Override
     public void onResponse(@NonNull Call<ResponseModel<T>> call, @NonNull Response<ResponseModel<T>> response) {
-        Log.i(TAG, "onResponse");
+        // 打印错误码 错误说明 服务器响应时间 Result
+        Log.i(TAG, "onResponse: " + response.body());
+
         if (mCallback == null) {
             Log.w(TAG, "onResponse: callback == null");
             return;
@@ -96,14 +99,6 @@ public abstract class MyCallback<T> implements Callback<ResponseModel<T>> {
         if (mRsp == null) {
             return null;
         }
-        try {
-            return (T) mRsp.getResult();
-        } catch (Exception e) {
-            Log.e(TAG, "getResultOrHandled: Exception");
-            if (mCallback != null) {
-                mCallback.onFailure(R.string.toast_net_unknown_error);
-            }
-        }
-        return null;
+        return (T) mRsp.getResult();
     }
 }

@@ -6,7 +6,10 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.tower.smartline.factory.data.DbPortal;
+import com.tower.smartline.factory.data.Dispatcher.DataCenter;
 import com.tower.smartline.factory.data.IDataSource;
+import com.tower.smartline.factory.data.helper.base.MyCallback;
 import com.tower.smartline.factory.model.api.user.UpdateInfoModel;
 import com.tower.smartline.factory.model.db.UserEntity;
 import com.tower.smartline.factory.model.db.UserEntity_Table;
@@ -16,6 +19,7 @@ import com.tower.smartline.factory.net.Network;
 
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,7 +58,7 @@ public class UserHelper {
                         if (result == null) {
                             return;
                         }
-                        DbHelper.save(UserEntity.class, result.toUserEntity());
+                        DbPortal.save(UserEntity.class, result.toUserEntity());
                         callback.onSuccess(result);
                     }
                 });
@@ -114,7 +118,7 @@ public class UserHelper {
                         }
 
                         // 保存并通知联系人列表刷新
-                        DbHelper.save(UserEntity.class, result.toUserEntity());
+                        DbPortal.save(UserEntity.class, result.toUserEntity());
                         callback.onSuccess(result);
                     }
                 });
@@ -150,7 +154,7 @@ public class UserHelper {
     }
 
     /**
-     * 查询指定Id的用户信息 (网络)
+     * 查询指定Id的用户信息 (网络) (异步回调)
      *
      * @param id       用户Id
      * @param callback 回调
@@ -174,28 +178,56 @@ public class UserHelper {
                         }
 
                         UserEntity userEntity = result.toUserEntity();
-                        DbHelper.save(UserEntity.class, userEntity);
+                        DbPortal.save(UserEntity.class, userEntity);
                         callback.onSuccess(userEntity);
                     }
                 });
     }
 
     /**
-     * 查询指定Id的用户信息 (优先本地，其次网络)
+     * 查询指定Id的用户信息 (网络) (同步返回)
      *
      * @param id 用户Id
      */
-    public static void infoFirstOfLocal(String id, IDataSource.Callback<UserEntity> callback) {
-        if (TextUtils.isEmpty(id) || callback == null) {
-            Log.w(TAG, "infoFirstOfLocal: id == null || callback == null");
-            return;
+    @Nullable
+    public static UserEntity info(String id) {
+        Log.i(TAG, "info: start");
+        if (TextUtils.isEmpty(id)) {
+            Log.w(TAG, "info: id == null");
+            return null;
+        }
+        try {
+            Response<ResponseModel<UserCard>> response = Network.remote().userInfo(id).execute();
+            Log.i(TAG, "info: " + response.body());
+            if (response.body() != null) {
+                UserCard result = response.body().getResult();
+                DataCenter.dispatchUser(result);
+                return result.toUserEntity();
+            }
+        } catch (IOException e) {
+            Log.e(TAG, "info: Exception");
+        }
+        return null;
+    }
+
+    /**
+     * 查询指定Id的用户信息 (优先本地，其次网络) (同步返回)
+     *
+     * @param id 用户Id
+     * @return UserEntity
+     */
+    @Nullable
+    public static UserEntity infoFirstOfLocal(String id) {
+        if (TextUtils.isEmpty(id)) {
+            Log.w(TAG, "infoFirstOfLocal: id == null");
+            return null;
         }
         UserEntity userEntity = infoFromLocal(id);
-        if (userEntity != null) {
-            callback.onSuccess(userEntity);
-        } else {
-            info(id, callback);
+        if (userEntity == null) {
+            // 网络查询
+            return info(id);
         }
+        return userEntity;
     }
 
     /**

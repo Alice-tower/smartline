@@ -1,10 +1,9 @@
-package com.tower.smartline.factory.data.helper;
+package com.tower.smartline.factory.data;
 
 import com.tower.smartline.factory.model.db.base.AppDatabase;
 
 import com.raizlabs.android.dbflow.config.FlowManager;
 import com.raizlabs.android.dbflow.structure.BaseModel;
-import com.raizlabs.android.dbflow.structure.database.transaction.ITransaction;
 
 import java.util.Arrays;
 
@@ -14,10 +13,10 @@ import java.util.Arrays;
  * @author zpsong-tower <pingzisong2012@gmail.com>
  * @since 2021/8/3 23:40
  */
-public class DbHelper {
-    private static final DbHelper sInstance = new DbHelper();
+public class DbPortal {
+    private static final DbPortal INSTANCE = new DbPortal();
 
-    private DbHelper() {
+    private DbPortal() {
     }
 
     /**
@@ -38,7 +37,7 @@ public class DbHelper {
                 .beginTransactionAsync(databaseWrapper -> {
                     // 保存数据，唤起通知
                     FlowManager.getModelAdapter(eClass).saveAll(Arrays.asList(entities));
-                    sInstance.notifySave(eClass, entities);
+                    INSTANCE.notifySave(eClass, entities);
                 }).build().execute();
     }
 
@@ -60,7 +59,7 @@ public class DbHelper {
                 .beginTransactionAsync(databaseWrapper -> {
                     // 删除数据，唤起通知
                     FlowManager.getModelAdapter(eClass).deleteAll(Arrays.asList(entities));
-                    sInstance.notifyDelete(eClass, entities);
+                    INSTANCE.notifyDelete(eClass, entities);
                 }).build().execute();
     }
 
