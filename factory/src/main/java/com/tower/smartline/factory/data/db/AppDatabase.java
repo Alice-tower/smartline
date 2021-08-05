@@ -1,4 +1,4 @@
-package com.tower.smartline.factory.model.db.base;
+package com.tower.smartline.factory.data.db;
 
 import com.raizlabs.android.dbflow.annotation.Database;
 
@@ -10,6 +10,9 @@ import com.raizlabs.android.dbflow.annotation.Database;
  */
 @Database(name = AppDatabase.NAME, version = AppDatabase.VERSION)
 public class AppDatabase {
+    private AppDatabase() {
+    }
+
     /**
      * 名称
      */
@@ -18,5 +21,5 @@ public class AppDatabase {
     /**
      * 版本号
      */
-    public static final int VERSION = 3;
+    public static final int VERSION = 4;
 }

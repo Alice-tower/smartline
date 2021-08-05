@@ -3,7 +3,7 @@ package com.tower.smartline.push;
 import android.content.Context;
 import android.util.Log;
 
-import com.tower.smartline.factory.data.Dispatcher.DataCenter;
+import com.tower.smartline.factory.data.dispatcher.DataCenter;
 import com.tower.smartline.factory.data.helper.AccountHelper;
 import com.tower.smartline.factory.persistence.Account;
 

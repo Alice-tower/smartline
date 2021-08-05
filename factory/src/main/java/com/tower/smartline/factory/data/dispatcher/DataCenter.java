@@ -1,4 +1,4 @@
-package com.tower.smartline.factory.data.Dispatcher;
+package com.tower.smartline.factory.data.dispatcher;
 
 import com.tower.smartline.factory.model.response.GroupCard;
 import com.tower.smartline.factory.model.response.GroupMemberCard;
@@ -12,6 +12,9 @@ import com.tower.smartline.factory.model.response.UserCard;
  * @since 2021/8/4 19:15
  */
 public class DataCenter {
+    private DataCenter() {
+    }
+
     /**
      * 推送分发
      *

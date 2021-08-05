@@ -26,7 +26,7 @@ public class MyApplication extends Application {
     }
 
     /**
-     * 外部获取单例
+     * 获取单例
      *
      * @return Application
      */

@@ -6,7 +6,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.tower.smartline.factory.R;
-import com.tower.smartline.factory.data.DbPortal;
+import com.tower.smartline.factory.data.db.DbPortal;
 import com.tower.smartline.factory.data.IDataSource;
 import com.tower.smartline.factory.data.helper.base.MyCallback;
 import com.tower.smartline.factory.model.api.account.LoginModel;
@@ -29,6 +29,9 @@ import retrofit2.Response;
  */
 public class AccountHelper {
     private static final String TAG = AccountHelper.class.getName();
+
+    private AccountHelper() {
+    }
 
     /**
      * 登录

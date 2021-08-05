@@ -1,6 +1,6 @@
 package com.tower.smartline.factory.model.db;
 
-import com.tower.smartline.factory.model.db.base.AppDatabase;
+import com.tower.smartline.factory.data.db.AppDatabase;
 import com.tower.smartline.factory.model.db.base.BaseEntity;
 
 import com.raizlabs.android.dbflow.annotation.Column;
@@ -39,6 +39,21 @@ public class MessageEntity extends BaseEntity<MessageEntity> {
      */
     public static final int TYPE_FILE = 4;
 
+    /**
+     * 消息发送失败状态
+     */
+    public static final int STATE_FAILED = -2;
+
+    /**
+     * 消息发送中状态 (消息实体构建完成 到 收到服务器返回的结果之前)
+     */
+    public static final int STATE_Sending = -1;
+
+    /**
+     * 消息发送成功状态 (大部分存储消息的常态)
+     */
+    public static final int STATE_DONE = 0;
+
     // Id
     @PrimaryKey
     private String id;
@@ -54,6 +69,10 @@ public class MessageEntity extends BaseEntity<MessageEntity> {
     // 消息类型
     @Column
     private int type;
+
+    // 发送状态
+    @Column
+    private int state;
 
     // 消息发送者外键
     @ForeignKey(tableClass = UserEntity.class, stubbedRelationship = true)
@@ -103,6 +122,14 @@ public class MessageEntity extends BaseEntity<MessageEntity> {
         this.type = type;
     }
 
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
     public UserEntity getSender() {
         return sender;
     }
@@ -141,6 +168,7 @@ public class MessageEntity extends BaseEntity<MessageEntity> {
         if (o == null || getClass() != o.getClass()) return false;
         MessageEntity that = (MessageEntity) o;
         if (type != that.type) return false;
+        if (state != that.state) return false;
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (content != null ? !content.equals(that.content) : that.content != null) return false;
         if (attachment != null ? !attachment.equals(that.attachment) : that.attachment != null)
@@ -165,7 +193,7 @@ public class MessageEntity extends BaseEntity<MessageEntity> {
 
     @Override
     public boolean isUiContentSame(MessageEntity old) {
-        // 显示的内容是否一致 消息设计上目前不可更改 直接返回True
-        return true;
+        // 显示的内容是否一致 主要关注 发送状态 (消息内容等目前设计为不可更改)
+        return this == old || Objects.equals(state, old.state);
     }
 }

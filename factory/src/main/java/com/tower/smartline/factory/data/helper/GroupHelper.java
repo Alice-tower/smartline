@@ -16,6 +16,9 @@ import com.tower.smartline.factory.model.db.GroupEntity;
 public class GroupHelper {
     private static final String TAG = GroupHelper.class.getName();
 
+    private GroupHelper() {
+    }
+
     /**
      * 查询指定Id的群组信息 (优先本地，其次网络) (同步返回)
      *

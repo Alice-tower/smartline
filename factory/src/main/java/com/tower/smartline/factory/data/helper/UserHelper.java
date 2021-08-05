@@ -6,8 +6,8 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.tower.smartline.factory.data.DbPortal;
-import com.tower.smartline.factory.data.Dispatcher.DataCenter;
+import com.tower.smartline.factory.data.db.DbPortal;
+import com.tower.smartline.factory.data.dispatcher.DataCenter;
 import com.tower.smartline.factory.data.IDataSource;
 import com.tower.smartline.factory.data.helper.base.MyCallback;
 import com.tower.smartline.factory.model.api.user.UpdateInfoModel;
@@ -34,6 +34,9 @@ import retrofit2.Response;
  */
 public class UserHelper {
     private static final String TAG = UserHelper.class.getName();
+
+    private UserHelper() {
+    }
 
     /**
      * 用户个人信息更新

@@ -1,10 +1,10 @@
-package com.tower.smartline.factory.data.Dispatcher;
+package com.tower.smartline.factory.data.dispatcher;
 
 import android.text.TextUtils;
 
 import com.tower.smartline.factory.data.helper.GroupHelper;
 import com.tower.smartline.factory.data.helper.UserHelper;
-import com.tower.smartline.factory.data.DbPortal;
+import com.tower.smartline.factory.data.db.DbPortal;
 import com.tower.smartline.factory.model.db.GroupEntity;
 import com.tower.smartline.factory.model.db.MessageEntity;
 import com.tower.smartline.factory.model.db.UserEntity;

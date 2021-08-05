@@ -1,6 +1,6 @@
 package com.tower.smartline.factory.model.db;
 
-import com.tower.smartline.factory.model.db.base.AppDatabase;
+import com.tower.smartline.factory.data.db.AppDatabase;
 import com.tower.smartline.factory.model.db.base.BaseEntity;
 
 import com.raizlabs.android.dbflow.annotation.Column;
