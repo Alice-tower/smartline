@@ -70,13 +70,13 @@
             android:theme="@style/AppTheme.Main" />
         <activity
             android:name=".activities.AccountActivity"
-            android:theme="@style/AppTheme.Account" />
+            android:theme="@style/AppTheme.TransStatusBar" />
         <activity
             android:name=".activities.UserActivity"
-            android:theme="@style/AppTheme.Account" />
+            android:theme="@style/AppTheme.TransStatusBar" />
         <activity
             android:name=".activities.MessageActivity"
-            android:theme="@style/AppTheme.Message" />
+            android:theme="@style/AppTheme.TransStatusBar" />
         <activity
             android:name=".activities.SearchActivity"
             android:label="@string/title_search"

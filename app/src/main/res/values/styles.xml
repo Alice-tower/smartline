@@ -20,13 +20,6 @@
         <item name="toolbarTitleColor">@color/white</item>
         <item name="toolbarMenuIconColor">@color/white</item>
         <item name="colorControlHighlight">@color/textSecond</item>
-        <item name="android:windowBackground">@color/windowsBackgroundLight</item>
-    </style>
-
-    <style name="AppTheme.Account" parent="AppTheme.TransStatusBar" />
-
-    <style name="AppTheme.Message" parent="AppTheme.TransStatusBar">
-        <item name="android:windowBackground">@color/windowsBackgroundLight</item>
     </style>
 
     <style name="TextAppearance.Title" parent="@style/TextAppearance.AppCompat.Title">

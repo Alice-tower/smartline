@@ -10,7 +10,6 @@
 
     <!--背景-->
     <color name="windowsBackground">#f7f7f7</color>
-    <color name="windowsBackgroundLight">#f8f8f8</color>
 
     <!--字体-->
     <color name="textPrimary">#4e5864</color>
