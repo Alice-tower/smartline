@@ -1,7 +1,7 @@
 package com.tower.smartline.factory.data.db;
 
 import com.raizlabs.android.dbflow.config.FlowManager;
-import com.raizlabs.android.dbflow.structure.BaseModel;
+import com.tower.smartline.factory.model.db.base.BaseEntity;
 
 import java.util.Arrays;
 
@@ -23,7 +23,7 @@ public class DbPortal {
      * @param entities 新增或修改数据的Entity数组
      * @param <E>      数据库表类型
      */
-    public static <E extends BaseModel> void save(Class<E> eClass, E... entities) {
+    public static <E extends BaseEntity<E>> void save(Class<E> eClass, E... entities) {
         if (entities == null || entities.length == 0) {
             return;
         }
@@ -44,7 +44,7 @@ public class DbPortal {
      * @param entities 删除数据的Entity数组
      * @param <E>      数据库表类型
      */
-    public static <E extends BaseModel> void delete(Class<E> eClass, E... entities) {
+    public static <E extends BaseEntity<E>> void delete(Class<E> eClass, E... entities) {
         if (entities == null || entities.length == 0) {
             return;
         }

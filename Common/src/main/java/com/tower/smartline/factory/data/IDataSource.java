@@ -3,12 +3,16 @@ package com.tower.smartline.factory.data;
 import androidx.annotation.StringRes;
 
 /**
- * IDataSource
+ * 数据源接口
  *
  * @author zpsong-tower <pingzisong2012@gmail.com>
  * @since 2021/6/9 4:07
  */
 public interface IDataSource {
+    /**
+     * 数据源释放
+     */
+    void release();
 
     /**
      * 回调接口 (包括成功和失败两种回调)

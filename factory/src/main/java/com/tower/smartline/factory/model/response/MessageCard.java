@@ -39,6 +39,9 @@ public class MessageCard {
     // 创建时间
     private Date createAt;
 
+    // 当前消息状态 (额外本地字段 不会被Gson序列化和反序列化)
+    private transient int state = MessageEntity.STATE_DONE;
+
     public String getId() {
         return id;
     }
@@ -103,6 +106,14 @@ public class MessageCard {
         this.createAt = createAt;
     }
 
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
     /**
      * 将当前MessageCard内数据转化为MessageEntity
      *
@@ -122,6 +133,7 @@ public class MessageCard {
         message.setSender(sender);
         message.setReceiver(receiver);
         message.setGroup(group);
+        message.setState(state);
         return message;
     }
 

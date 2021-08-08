@@ -2,7 +2,7 @@ package com.tower.smartline.factory.data.db;
 
 import com.tower.smartline.factory.model.db.MessageEntity;
 
-import com.raizlabs.android.dbflow.structure.BaseModel;
+import com.tower.smartline.factory.model.db.base.BaseEntity;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -33,7 +33,7 @@ public class DbSubject {
      *
      * @return DbSubject
      */
-    static DbSubject getInstance() {
+    public static DbSubject getInstance() {
         return INSTANCE;
     }
 
@@ -44,7 +44,7 @@ public class DbSubject {
      * @param observer 观察者
      * @param <E>      被添加观察的数据库表
      */
-    <E extends BaseModel> void registerDbObserver(Class<E> eClass, IDbObserver<E> observer) {
+    public <E extends BaseEntity<E>> void registerDbObserver(Class<E> eClass, IDbObserver<E> observer) {
         Set<IDbObserver> observers = getObservers(eClass);
         if (observers == null) {
             // 该表还没有建立过观察者 进行一次初始化
@@ -61,7 +61,7 @@ public class DbSubject {
      * @param observer 观察者
      * @param <E>      被移除观察的数据库表
      */
-    <E extends BaseModel> void removeDbObserver(Class<E> eClass, IDbObserver<E> observer) {
+    public <E extends BaseEntity<E>> void removeDbObserver(Class<E> eClass, IDbObserver<E> observer) {
         Set<IDbObserver> observers = getObservers(eClass);
         if (observers == null) {
             // 该表还没有建立过观察者 直接Return
@@ -77,7 +77,7 @@ public class DbSubject {
      * @param entities 通知数据的Entity数组
      * @param <E>      数据库表类型
      */
-    <E extends BaseModel> void notifySave(Class<E> eClass, E... entities) {
+    <E extends BaseEntity<E>> void notifySave(Class<E> eClass, E... entities) {
         Set<IDbObserver> observers = getObservers(eClass);
         if (observers != null && observers.size() > 0) {
             for (IDbObserver<E> observer : observers) {
@@ -98,7 +98,7 @@ public class DbSubject {
      * @param entities 通知数据的Entity数组
      * @param <E>      数据库表类型
      */
-    <E extends BaseModel> void notifyDelete(Class<E> eClass, E... entities) {
+    <E extends BaseEntity<E>> void notifyDelete(Class<E> eClass, E... entities) {
         Set<IDbObserver> observers = getObservers(eClass);
         if (observers != null && observers.size() > 0) {
             for (IDbObserver<E> observer : observers) {
@@ -112,7 +112,7 @@ public class DbSubject {
         }
     }
 
-    private <E extends BaseModel> Set<IDbObserver> getObservers(Class<E> eClass) {
+    private <E extends BaseEntity<E>> Set<IDbObserver> getObservers(Class<E> eClass) {
         if (mObservers.containsKey(eClass)) {
             return mObservers.get(eClass);
         }

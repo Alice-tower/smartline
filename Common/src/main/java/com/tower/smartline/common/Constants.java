@@ -11,6 +11,11 @@ public class Constants {
     }
 
     /**
+     * 每页显示数据上限
+     */
+    public static final int MAX_RESULTS_EACH_PAGE = 100;
+
+    /**
      * 手机号正则表达式 11位
      */
     public static final String REGEX_PHONE = "^1[3-9]\\d{9}$";

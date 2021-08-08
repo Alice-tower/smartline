@@ -1,6 +1,6 @@
 package com.tower.smartline.factory.data.db;
 
-import com.raizlabs.android.dbflow.structure.BaseModel;
+import com.tower.smartline.factory.model.db.base.BaseEntity;
 
 /**
  * 数据库观察者接口
@@ -9,7 +9,7 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
  * @since 2021/8/5 16:42
  */
 @SuppressWarnings({"unchecked"})
-public interface IDbObserver<E extends BaseModel> {
+public interface IDbObserver<E extends BaseEntity<E>> {
     /**
      * 当数据库新增或修改时发送的通知
      *
