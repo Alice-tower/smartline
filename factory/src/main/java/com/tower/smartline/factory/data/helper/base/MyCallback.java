@@ -42,7 +42,8 @@ public abstract class MyCallback<T> implements Callback<ResponseModel<T>> {
 
     /**
      * 对判空和失败错误码做处理
-     * 建议子类调用 {@link #getBodyOrHandled()} 或 {@link #getResultOrHandled()} 获得处理结果和所需数据
+     * 建议子类调用 {@link #getResultWithoutCallback()}
+     * 或 {@link #getResultOrHandled()} 获得处理结果和所需数据
      *
      * @param call     Call
      * @param response Response
@@ -52,12 +53,8 @@ public abstract class MyCallback<T> implements Callback<ResponseModel<T>> {
         // 打印错误码 错误说明 服务器响应时间 Result
         Log.i(TAG, "onResponse: " + response.body());
 
-        if (mCallback == null) {
-            Log.w(TAG, "onResponse: callback == null");
-            return;
-        }
         if (Responses.isSuccess(response.body(), mCallback)) {
-            // Responses未被截获 对mRsp赋值 子类调用needHandle将不为Null 需要子类处理
+            // Responses未被截获 对mRsp赋值 子类调用是否处理过 将不为Null 需要子类处理
             mRsp = response.body();
         }
     }
@@ -80,25 +77,28 @@ public abstract class MyCallback<T> implements Callback<ResponseModel<T>> {
     }
 
     /**
-     * 返回一个需要子类继续处理ResponseModel
+     * 返回一个需要子类继续处理ResponseModel.result 不关注回调是否为空
      *
      * @return ResponseModel 如为Null则父类已处理过，不需要继续处理
      */
     @Nullable
-    protected final ResponseModel getBodyOrHandled() {
-        return mRsp;
+    protected final T getResultWithoutCallback() {
+        if (mRsp == null) {
+            return null;
+        }
+        return (T) mRsp.getResult();
     }
 
     /**
-     * 返回一个需要子类继续处理ResponseModel.result
+     * 返回一个需要子类继续处理ResponseModel.result 会对回调做判空校验
      *
      * @return ResponseModel 如为Null则父类已处理过，不需要继续处理
      */
     @Nullable
     protected final T getResultOrHandled() {
-        if (mRsp == null) {
+        if (mCallback == null) {
             return null;
         }
-        return (T) mRsp.getResult();
+        return getResultWithoutCallback();
     }
 }

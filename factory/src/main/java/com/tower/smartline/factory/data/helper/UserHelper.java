@@ -19,12 +19,11 @@ import com.tower.smartline.factory.net.Network;
 
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Response;
+
+import java.io.IOException;
+import java.util.List;
 
 /**
  * UserHelper
@@ -129,28 +128,20 @@ public class UserHelper {
 
     /**
      * 获取联系人列表
-     *
-     * @param callback 回调
      */
-    public static void getContacts(IDataSource.Callback<List<UserEntity>> callback) {
+    public static void refreshContacts() {
         Log.i(TAG, "getContacts: start");
         Network.remote().userContacts().enqueue(
-                new MyCallback<List<UserCard>>(callback) {
+                new MyCallback<List<UserCard>>(null) {
                     @Override
                     public void onResponse(@NonNull Call<ResponseModel<List<UserCard>>> call, @NonNull Response<ResponseModel<List<UserCard>>> response) {
                         super.onResponse(call, response);
-                        List<UserCard> result = getResultOrHandled();
+                        List<UserCard> result = getResultWithoutCallback();
                         if (result == null) {
                             return;
                         }
-
-                        // TODO 数据库处理 待完善
-                        List<UserEntity> entities = new ArrayList<>();
-                        for (UserCard card : result) {
-                            entities.add(card.toUserEntity());
-                        }
-
-                        callback.onSuccess(entities);
+                        UserCard[] cards = result.toArray(new UserCard[0]);
+                        DataCenter.dispatchUser(cards);
                     }
                 }
         );

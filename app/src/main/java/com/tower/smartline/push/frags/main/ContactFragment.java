@@ -40,7 +40,7 @@ public class ContactFragment extends PresenterFragment<IHomepageContract.Present
     private boolean mIsFirst = true;
 
     // 标识是否第一次初始化数据成功 (已拿到数据)
-    private boolean mIsFirstSuccess = false;
+    private volatile boolean mIsFirstSuccess = false;
 
     public ContactFragment() {
         // Required empty public constructor
@@ -106,7 +106,7 @@ public class ContactFragment extends PresenterFragment<IHomepageContract.Present
             // 重新切换到该Fragment 还未拿到数据 显示加载动画
             showLoading();
         } else {
-            // 重新切换到该Fragment 刷新空界面内容
+            // 重新切换到该Fragment 刷新界面内容
             onAdapterDataChanged();
         }
     }

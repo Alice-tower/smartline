@@ -5,6 +5,7 @@ import com.tower.smartline.factory.model.db.base.BaseEntity;
 /**
  * 数据库观察者接口
  *
+ * @param <E> Entity类本身
  * @author zpsong-tower <pingzisong2012@gmail.com>
  * @since 2021/8/5 16:42
  */

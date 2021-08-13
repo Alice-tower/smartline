@@ -15,7 +15,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * baseDbRepository
+ * 数据仓库基类
  *
  * @param <E> Entity类本身
  * @author zpsong-tower <pingzisong2012@gmail.com>
