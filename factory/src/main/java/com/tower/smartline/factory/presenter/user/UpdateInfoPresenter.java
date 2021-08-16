@@ -47,8 +47,7 @@ public class UpdateInfoPresenter extends BasePresenter<IUpdateInfoContract.View>
             String portraitType = isMale ? PortraitView.DEFAULT_MALE : PortraitView.DEFAULT_FEMALE;
 
             // 向云侧发送修改请求
-            UserHelper.update(new UpdateInfoModel("", portraitType, desc, sex),
-                    UpdateInfoPresenter.this);
+            UserHelper.update(new UpdateInfoModel("", portraitType, desc, sex), this);
         } else {
             // 用户使用了本地图片 上传头像
             Factory.runOnAsync(() -> {
@@ -62,8 +61,7 @@ public class UpdateInfoPresenter extends BasePresenter<IUpdateInfoContract.View>
                 } else {
                     // 上传成功 向云侧发送修改请求
                     Log.i(TAG, "update: portraitUrl: " + portraitUrl);
-                    UserHelper.update(new UpdateInfoModel("", portraitUrl, desc, sex),
-                            UpdateInfoPresenter.this);
+                    UserHelper.update(new UpdateInfoModel("", portraitUrl, desc, sex), this);
                 }
             });
         }

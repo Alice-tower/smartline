@@ -6,7 +6,6 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.tower.smartline.factory.data.db.DbPortal;
 import com.tower.smartline.factory.data.dispatcher.DataCenter;
 import com.tower.smartline.factory.data.IDataSource;
 import com.tower.smartline.factory.data.helper.base.MyCallback;
@@ -60,7 +59,7 @@ public class UserHelper {
                         if (result == null) {
                             return;
                         }
-                        DbPortal.save(UserEntity.class, result.toUserEntity());
+                        DataCenter.dispatchUser(result);
                         callback.onSuccess(result);
                     }
                 });
@@ -120,7 +119,7 @@ public class UserHelper {
                         }
 
                         // 保存并通知联系人列表刷新
-                        DbPortal.save(UserEntity.class, result.toUserEntity());
+                        DataCenter.dispatchUser(result);
                         callback.onSuccess(result);
                     }
                 });
@@ -170,10 +169,8 @@ public class UserHelper {
                         if (result == null) {
                             return;
                         }
-
-                        UserEntity userEntity = result.toUserEntity();
-                        DbPortal.save(UserEntity.class, userEntity);
-                        callback.onSuccess(userEntity);
+                        DataCenter.dispatchUser(result);
+                        callback.onSuccess(result.toUserEntity());
                     }
                 });
     }
