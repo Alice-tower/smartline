@@ -1,10 +1,10 @@
 # smartline(米线)
 
-**米线为个人学习的即时通讯开源App，依照大厂编码规范，在项目中思考并使用各种设计模式**
+**米线为个人学习的即时通讯开源App，依照大厂编码规范，在项目中反复思考并重构**
 
 您如果需要使用仓库源代码打包，需要根据文末的指引配置相关参数，否则将无法使用联网功能
 
-与该App配套的服务端代码仓库为[Smartservice](https://github.com/zpsong-tower/smartservice)
+与该App配套的服务端代码仓库为 [smartservice](https://github.com/zpsong-tower/smartservice)
 
 功能与版本计划：
 
