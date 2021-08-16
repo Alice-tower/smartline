@@ -24,7 +24,7 @@ public abstract class ToolbarActivity extends BaseActivity {
     }
 
     /**
-     * 初始化toolbar
+     * 初始化Toolbar
      */
     public void initToolbar() {
         if (mToolbar != null) {

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:paddingTop="@dimen/statusBarSize"
     android:paddingBottom="@dimen/len_28"
-    tools:background="@drawable/bg_src_morning"
+    tools:background="@drawable/bg_src_noon"
     tools:context=".frags.account.LoginFragment">
 
     <androidx.appcompat.widget.Toolbar
@@ -214,7 +214,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         app:gAutoRun="false"
-        app:gBackgroundColor="@color/trans"
+        app:gBackgroundColor="@null"
         app:gForegroundColor="@color/white"
         app:gForegroundLineSize="@dimen/len_1" />
 

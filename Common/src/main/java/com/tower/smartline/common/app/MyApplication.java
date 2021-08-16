@@ -73,9 +73,7 @@ public class MyApplication extends Application {
      */
     public static void showToast(final String msg) {
         // 确保在Ui线程执行
-        Run.onUiAsync(() -> {
-            Toast.makeText(sInstance, msg, Toast.LENGTH_SHORT).show();
-        });
+        Run.onUiAsync(() -> Toast.makeText(sInstance, msg, Toast.LENGTH_SHORT).show());
     }
 
     /**

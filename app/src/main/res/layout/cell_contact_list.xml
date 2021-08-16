@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginVertical="@dimen/len_2"
-    android:foreground="@drawable/ic_touch_fg"
     android:orientation="horizontal"
     android:paddingHorizontal="@dimen/len_16"
     android:paddingVertical="@dimen/len_10">

@@ -47,7 +47,7 @@ public class MessageEntity extends BaseEntity<MessageEntity> {
     /**
      * 消息发送中状态 (消息实体构建完成 到 收到服务器返回的结果之前)
      */
-    public static final int STATE_Sending = -1;
+    public static final int STATE_SENDING = -1;
 
     /**
      * 消息发送成功状态 (大部分存储消息的常态)

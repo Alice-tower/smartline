@@ -12,17 +12,17 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="@dimen/len_48"
-        android:contentDescription="@string/app_name"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/bg_src_night" />
+        tools:src="@drawable/bg_src_night"
+        tools:ignore="ContentDescription" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/actionBarWithStatusBarSize"
-        android:background="@color/trans"
+        android:background="@null"
         android:paddingTop="@dimen/statusBarSize"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -110,7 +110,7 @@
         android:layout_height="@dimen/len_36"
         android:layout_marginBottom="@dimen/len_20"
         app:gAutoRun="false"
-        app:gBackgroundColor="@color/trans"
+        app:gBackgroundColor="@null"
         app:gForegroundColor="@color/white"
         app:gForegroundLineSize="@dimen/len_1"
         app:layout_constraintBottom_toBottomOf="parent"

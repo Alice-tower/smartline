@@ -109,9 +109,9 @@ public class MainActivity extends BaseActivity
 
         // 顶部TitleBar加载背景图
         Glide.with(this)
-                .load(R.drawable.bg_src_morning)
+                .load(R.drawable.bg_src_noon)
                 .centerCrop()
-                .into(new CustomViewTarget<AppBarLayout, Drawable>(mBinding.appbar) {
+                .into(new CustomViewTarget<AppBarLayout, Drawable>(mBinding.layAppbar) {
                     @Override
                     public void onLoadFailed(@Nullable Drawable errorDrawable) {
                     }

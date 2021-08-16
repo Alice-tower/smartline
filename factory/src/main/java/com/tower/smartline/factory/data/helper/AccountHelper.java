@@ -29,6 +29,9 @@ import retrofit2.Response;
 public class AccountHelper {
     private static final String TAG = AccountHelper.class.getName();
 
+    // 防止推送初始化频繁向服务器绑定设备Id
+    public static boolean sFirstBind = false;
+
     private AccountHelper() {
     }
 
@@ -107,8 +110,12 @@ public class AccountHelper {
                     public void onResponse(@NonNull Call<ResponseModel<AccountCard>> call,
                                            @NonNull Response<ResponseModel<AccountCard>> response) {
                         super.onResponse(call, response);
-                        AccountCard result = getResultOrHandled();
+                        AccountCard result = getResultWithoutCallback();
                         if (result == null) {
+                            return;
+                        }
+                        if (callback == null) {
+                            sFirstBind = true;
                             return;
                         }
                         if (!result.isBind()) {

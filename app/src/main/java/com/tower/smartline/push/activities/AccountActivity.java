@@ -68,7 +68,7 @@ public class AccountActivity extends BaseActivity {
 
         // 初始化背景
         Glide.with(this)
-                .load(R.drawable.bg_src_morning)
+                .load(R.drawable.bg_src_noon)
                 .centerCrop() //居中剪切
                 .into(new DrawableImageViewTarget(mBinding.imBg) {
                     @Override

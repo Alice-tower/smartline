@@ -25,7 +25,7 @@ public class AppMessageReceiverService extends GTIntentService {
      * 个推进程启动成功回调该函数
      *
      * @param context Context
-     * @param pid Push 进程 ID
+     * @param pid     Push 进程 ID
      */
     @Override
     public void onReceiveServicePid(Context context, int pid) {
@@ -36,11 +36,15 @@ public class AppMessageReceiverService extends GTIntentService {
      * 个推初始化成功回调该函数并返回 cid
      *
      * @param context Context
-     * @param pushId 个推唯一 ID，用于标识当前应用
+     * @param pushId  个推唯一 ID，用于标识当前应用
      */
     @Override
     public void onReceiveClientId(Context context, String pushId) {
         Log.d(TAG, "onReceiveClientId -> " + pushId);
+        if (AccountHelper.sFirstBind) {
+            // 防止推送初始化频繁向服务器绑定设备Id
+            return;
+        }
 
         // 设备Id持久化
         Account.setPushId(pushId);
@@ -54,7 +58,7 @@ public class AppMessageReceiverService extends GTIntentService {
      * 接收到透传消息后回调该函数
      *
      * @param context Context
-     * @param msg 透传消息封装类
+     * @param msg     透传消息封装类
      */
     @Override
     public void onReceiveMessageData(Context context, GTTransmitMessage msg) {
@@ -63,8 +67,8 @@ public class AppMessageReceiverService extends GTIntentService {
                 "\ntaskid = " + msg.getTaskId() +
                 "\nmessageid = " + msg.getMessageId() +
                 "\npkg = " + msg.getPkgName() +
-                "\ncid = " + msg.getClientId()+
-                "\nplayload = "+ new String(msg.getPayload()));
+                "\ncid = " + msg.getClientId() +
+                "\nplayload = " + new String(msg.getPayload()));
 
         // 透传消息转换为字符串后分发处理
         byte[] payload = msg.getPayload();
@@ -78,7 +82,7 @@ public class AppMessageReceiverService extends GTIntentService {
      * cid 在线状态变化时回调该函数
      *
      * @param context Context
-     * @param online 当前 cid 是否在线，true 代表在线，false 代表离线，若由于网络原因离线，个推 SDK 内部会自动重连
+     * @param online  当前 cid 是否在线，true 代表在线，false 代表离线，若由于网络原因离线，个推 SDK 内部会自动重连
      */
     @Override
     public void onReceiveOnlineState(Context context, boolean online) {
@@ -88,7 +92,7 @@ public class AppMessageReceiverService extends GTIntentService {
     /**
      * 调用设置标签、绑定别名、解绑别名、自定义回执操作的结果返回
      *
-     * @param context Context
+     * @param context    Context
      * @param cmdMessage 通过cmdMessage.getAction()获取相应的状态值
      */
     @Override

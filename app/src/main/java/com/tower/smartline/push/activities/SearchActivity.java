@@ -125,18 +125,14 @@ public class SearchActivity extends ToolbarActivity {
             ((SearchView) actionView).setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
-                    // 当点击了提交按钮的时候
+                    // 当点击提交按钮时
                     search(query);
                     return true;
                 }
 
                 @Override
                 public boolean onQueryTextChange(String s) {
-                    // 当键入文字改变时，不会即时搜索，只在搜索框为空时搜索一次
-                    if (TextUtils.isEmpty(s)) {
-                        search(s);
-                        return true;
-                    }
+                    // 当键入文字改变时
                     return false;
                 }
             });

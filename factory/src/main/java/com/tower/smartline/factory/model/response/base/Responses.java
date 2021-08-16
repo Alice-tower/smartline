@@ -20,16 +20,20 @@ public class Responses {
     private Responses() {
     }
 
-    public static boolean isSuccess(ResponseModel rsp, @NonNull IDataSource.FailureCallback callback) {
+    public static boolean isSuccess(ResponseModel rsp, IDataSource.FailureCallback callback) {
         if (rsp == null) {
             Log.w(TAG, "isSuccess: rsp == null");
-            callback.onFailure(R.string.toast_net_service_exception);
+            if (callback != null) {
+                callback.onFailure(R.string.toast_net_service_exception);
+            }
             return false;
         }
 
         // 错误码为不成功 调用失败回调显示Toast
         if (rsp.getCode() != ResponseCode.SUCCESS) {
-            decodeRspCode(rsp.getCode(), callback);
+            if (callback != null) {
+                decodeRspCode(rsp.getCode(), callback);
+            }
             return false;
         }
         return true;

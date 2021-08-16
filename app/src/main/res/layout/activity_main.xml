@@ -8,7 +8,7 @@
     tools:context=".activities.MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar"
+        android:id="@+id/lay_appbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/actionBarWithStatusBarSize"
         android:outlineProvider="bounds"
@@ -26,7 +26,6 @@
                 android:layout_width="@dimen/portraitSize"
                 android:layout_height="@dimen/portraitSize"
                 android:layout_margin="@dimen/len_4"
-                android:foreground="@drawable/ic_touch_menu"
                 android:padding="@dimen/len_4"
                 android:scaleType="centerCrop"
                 android:src="@color/textSecond" />
@@ -47,7 +46,6 @@
                 android:layout_margin="@dimen/len_4"
                 android:layout_gravity="end|center_vertical"
                 android:padding="@dimen/len_10"
-                android:foreground="@drawable/ic_touch_menu"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_search"
                 app:tint="?attr/toolbarMenuIconColor"
