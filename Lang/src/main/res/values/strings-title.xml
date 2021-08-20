@@ -16,4 +16,8 @@
     <string name="title_search_main">综合</string>
     <string name="title_search_user">找人</string>
     <string name="title_search_group">找群</string>
+
+    <!--聊天页面-->
+    <string name="title_chat_user_info">用户信息</string>
+    <string name="title_chat_group_info">群组信息</string>
 </resources>

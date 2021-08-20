@@ -2,14 +2,18 @@ package com.tower.smartline.push.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 import com.tower.smartline.common.app.BaseActivity;
 import com.tower.smartline.factory.model.IUserInfo;
 import com.tower.smartline.push.databinding.ActivityMessageBinding;
+import com.tower.smartline.push.frags.message.ChatGroupFragment;
+import com.tower.smartline.push.frags.message.ChatUserFragment;
 
 /**
  * 消息Activity
@@ -27,6 +31,15 @@ public class MessageActivity extends BaseActivity {
     private static final String KEY_RECEIVER_IS_GROUP = "KEY_RECEIVER_IS_GROUP";
 
     private ActivityMessageBinding mBinding;
+
+    // 接受者Id
+    private String mReceiverId;
+
+    // 是否为群聊天
+    private boolean mIsGroup;
+
+    // 当前的Fragment
+    private Fragment mCurFragment;
 
     /**
      * 消息Activity拉起入口 (一对一用户聊天)
@@ -54,10 +67,34 @@ public class MessageActivity extends BaseActivity {
     //
     // }
 
+    @Override
+    protected boolean initArgs(Bundle bundle) {
+        mReceiverId = bundle.getString(KEY_RECEIVER_ID);
+        mIsGroup = bundle.getBoolean(KEY_RECEIVER_IS_GROUP);
+        return !TextUtils.isEmpty(mReceiverId) && super.initArgs(bundle);
+    }
+
     @NonNull
     @Override
     protected View initBinding() {
         mBinding = ActivityMessageBinding.inflate(getLayoutInflater());
         return mBinding.getRoot();
+    }
+
+    @Override
+    protected void initWidget() {
+        super.initWidget();
+        mCurFragment = mIsGroup
+                ? new ChatGroupFragment()
+                : new ChatUserFragment();
+
+        // 从Activity传递参数到Fragment中去
+        Bundle bundle = new Bundle();
+        bundle.putString(KEY_RECEIVER_ID, mReceiverId);
+        mCurFragment.setArguments(bundle);
+
+        getSupportFragmentManager().beginTransaction()
+                .add(mBinding.layRoot.getId(), mCurFragment)
+                .commit();
     }
 }
