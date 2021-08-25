@@ -14,8 +14,10 @@ import androidx.annotation.Nullable;
 
 import com.tower.smartline.common.Config;
 import com.tower.smartline.common.app.BaseActivity;
+import com.tower.smartline.factory.data.helper.AccountHelper;
 import com.tower.smartline.factory.persistence.Account;
 import com.tower.smartline.push.activities.AccountActivity;
+import com.tower.smartline.push.activities.MainActivity;
 import com.tower.smartline.push.databinding.ActivityLauncherBinding;
 import com.tower.smartline.push.frags.assist.PermissionsFragment;
 
@@ -99,9 +101,10 @@ public class LauncherActivity extends BaseActivity {
             mTimer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    if (mIsConfigAvailable && mIsAnimationOver
-                            && !TextUtils.isEmpty(Account.getPushId())) {
-                        // Config参数不为空 渐变动画结束 PushId准备就绪
+                    if (mIsConfigAvailable // Config参数不为空
+                            && mIsAnimationOver // 渐变动画结束
+                            && AccountHelper.sIsFirstBindOver // 首次绑定已结束
+                            && !TextUtils.isEmpty(Account.getPushId())) { // PushId准备就绪
                         mTimer.cancel();
                         checkPermission();
                         mIsTimerOver = true;
@@ -132,14 +135,21 @@ public class LauncherActivity extends BaseActivity {
      */
     private void checkPermission() {
         if (PermissionsFragment.hasAllPermissions(this, getSupportFragmentManager())) {
-            // TODO 通过检查PushId Token等相关持久化参数 实现免登录
-            AccountActivity.show(this);
+            if (Account.isLogin() // 账号已登录
+                    && AccountHelper.sIsFirstBindSuccess) { // 首次绑定成功 Token未失效
+                MainActivity.show(this);
+            } else {
+                AccountActivity.show(this);
+            }
             finish();
         }
     }
 
     private boolean checkConfig() {
         if (Config.isEmpty()) {
+            if (mTimer != null) {
+                mTimer.cancel();
+            }
             new AlertDialog.Builder(this)
                     .setTitle(R.string.launcher_alert_title)
                     .setIcon(R.mipmap.ic_launcher)
@@ -148,8 +158,6 @@ public class LauncherActivity extends BaseActivity {
                     .create().show();
             return false;
         }
-
-        // App无法运行 无需考虑计时器内存泄漏问题
         mIsConfigAvailable = true;
         return true;
     }

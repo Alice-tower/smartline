@@ -29,8 +29,11 @@ import retrofit2.Response;
 public class AccountHelper {
     private static final String TAG = AccountHelper.class.getName();
 
-    // 防止推送初始化频繁向服务器绑定设备Id
-    public static boolean sFirstBind = false;
+    // 首次绑定是否成功 决定打开App跳转登录界面还是登录界面
+    public volatile static boolean sIsFirstBindSuccess = false;
+
+    // 是否进行过首次绑定 防止推送初始化频繁向服务器绑定设备Id
+    public volatile static boolean sIsFirstBindOver = false;
 
     private AccountHelper() {
     }
@@ -110,16 +113,15 @@ public class AccountHelper {
                     public void onResponse(@NonNull Call<ResponseModel<AccountCard>> call,
                                            @NonNull Response<ResponseModel<AccountCard>> response) {
                         super.onResponse(call, response);
-                        AccountCard result = getResultWithoutCallback();
+                        AccountCard result = getResultOrHandled();
                         if (result == null) {
+                            sIsFirstBindOver = true;
                             return;
                         }
-                        if (callback == null) {
-                            sFirstBind = true;
-                            return;
-                        }
+                        sIsFirstBindSuccess = true;
+                        sIsFirstBindOver = true;
                         if (!result.isBind()) {
-                            // 向服务器请求绑定的结果仍为未绑定 防止死循环
+                            // 向服务器请求绑定的结果仍为未绑定 防止死循环 (理论上该逻辑不可能走进来)
                             Log.w(TAG, "onResponse: isBind == false");
                             callback.onFailure(R.string.toast_net_service_exception);
                             return;

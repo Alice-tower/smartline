@@ -3,8 +3,11 @@ package com.tower.smartline.push;
 import android.content.Context;
 import android.util.Log;
 
+import com.tower.smartline.common.app.MyApplication;
+import com.tower.smartline.factory.data.IDataSource;
 import com.tower.smartline.factory.data.dispatcher.DataCenter;
 import com.tower.smartline.factory.data.helper.AccountHelper;
+import com.tower.smartline.factory.model.response.UserCard;
 import com.tower.smartline.factory.persistence.Account;
 
 import com.igexin.sdk.GTIntentService;
@@ -41,7 +44,7 @@ public class AppMessageReceiverService extends GTIntentService {
     @Override
     public void onReceiveClientId(Context context, String pushId) {
         Log.d(TAG, "onReceiveClientId -> " + pushId);
-        if (AccountHelper.sFirstBind) {
+        if (AccountHelper.sIsFirstBindOver) {
             // 防止推送初始化频繁向服务器绑定设备Id
             return;
         }
@@ -49,8 +52,20 @@ public class AppMessageReceiverService extends GTIntentService {
         // 设备Id持久化
         Account.setPushId(pushId);
         if (Account.isLogin()) {
-            // 账号若为登录状态则绑定一次PushId 不设置回调
-            AccountHelper.bindPush(null);
+            // App首次打开时账号若为登录状态则 绑定一次PushId 顺便检测Token是否失效
+            AccountHelper.bindPush(new IDataSource.Callback<UserCard>() {
+                @Override
+                public void onSuccess(UserCard userCard) {
+                }
+
+                @Override
+                public void onFailure(int strRes) {
+                    MyApplication.showToast(strRes);
+                    // TODO 清除本地数据
+                }
+            });
+        } else {
+            AccountHelper.sIsFirstBindOver = true;
         }
     }
 
