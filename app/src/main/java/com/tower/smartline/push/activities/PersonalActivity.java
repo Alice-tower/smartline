@@ -31,26 +31,44 @@ public class PersonalActivity extends PresenterToolbarActivity<IPersonalInfoCont
 
     private static final String KEY_USER_ID = "KEY_USER_ID";
 
+    private static final String KEY_FROM_MESSAGE = "KEY_FROM_MESSAGE";
+
     private ActivityPersonalBinding mBinding;
 
     private String mUserId;
 
     private IUserInfo mUser;
 
+    // 与该用户的关系类型 (主要决定底部按钮)
     private int mType;
 
+    // 是否从消息页面拉起
+    private boolean mIsShowFromMessage = false;
+
     /**
-     * 个人信息Activity拉起入口
+     * 个人信息Activity拉起入口 (非消息页面拉起)
      *
      * @param context 上下文
      * @param userId  目标用户Id
      */
     public static void show(Context context, String userId) {
+        show(context, userId, false);
+    }
+
+    /**
+     * 个人信息Activity拉起入口
+     *
+     * @param context           上下文
+     * @param userId            目标用户Id
+     * @param isShowFromMessage 是否从消息页面拉起
+     */
+    public static void show(Context context, String userId, boolean isShowFromMessage) {
         if (context == null || TextUtils.isEmpty(userId)) {
             return;
         }
         Intent intent = new Intent(context, PersonalActivity.class);
         intent.putExtra(KEY_USER_ID, userId);
+        intent.putExtra(KEY_FROM_MESSAGE, isShowFromMessage);
         context.startActivity(intent);
     }
 
@@ -58,6 +76,7 @@ public class PersonalActivity extends PresenterToolbarActivity<IPersonalInfoCont
     protected boolean initArgs(Bundle bundle) {
         if (bundle != null) {
             mUserId = bundle.getString(KEY_USER_ID);
+            mIsShowFromMessage = bundle.getBoolean(KEY_FROM_MESSAGE);
             if (!TextUtils.isEmpty(mUserId)) {
                 Log.i(TAG, "initArgs: userId: " + mUserId);
                 return super.initArgs(bundle);
@@ -183,7 +202,12 @@ public class PersonalActivity extends PresenterToolbarActivity<IPersonalInfoCont
                 getPresenter().follow(mUserId);
                 break;
             case IPersonalInfoContract.TYPE_MESSAGE:
-                MessageActivity.show(this, mUser);
+                if (mIsShowFromMessage) {
+                    // 如果从消息页面拉起直接关闭该页面
+                    finish();
+                } else {
+                    MessageActivity.show(this, mUser);
+                }
                 break;
             default:
                 break;

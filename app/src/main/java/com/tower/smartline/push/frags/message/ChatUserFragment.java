@@ -42,6 +42,6 @@ public class ChatUserFragment extends ChatFragment {
     @Override
     protected void onPortraitClick() {
         Log.i(TAG, "onPortraitClick");
-        PersonalActivity.show(requireContext(), mReceiverId);
+        PersonalActivity.show(requireContext(), mReceiverId, true);
     }
 }

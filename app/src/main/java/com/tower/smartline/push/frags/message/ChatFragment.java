@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.tower.smartline.common.app.BaseFragment;
 import com.tower.smartline.push.R;
@@ -88,6 +89,9 @@ public abstract class ChatFragment extends BaseFragment
             }
         });
 
+        // RecyclerView初始化
+        mBinding.recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
+
         // 点击监听初始化
         mBinding.imPortrait.setOnClickListener(this);
         mBinding.btnRecord.setOnClickListener(this);
@@ -112,7 +116,44 @@ public abstract class ChatFragment extends BaseFragment
 
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-        // TODO
+        float totalScrollRange = appBarLayout.getTotalScrollRange(); // 滚动范围
+        Log.d(TAG, "onOffsetChanged: totalScrollRange: " + totalScrollRange
+                + " verticalOffset: " + verticalOffset);
+        float verticalOffsetAbs = Math.abs(verticalOffset); // 垂直偏移绝对值
+        if (verticalOffsetAbs == 0) {
+            // AppBar完全展开时
+            // 头像可见 缩放100% 不透明度100%
+            mBinding.imPortrait.setVisibility(View.VISIBLE);
+            mBinding.imPortrait.setScaleX(1);
+            mBinding.imPortrait.setScaleY(1);
+            mBinding.imPortrait.setAlpha((float) 1);
+            if (mMenuItem != null) {
+                // 隐藏菜单
+                mMenuItem.setVisible(false);
+            }
+        } else if (verticalOffsetAbs >= totalScrollRange) {
+            // AppBar完全关闭时
+            // 头像不可见
+            mBinding.imPortrait.setVisibility(View.INVISIBLE);
+            if (mMenuItem != null) {
+                // 显示菜单 不透明度100%
+                mMenuItem.setVisible(true);
+                mMenuItem.getIcon().setAlpha(255);
+            }
+        } else {
+            // AppBar伸缩时
+            // 头像可见 调整缩放和不透明度
+            float progress = 1 - verticalOffsetAbs / totalScrollRange;
+            mBinding.imPortrait.setVisibility(View.VISIBLE);
+            mBinding.imPortrait.setScaleX(progress);
+            mBinding.imPortrait.setScaleY(progress);
+            mBinding.imPortrait.setAlpha(progress);
+            if (mMenuItem != null) {
+                // 显示菜单 不透明度与头像相反
+                mMenuItem.setVisible(true);
+                mMenuItem.getIcon().setAlpha(255 - (int) (progress * 255));
+            }
+        }
     }
 
     /**
