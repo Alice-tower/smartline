@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import com.tower.smartline.common.widget.recycler.BaseRecyclerAdapter;
 import com.tower.smartline.factory.data.helper.UserHelper;
 import com.tower.smartline.factory.data.repository.ContactRepository;
+import com.tower.smartline.factory.data.repository.base.IUserSource;
 import com.tower.smartline.factory.model.db.UserEntity;
 import com.tower.smartline.factory.presenter.BaseDbDataSourcePresenter;
 import com.tower.smartline.factory.utils.DiffUiDataCallback;
@@ -18,7 +19,7 @@ import java.util.List;
  * @author zpsong-tower <pingzisong2012@gmail.com>
  * @since 2021/7/25 10:26
  */
-public class ContactPresenter extends BaseDbDataSourcePresenter<UserEntity, IHomepageContract.View, ContactRepository>
+public class ContactPresenter extends BaseDbDataSourcePresenter<UserEntity, IHomepageContract.View, IUserSource>
         implements IHomepageContract.Presenter {
     /**
      * 构造方法
@@ -40,8 +41,7 @@ public class ContactPresenter extends BaseDbDataSourcePresenter<UserEntity, IHom
         if (getView() == null || getView().getRecyclerAdapter() == null) {
             return;
         }
-        BaseRecyclerAdapter<UserEntity> adapter = getView().getRecyclerAdapter();
-        List<UserEntity> old = adapter.getItems();
+        List<UserEntity> old = getView().getRecyclerAdapter().getItems();
 
         // 与当前显示的数据进行比较刷新
         DiffUtil.Callback callback = new DiffUiDataCallback<>(old, users);

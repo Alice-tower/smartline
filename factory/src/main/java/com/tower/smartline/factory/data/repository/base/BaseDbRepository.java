@@ -53,7 +53,13 @@ public abstract class BaseDbRepository<E extends BaseEntity<E>> implements IDbDa
         if (mEClass != null) {
             DbSubject.getInstance().registerDbObserver(mEClass, this);
         }
+        loadData();
     }
+
+    /**
+     * 加载数据源时加载一次数据
+     */
+    protected abstract void loadData();
 
     @Override
     public void release() {

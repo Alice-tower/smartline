@@ -13,7 +13,7 @@ public class Constants {
     /**
      * 每页显示数据上限
      */
-    public static final int MAX_RESULTS_EACH_PAGE = 100;
+    public static final int MAX_RESULTS_EACH_PAGE = 30;
 
     /**
      * 手机号正则表达式 11位

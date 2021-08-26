@@ -1,6 +1,7 @@
 package com.tower.smartline.factory.model.db;
 
 import com.tower.smartline.factory.data.db.AppDatabase;
+import com.tower.smartline.factory.model.api.message.MessageCreateModel;
 import com.tower.smartline.factory.model.db.base.BaseEntity;
 
 import com.raizlabs.android.dbflow.annotation.Column;
@@ -19,23 +20,13 @@ import java.util.Objects;
  */
 @Table(database = AppDatabase.class)
 public class SessionEntity extends BaseEntity<SessionEntity> {
-    /**
-     * 消息接收者类型 用户
-     */
-    public static final int RECEIVER_TYPE_USER = 0;
-
-    /**
-     * 消息接受者类型 群组
-     */
-    public static final int RECEIVER_TYPE_GROUP = 1;
-
     // Id 规定为消息的接收人Id或接收群Id
     @PrimaryKey
     private String id;
 
     // 消息接收者类型 对应人或群
     @Column
-    private int receiverType = RECEIVER_TYPE_USER;
+    private int receiverType = MessageCreateModel.RECEIVER_TYPE_USER;
 
     // 用户名或群名
     @Column
