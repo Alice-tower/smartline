@@ -3,7 +3,9 @@ package com.tower.smartline.factory.presenter.message;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 
+import com.tower.smartline.factory.data.helper.MessageHelper;
 import com.tower.smartline.factory.data.repository.base.IMessageSource;
+import com.tower.smartline.factory.model.api.message.MessageCreateModel;
 import com.tower.smartline.factory.model.db.MessageEntity;
 import com.tower.smartline.factory.presenter.BaseDbDataSourcePresenter;
 import com.tower.smartline.factory.utils.DiffUiDataCallback;
@@ -13,6 +15,7 @@ import java.util.List;
 /**
  * ChatPresenter
  *
+ * @param <ReceiverEntity> 接受者类型 (UserEntity / GroupEntity)
  * @author zpsong-tower <pingzisong2012@gmail.com>
  * @since 2021/8/26 17:43
  */
@@ -42,7 +45,11 @@ public abstract class ChatPresenter<ReceiverEntity>
 
     @Override
     public void sendText(String content) {
-        // TODO
+        MessageCreateModel model = new MessageCreateModel.Builder()
+                .receiver(mReceiverId, mReceiverType)
+                .content(content, MessageEntity.TYPE_TEXT)
+                .build();
+        MessageHelper.send(model);
     }
 
     @Override

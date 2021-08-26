@@ -2,8 +2,10 @@ package com.tower.smartline.factory.net;
 
 import com.tower.smartline.factory.model.api.account.LoginModel;
 import com.tower.smartline.factory.model.api.account.RegisterModel;
+import com.tower.smartline.factory.model.api.message.MessageCreateModel;
 import com.tower.smartline.factory.model.api.user.UpdateInfoModel;
 import com.tower.smartline.factory.model.response.AccountCard;
+import com.tower.smartline.factory.model.response.MessageCard;
 import com.tower.smartline.factory.model.response.UserCard;
 import com.tower.smartline.factory.model.response.base.ResponseModel;
 
@@ -93,4 +95,13 @@ public interface IRemoteService {
      */
     @GET("user/contact")
     Call<ResponseModel<List<UserCard>>> userContacts();
+
+    /**
+     * 发送一条消息到服务器处理推送
+     *
+     * @param model MessageCreateModel
+     * @return ResponseModel<MessageCard>
+     */
+    @POST("message")
+    Call<ResponseModel<MessageCard>> messageSend(@Body MessageCreateModel model);
 }

@@ -3,6 +3,7 @@ package com.tower.smartline.factory.data.dispatcher;
 import android.text.TextUtils;
 
 import com.tower.smartline.factory.data.helper.GroupHelper;
+import com.tower.smartline.factory.data.helper.MessageHelper;
 import com.tower.smartline.factory.data.helper.UserHelper;
 import com.tower.smartline.factory.data.db.DbPortal;
 import com.tower.smartline.factory.model.db.GroupEntity;
@@ -78,14 +79,38 @@ public class MessageDispatcher {
                     continue;
                 }
 
-                // TODO 发消息时，应当先存储消息到数据库，再进行网络请求
-                //  首次存储和服务器返回都在此逻辑中加工过滤
-                //  考虑对比消息本地和服务器的创建时间或增加新的状态值
+                // 发消息流程：客户端创建消息->存储本地->发送至服务端->服务端返回->刷新本地状态
+                MessageEntity message = MessageHelper.findFromLocal(card.getId());
+                if (message == null) {
+                    // 本地无此消息，初次在数据库存储
+                    UserEntity sender = UserHelper.infoFirstOfLocal(card.getSenderId());
+                    UserEntity receiver = null;
+                    GroupEntity group = null;
+                    if (!TextUtils.isEmpty(card.getReceiverId())) {
+                        receiver = UserHelper.infoFirstOfLocal(card.getReceiverId());
+                    } else if (!TextUtils.isEmpty(card.getGroupId())) {
+                        group = GroupHelper.infoFirstOfLocal(card.getGroupId());
+                    }
+                    if (sender == null || (receiver == null && group == null)) {
+                        continue;
+                    }
+                    message = card.toMessageEntity(sender, receiver, group);
+                } else {
+                    // 本地有此消息，若本地消息不为完成态则刷新该消息状态
+                    if (message.getState() == MessageEntity.STATE_DONE) {
+                        continue;
+                    }
 
-                UserEntity sender = UserHelper.infoFirstOfLocal(card.getSenderId());
-                UserEntity receiver = UserHelper.infoFirstOfLocal(card.getReceiverId());
-                GroupEntity group = GroupHelper.infoFirstOfLocal(card.getGroupId());
-                messages.add(card.toMessageEntity(sender, receiver, group));
+                    // 更新一些可能会变化的内容
+                    message.setContent(card.getContent());
+                    message.setAttachment(card.getAttachment());
+                    message.setState(card.getState());
+                    if (card.getState() == MessageEntity.STATE_DONE) {
+                        // 消息发送成功时需要修改创建时间为服务器时间
+                        message.setCreateAt(card.getCreateAt());
+                    }
+                }
+                messages.add(message);
             }
             if (messages.size() > 0) {
                 // 进行数据库存储并通知

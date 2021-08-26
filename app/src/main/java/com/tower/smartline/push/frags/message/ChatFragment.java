@@ -16,12 +16,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.tower.smartline.common.app.BaseFragment;
+import com.tower.smartline.common.app.PresenterFragment;
 import com.tower.smartline.common.widget.PortraitView;
 import com.tower.smartline.common.widget.recycler.BaseRecyclerAdapter;
 import com.tower.smartline.factory.model.db.MessageEntity;
 import com.tower.smartline.factory.model.db.UserEntity;
 import com.tower.smartline.factory.persistence.Account;
+import com.tower.smartline.factory.presenter.message.IChatContract;
 import com.tower.smartline.push.R;
 import com.tower.smartline.push.activities.MessageActivity;
 import com.tower.smartline.push.activities.PersonalActivity;
@@ -36,11 +37,12 @@ import net.qiujuer.genius.ui.widget.Loading;
 /**
  * ChatFragment
  *
+ * @param <ReceiverEntity> 接受者类型 (UserEntity / GroupEntity)
  * @author zpsong-tower <pingzisong2012@gmail.com>
  * @since 2021/8/19 8:56
  */
-public abstract class ChatFragment extends BaseFragment
-        implements AppBarLayout.OnOffsetChangedListener, View.OnClickListener {
+public abstract class ChatFragment<ReceiverEntity> extends PresenterFragment<IChatContract.Presenter>
+        implements IChatContract.View<ReceiverEntity>, AppBarLayout.OnOffsetChangedListener, View.OnClickListener {
     private static final String TAG = ChatFragment.class.getName();
 
     protected FragmentChatBinding mBinding;
@@ -50,6 +52,8 @@ public abstract class ChatFragment extends BaseFragment
     private MenuItem mMenuItem;
 
     private boolean mIsMessageBlank = true;
+
+    private ChatRecyclerAdapter mAdapter;
 
     @Override
     protected void initArgs(Bundle bundle) {
@@ -102,6 +106,7 @@ public abstract class ChatFragment extends BaseFragment
 
         // RecyclerView初始化
         mBinding.recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
+        mBinding.recycler.setAdapter(mAdapter = new ChatRecyclerAdapter());
 
         // 点击监听初始化
         mBinding.imPortrait.setOnClickListener(this);
@@ -109,7 +114,6 @@ public abstract class ChatFragment extends BaseFragment
         mBinding.btnEmoji.setOnClickListener(this);
         mBinding.btnSubmit.setOnClickListener(this);
     }
-
 
     /**
      * 初始化Toolbar菜单
@@ -119,6 +123,12 @@ public abstract class ChatFragment extends BaseFragment
      */
     @Nullable
     protected abstract MenuItem initToolbarMenu(Toolbar toolbar);
+
+    @Override
+    protected void initData() {
+        super.initData();
+        getPresenter().initReceiverData();
+    }
 
     @Override
     protected void destroyBinding() {
@@ -187,8 +197,20 @@ public abstract class ChatFragment extends BaseFragment
         if (mIsMessageBlank) {
             // TODO 更多按钮
         } else {
-            // TODO 发送按钮
+            // 发送按钮
+            String content = mBinding.editMessage.getText().toString();
+            mBinding.editMessage.setText("");
+            getPresenter().sendText(content);
         }
+    }
+
+    @Override
+    public BaseRecyclerAdapter<MessageEntity> getRecyclerAdapter() {
+        return mAdapter;
+    }
+
+    @Override
+    public void onAdapterDataChanged() {
     }
 
     @Override
