@@ -79,6 +79,7 @@ public class SearchUserFragment extends PresenterFragment<ISearchContract.Presen
                     return R.layout.cell_search_list;
                 }
 
+                @NonNull
                 @Override
                 protected BaseRecyclerViewHolder<UserCard> onCreateViewHolder(View root, int viewType) {
                     return new SearchUserViewHolder(root);
@@ -136,17 +137,18 @@ public class SearchUserFragment extends PresenterFragment<ISearchContract.Presen
 
             // Presenter初始化
             mPresenter = initPresenter();
-
-            // 点击监听初始化
-            mPortrait.setOnClickListener(this);
-            mFollow.setOnClickListener(this);
         }
 
         @Override
-        protected void onBind(UserCard userCard) {
+        protected void onBind(@NonNull UserCard userCard) {
+            if (mPortrait == null || mName == null || mFollow == null) {
+                return;
+            }
             mPortrait.setup(Glide.with(SearchUserFragment.this), userCard);
+            mPortrait.setOnClickListener(this);
             mName.setText(userCard.getName());
             mFollow.setEnabled(!userCard.isFollow());
+            mFollow.setOnClickListener(this);
         }
 
         @Override

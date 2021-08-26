@@ -183,6 +183,7 @@ public class GalleryView extends RecyclerView {
             return R.layout.cell_gallery;
         }
 
+        @NonNull
         @Override
         protected BaseRecyclerViewHolder<Image> onCreateViewHolder(View root, int viewType) {
             return new GalleryViewHolder(root);
@@ -204,7 +205,10 @@ public class GalleryView extends RecyclerView {
         }
 
         @Override
-        protected void onBind(Image image) {
+        protected void onBind(@NonNull Image image) {
+            if (mPic == null || mShade == null || mSelected == null) {
+                return;
+            }
             Glide.with(getContext())
                     .load(image.mUri) // 加载资源
                     .diskCacheStrategy(DiskCacheStrategy.NONE) // 本地图片不使用缓存

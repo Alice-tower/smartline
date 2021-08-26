@@ -73,6 +73,7 @@ public class ContactFragment extends PresenterFragment<IHomepageContract.Present
                     return R.layout.cell_contact_list;
                 }
 
+                @NonNull
                 @Override
                 protected BaseRecyclerViewHolder<UserEntity> onCreateViewHolder(View root, int viewType) {
                     return new ContactViewHolder(root);
@@ -148,14 +149,15 @@ public class ContactFragment extends PresenterFragment<IHomepageContract.Present
             mPortrait = itemView.findViewById(R.id.im_portrait);
             mName = itemView.findViewById(R.id.txt_name);
             mDesc = itemView.findViewById(R.id.txt_desc);
-
-            // 点击监听初始化
-            mPortrait.setOnClickListener(this);
         }
 
         @Override
-        protected void onBind(UserEntity userEntity) {
+        protected void onBind(@NonNull UserEntity userEntity) {
+            if (mPortrait == null || mName == null || mDesc == null) {
+                return;
+            }
             mPortrait.setup(Glide.with(ContactFragment.this), userEntity);
+            mPortrait.setOnClickListener(this);
             mName.setText(userEntity.getName());
             mDesc.setText(userEntity.getDescription());
         }

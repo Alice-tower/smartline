@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,11 +17,21 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.tower.smartline.common.app.BaseFragment;
+import com.tower.smartline.common.widget.PortraitView;
+import com.tower.smartline.common.widget.recycler.BaseRecyclerAdapter;
+import com.tower.smartline.factory.model.db.MessageEntity;
+import com.tower.smartline.factory.model.db.UserEntity;
+import com.tower.smartline.factory.persistence.Account;
 import com.tower.smartline.push.R;
 import com.tower.smartline.push.activities.MessageActivity;
+import com.tower.smartline.push.activities.PersonalActivity;
 import com.tower.smartline.push.databinding.FragmentChatBinding;
 
 import com.google.android.material.appbar.AppBarLayout;
+
+import com.bumptech.glide.Glide;
+
+import net.qiujuer.genius.ui.widget.Loading;
 
 /**
  * ChatFragment
@@ -200,6 +211,146 @@ public abstract class ChatFragment extends BaseFragment
             onSubmitClick();
         } else {
             Log.w(TAG, "onClick: illegal param: " + id);
+        }
+    }
+
+    private class ChatRecyclerAdapter extends BaseRecyclerAdapter<MessageEntity> {
+        @Override
+        protected int getItemViewType(int position, MessageEntity message) {
+            if (message == null) {
+                return 0;
+            }
+            boolean isRight = false;
+            if (!TextUtils.isEmpty(Account.getUserId()) && message.getSender() != null
+                    && Account.getUserId().equals(message.getSender().getId())) {
+                isRight = true;
+            }
+            switch (message.getType()) {
+                case MessageEntity.TYPE_TEXT: // 文本类型消息
+                    return isRight ? R.layout.cell_chat_text_right : R.layout.cell_chat_text_left;
+                case MessageEntity.TYPE_IMAGE: // 图片类型消息
+                    return isRight ? R.layout.cell_chat_image_right : R.layout.cell_chat_image_left;
+                case MessageEntity.TYPE_AUDIO: // 语音类型消息
+                    return isRight ? R.layout.cell_chat_audio_right : R.layout.cell_chat_audio_left;
+                case MessageEntity.TYPE_FILE: // 文件类型消息
+                    return isRight ? R.layout.cell_chat_file_right : R.layout.cell_chat_file_left;
+                default:
+                    return R.layout.cell_chat_text_left;
+            }
+        }
+
+        @NonNull
+        @Override
+        protected BaseRecyclerViewHolder<MessageEntity> onCreateViewHolder(View root, int viewType) {
+            switch (viewType) {
+                case R.layout.cell_chat_image_right:
+                case R.layout.cell_chat_image_left:
+                    // TODO 图片类型消息ViewHolder
+                case R.layout.cell_chat_audio_right:
+                case R.layout.cell_chat_audio_left:
+                    // TODO 语音类型消息ViewHolder
+                case R.layout.cell_chat_file_right:
+                case R.layout.cell_chat_file_left:
+                    // TODO 文件类型消息ViewHolder
+                default:
+                    // 文本类型消息ViewHolder
+                    return new TextHolder(root);
+            }
+        }
+    }
+
+    /**
+     * 所有类型消息ViewHolder的基类
+     */
+    abstract class ChatViewHolder extends BaseRecyclerAdapter.BaseRecyclerViewHolder<MessageEntity>
+            implements View.OnClickListener {
+        private PortraitView mPortrait;
+
+        @Nullable
+        private Loading mLoading;
+
+        public ChatViewHolder(View itemView) {
+            super(itemView);
+            mPortrait = itemView.findViewById(R.id.im_portrait);
+            mLoading = itemView.findViewById(R.id.loading);
+        }
+
+        @Override
+        protected void onBind(@NonNull MessageEntity message) {
+            if (mPortrait == null) {
+                return;
+            }
+            mPortrait.setOnClickListener(this);
+            message.load();
+            UserEntity sender = message.getSender();
+
+            // 需要先进行数据加载
+            sender.load();
+
+            // 设置头像
+            mPortrait.setup(Glide.with(ChatFragment.this), sender);
+
+            if (mLoading != null) {
+                // 右侧布局需要对Loading增加逻辑
+                int state = message.getState();
+                if (state == MessageEntity.STATE_DONE) {
+                    // 发送成功的常态
+                    mLoading.stop();
+                    mLoading.setVisibility(View.GONE);
+                } else if (state == MessageEntity.STATE_SENDING) {
+                    // 发送中
+                    mLoading.setProgress(0);
+                    mLoading.setVisibility(View.VISIBLE);
+                    mLoading.start();
+                } else if (state == MessageEntity.STATE_FAILED) {
+                    // 发送失败
+                    mLoading.setVisibility(View.VISIBLE);
+                    mLoading.stop();
+                    mLoading.setProgress(1);
+                }
+            }
+        }
+
+        private void onPortraitClick() {
+            Log.i(TAG, "onPortraitClick");
+            if (getData() != null) {
+                PersonalActivity.show(requireContext(), getData().getId(), true);
+            }
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (v == null) {
+                return;
+            }
+            int id = v.getId();
+            if (id == mPortrait.getId()) {
+                // 头像点击
+                onPortraitClick();
+            } else {
+                Log.w(TAG, "onClick: illegal param: " + id);
+            }
+        }
+    }
+
+    /**
+     * 文本类型消息ViewHolder
+     */
+    class TextHolder extends ChatViewHolder {
+        private TextView mContent;
+
+        public TextHolder(View itemView) {
+            super(itemView);
+            mContent = itemView.findViewById(R.id.txt_content);
+        }
+
+        @Override
+        protected void onBind(@NonNull MessageEntity message) {
+            super.onBind(message);
+            if (mContent == null) {
+                return;
+            }
+            mContent.setText(message.getContent());
         }
     }
 }

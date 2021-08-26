@@ -116,6 +116,7 @@ public abstract class BaseRecyclerAdapter<Data>
      * @param viewType 布局类型，约定为XML布局的Id
      * @return ViewHolder
      */
+    @NonNull
     protected abstract BaseRecyclerViewHolder<Data> onCreateViewHolder(View root, int viewType);
 
     /**
@@ -307,7 +308,9 @@ public abstract class BaseRecyclerAdapter<Data>
          */
         private void bind(Data data) {
             this.mData = data;
-            onBind(data);
+            if (data != null) {
+                onBind(data);
+            }
         }
 
         /**
@@ -315,7 +318,7 @@ public abstract class BaseRecyclerAdapter<Data>
          *
          * @param data 绑定的数据
          */
-        protected abstract void onBind(Data data);
+        protected abstract void onBind(@NonNull Data data);
 
         /**
          * Holder自己对自己对应的Data进行更新操作
