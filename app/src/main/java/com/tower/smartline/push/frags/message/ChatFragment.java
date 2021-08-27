@@ -103,6 +103,11 @@ public abstract class ChatFragment<ReceiverEntity> extends PresenterFragment<ICh
                 mBinding.btnSubmit.setImageResource(imgRes);
             }
         });
+        mBinding.editMessage.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                mBinding.layAppbar.setExpanded(false, true);
+            }
+        });
 
         // RecyclerView初始化
         mBinding.recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
